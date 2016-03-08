@@ -31,17 +31,17 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="src/link/link.c">
+		<Unit filename="header/Layer.h" />
+		<Unit filename="header/Neuron.h" />
+		<Unit filename="src/Layer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/link/link.h" />
-		<Unit filename="src/main.c">
+		<Unit filename="src/Main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/neuron/neuron.c">
+		<Unit filename="src/Neuron.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/neuron/neuron.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
