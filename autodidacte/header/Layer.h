@@ -1,6 +1,6 @@
  #ifndef H_LAYER
  #define H_LAYER
- 
+
 
   /* Layer.h    -----   LIF7 Auto-Didacte */
 
@@ -28,7 +28,7 @@ void setNbNeurons(int nbNeurons);
 Neuron * getNeuron(const Layer* layer, int i);
 void setNeuron(Layer * layer, int i);
 
-void update(Layer * layer);
+void updateLayer(Layer * layer);
 
 
 #endif
