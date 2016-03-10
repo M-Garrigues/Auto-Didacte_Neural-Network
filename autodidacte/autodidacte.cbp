@@ -31,8 +31,12 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="header/Genome.h" />
 		<Unit filename="header/Layer.h" />
 		<Unit filename="header/Neuron.h" />
+		<Unit filename="src/Genome.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/Layer.c">
 			<Option compilerVar="CC" />
 		</Unit>

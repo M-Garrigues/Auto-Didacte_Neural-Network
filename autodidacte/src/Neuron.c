@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "Neuron.h"
+#include "../header/Neuron.h"
 
 
 Neuron * newNeuron(char type, int nbHiddenNeuron)

@@ -1,6 +1,6 @@
  #ifndef H_NEURON
  #define H_NEURON
- 
+
 
   /* Neuron.h   -----   LIF7 Auto-Didacte */
 
@@ -31,6 +31,6 @@ void  setValue(Neuron * neuron, float newValue);
 float getWeight(Neuron * neuron, int i);
 void  setWeight(Neuron * neuron, int i, float newWeight);
 
-void  update(Neuron * neuron);
+void  updateNeuron(Neuron * neuron);
 
 #endif
