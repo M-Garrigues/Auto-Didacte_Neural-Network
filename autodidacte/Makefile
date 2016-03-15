@@ -24,7 +24,7 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "compiled "$<" ok"
 
-.PHONY : remove clean run valgring
+.PHONY : remove clean run valgrind
 
 clean:
 	@$(rm) $(OBJECTS)
@@ -37,5 +37,5 @@ remove : clean
 run: 
 	./$(BINDIR)/$(TARGET)
 
-valgring:
+valgrindd:
 	valgrind -v ./$(BINDIR)/$(TARGET) 
