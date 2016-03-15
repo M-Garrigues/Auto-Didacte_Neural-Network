@@ -1,5 +1,5 @@
- #ifndef H_LAYER
- #define H_LAYER
+ #ifndef H_MG_LAYER
+ #define H_MG_LAYER
 
 
   /* Layer.h    -----   LIF7 Auto-Didacte */
@@ -7,28 +7,36 @@
 
 #include "Neuron.h"
 
-/* Layer structure*/
 
+/* Layer structure*/
 typedef struct{
 
 	char type;
 	int nbNeurons;
-	Neuron * tabNeurons;
+	Neuron ** tabNeurons;
 
 }Layer;
 
+
+/* Layer constructors */
+Layer * newInputLayer(int nbNeurons, int nbHiddenNeuron);
+Layer * newHiddenLayer(int nbNeurons, int nbOutputNeuron);
+Layer * newOutputLayer(int nbNeurons);
+
+/* Layer get/set */
+int getNbNeurons(const Layer* layer);
+void setNbNeurons(Layer* layer, int nbNeurons);
+
+
 /* Layer functions */
+void updateInputLayer(Layer * layer, float * tabNewValues);
+void updateLayer(Layer * layer1, Layer* layer2);
+void initialiseLayerTEST(Layer * layer);
+float sigmoid(float x);
 
-Layer * newLayer(char type , int nbNeurons);
+
+/* Layer destructor */
 void deleteLayer(Layer * layer);
-
-char getNbNeurons(const Layer* layer);
-void setNbNeurons(int nbNeurons);
-
-Neuron * getNeuron(const Layer* layer, int i);
-void setNeuron(Layer * layer, int i);
-
-void updateLayer(Layer * layer);
 
 
 #endif
