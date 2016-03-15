@@ -1,6 +1,6 @@
 #ifndef H_GENOME
 #define H_GENOME
-
+#include "stdio.h"
 /*  Genome.h ----- LIF7 Auto-Didacte */
 
 
@@ -8,27 +8,44 @@
 
 typedef struct
 {
+    int nbInput;
+    int nbHidden;
+    int nbOutput;
+    float fitness;
     float * tabGenes;
 }Genome;
 
 /* Functions Genome */
 
-void initGenome(Genome * genome);
-//void newGenome(const Network * network, Genome * genome);
-void newGenomeRandom(Genome * genome);
-void newGenomeNull(Genome * genome);
+
+/* constructors and destructor */
+Genome * newGenomeRandom(int species);
+Genome * newGenomeNull(int species);
 void deleteGenome(Genome * genome);
 
+/* getters and setters */
 float getGene(const Genome * genome, int i);
-void setGene(Genome * genome, int i, float value);
+void setGene(Genome ** genome, int i, float value);
+int getNbInput(const Genome * genome);
+void setNbInput(Genome ** genome, int nb);
+int getNbHidden(const Genome * genome);
+void setNbHidden(Genome ** genome, int nb);
+int getNbOutput(const Genome * genome);
+void setNbOutput(Genome ** genome, int nb);
+float getFitness(const Genome * genome);
+void setFitness(Genome ** genome, float value);
 
-void crossover(const Genome * genome1, const Genome * genome2, Genome * child);
-void mutation(Genome * genome);
+/* general functions */
+Genome * crossover(const Genome * genome1, const Genome * genome2);
+void mutation(Genome ** genome);
 void displayGenome(const Genome * genome);
-float fitness(const Genome * genome);
-#if 0
+void saveGenome(const Genome * genome, FILE * f);
+Genome * loadGenome(FILE * f);
+#if 1
 Network * convertToNetwork(const Genome * genome);
 #endif
+void regressionTest();
+
 
 
 #endif
