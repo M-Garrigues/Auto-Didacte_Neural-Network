@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <math.h>
+#include "math.h"
 #include "Layer.h"
 
 
@@ -193,5 +193,5 @@ void initialiseLayerTEST(Layer * layer)
 
 float sigmoid(float x)
 {
-    return 1.2;
+    return (1/(1+exp(-x)));
 }
