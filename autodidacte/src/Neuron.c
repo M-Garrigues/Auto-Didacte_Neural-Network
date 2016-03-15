@@ -141,4 +141,32 @@ void  setWeight(Neuron * neuron, int i, float newWeight)
 
 
 
+char getTypeNeuron(const Neuron * neuron)
+{
+	assert(neuron != NULL);
+	return neuron->type;
+}
+
+void setTypeNeuron(Neuron * neuron, char newType)
+{
+	assert(neuron != NULL);
+	neuron->type = newType;
+}
+
+
+
+int getNbWeights(const Neuron * neuron)
+{
+	assert(neuron != NULL);
+	return  neuron->nbWeights;
+}
+
+void setNbWeights(Neuron * neuron,int newNbWeights)
+{
+	assert(neuron != NULL);
+	neuron->nbWeights = newNbWeights;
+}
+
+
+
 

@@ -33,9 +33,10 @@ Layer * newInputLayer(int nbNeurons, int nbHiddenNeuron)            /*INPUT LAYE
 
 	for (i = 0; i < nbNeurons; ++i)
 	{
-		layer->tabNeurons[i] = newInputNeuron(nbHiddenNeuron);
+		setNeuron(layer, i, newInputNeuron(nbHiddenNeuron));
 	}
-printf("Layer created\n");
+
+	printf("Layer created\n");
 	return layer;
 }
 
@@ -58,9 +59,10 @@ Layer * newHiddenLayer(int nbNeurons, int nbOutputNeuron)              /*HIDDEN 
 
 	for (i = 0; i < nbNeurons; ++i)
 	{
-		layer->tabNeurons[i] = newHiddenNeuron(nbOutputNeuron);
+		setNeuron(layer, i, newHiddenNeuron(nbOutputNeuron));
 	}
-printf("Layer created\n");
+
+	printf("Layer created\n");
 
 	return layer;
 }
@@ -84,9 +86,10 @@ Layer * newOutputLayer(int nbNeurons)                                  /*OUTPUT 
 
 	for (i = 0; i < nbNeurons; ++i)
 	{
-		layer->tabNeurons[i] = newOutputNeuron();
+		setNeuron(layer, i, newOutputNeuron());
 	}
-printf("Layer created\n\n");
+
+	printf("Layer created\n\n");
 
 	return layer;
 }
@@ -102,7 +105,7 @@ void deleteLayer(Layer * layer)                                     		/*LAYER DE
 
 	for (i = 0; i < layer->nbNeurons; ++i)
 	{
-		deleteNeuron(layer->tabNeurons[i]);
+		deleteNeuron(getNeuron(layer, i));
 	}
 
 	layer->nbNeurons = 0;
@@ -126,6 +129,38 @@ void setNbNeurons(Layer * layer, int newNbNeurons)
 }
 
 
+char getTypeLayer(const Layer * layer)
+{
+	assert(layer != NULL);
+	return layer->type;
+}
+
+void setTypeLayer(Layer * layer, char newType)
+{
+	assert(layer != NULL);
+	layer->type = newType;
+}
+
+
+Neuron * getNeuron(const Layer * layer, int i)
+{
+	assert(layer != NULL);
+	assert(layer->nbNeurons >= i && i >= 0);
+	return layer->tabNeurons[i]; 
+}
+
+void setNeuron(Layer * layer, int i, Neuron * newNeuron)
+{
+	assert(layer != NULL);
+	assert(layer->nbNeurons >= i && i >= 0);
+	assert(newNeuron != NULL);
+	layer->tabNeurons[i] = newNeuron;
+}
+
+
+
+
+
 void updateInputLayer(Layer * layer, float * tabNewValues)							/*LAYER FUNCTIONS*/
 {
 	int i;
@@ -135,7 +170,7 @@ void updateInputLayer(Layer * layer, float * tabNewValues)							/*LAYER FUNCTIO
 
 	for (i = 0; i < layer->nbNeurons; ++i)
 	{
-		layer->tabNeurons[i]->value = tabNewValues[i];
+		setValue(getNeuron(layer, i), tabNewValues[i]);
 	}
 }	
 
@@ -146,15 +181,16 @@ void updateLayer(Layer * layer1, Layer * layer2)
 	assert(layer1 !=NULL && layer2 != NULL);
 	assert((layer2->type == HIDDEN && layer1->type == INPUT)||(layer2->type == OUTPUT && layer1->type == HIDDEN));
 
-	if (layer1->type == HIDDEN)
+	if (layer1->type == HIDDEN) 
 	{
 		for (i = 0; i < layer2->nbNeurons; ++i)
 		{
-			layer2->tabNeurons[i]->value = 0;
+			setValue(getNeuron(layer2,i), 0);
 
 			for (j = 0; j < layer1->nbNeurons; ++j)
 			{
-				layer2->tabNeurons[i]->value += (layer1->tabNeurons[j]->tabWeights[i])*(layer1->tabNeurons[j]->value); /*summing all the entries*/
+				/*summing all the entries*/
+				setValue(getNeuron(layer2, i), getValue(getNeuron(layer2, i)) + getWeight(getNeuron(layer1,j), i) * getValue(getNeuron(layer1,j)));
 			}
 		}
 	}
@@ -165,11 +201,12 @@ void updateLayer(Layer * layer1, Layer * layer2)
 			layer2->tabNeurons[i]->value = 0;
 
 			for (j = 0; j < layer1->nbNeurons; ++j)
-			{
-				layer2->tabNeurons[i]->value += (layer1->tabNeurons[j]->tabWeights[i])*(layer1->tabNeurons[j]->value); /*summing all the entries*/
+			{	
+				/*summing all the entries*/
+				setValue(getNeuron(layer2, i), getValue(getNeuron(layer2, i)) + getWeight(getNeuron(layer1,j), i) * getValue(getNeuron(layer1,j))); 
 			}
 
-			layer2->tabNeurons[i]->value = sigmoid(layer2->tabNeurons[i]->value);
+			setValue(getNeuron(layer2, i), sigmoid(getValue(getNeuron(layer2, i))));
 		}
 	}
 }	
@@ -184,9 +221,9 @@ void initialiseLayerTEST(Layer * layer)
 
 	for (i = 0; i < layer->nbNeurons; ++i)
 	{
-		for (j = 0; j < layer->tabNeurons[0]->nbWeights; ++j)
+		for (j = 0; j < getNbWeights(getNeuron(layer, 0)); ++j)
 		{
-			layer->tabNeurons[i]->tabWeights[j] = 0.2;
+			setWeight(getNeuron(layer, i), j, 0.2);
 		}
 	}
 }

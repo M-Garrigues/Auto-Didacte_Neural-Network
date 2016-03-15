@@ -27,6 +27,12 @@ Layer * newOutputLayer(int nbNeurons);
 int getNbNeurons(const Layer* layer);
 void setNbNeurons(Layer* layer, int nbNeurons);
 
+char getTypeLayer(const Layer * layer);
+void setTypeLayer(Layer * layer, char newType);
+
+Neuron * getNeuron(const Layer * layer, int i);
+void setNeuron(Layer * layer, int i, Neuron * newNeuron);
+
 
 /* Layer functions */
 void updateInputLayer(Layer * layer, float * tabNewValues);
