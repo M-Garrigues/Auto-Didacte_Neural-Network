@@ -9,19 +9,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "Network.h"
-
+#include "Genome.h"
+#if 0
 void regressionTestANN();
 void printNetwork(Network * net);
 void printLayer(Layer * layer);
-
+#endif
 
 int main(int argc, char const *argv[])
 {
-    regressionTestANN();
+	Genome * g1 = newGenomeRandom(19);
+	FILE * f = NULL;
+	f = fopen("data/best.gen", "w");
+	displayGenome(g1);
+	saveGenome(g1, f);
+	fclose(f);
+	deleteGenome(g1);
 	return 0;
 }
 
+#if 0
 void regressionTestANN(void)
 {
 	float tabFloat[5] = {1, 0.5, -2, 0.8, -0.3};
@@ -150,3 +157,4 @@ void printNetwork(Network * net)
 // 	net->nbOutputNeuron = genome->nbOutputNeuron;
 
 // }
+#endif
