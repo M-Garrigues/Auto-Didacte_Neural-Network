@@ -11,7 +11,7 @@
 /* Layer structure*/
 typedef struct{
 
-	char type;
+	int type;
 	int nbNeurons;
 	Neuron ** tabNeurons;
 
@@ -26,6 +26,12 @@ Layer * newOutputLayer(int nbNeurons);
 /* Layer get/set */
 int getNbNeurons(const Layer* layer);
 void setNbNeurons(Layer* layer, int nbNeurons);
+
+int getTypeLayer(const Layer * layer);
+void setTypeLayer(Layer * layer, int newType);
+
+Neuron * getNeuron(const Layer * layer, int i);
+void setNeuron(Layer * layer, int i, Neuron * newNeuron);
 
 
 /* Layer functions */

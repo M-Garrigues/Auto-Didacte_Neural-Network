@@ -10,11 +10,12 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "Genome.h"
-#if 0
+#include "Network.h"
+
 void regressionTestANN();
 void printNetwork(Network * net);
 void printLayer(Layer * layer);
-#endif
+
 
 int main(int argc, char const *argv[])
 {
@@ -25,10 +26,15 @@ int main(int argc, char const *argv[])
 	saveGenome(g1, f);
 	fclose(f);
 	deleteGenome(g1);
+
+	printf("\n\n\n");
+
+	regressionTestANN();
+
 	return 0;
 }
 
-#if 0
+
 void regressionTestANN(void)
 {
 	float tabFloat[5] = {1, 0.5, -2, 0.8, -0.3};
@@ -103,7 +109,7 @@ void printNetwork(Network * net)
 }
 
 
-// void inportGenome(Genome * genome, Network * net)
+/* void inportGenome(Genome * genome, Network * net)
 // {
 // 	int i,j,c;
 // 	c=0;
@@ -156,5 +162,4 @@ void printNetwork(Network * net)
 // 	net->nbHiddenNeuron = genome->nbHiddenNeuron;
 // 	net->nbOutputNeuron = genome->nbOutputNeuron;
 
-// }
-#endif
+// } */

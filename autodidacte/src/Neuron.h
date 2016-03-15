@@ -14,7 +14,7 @@ enum{	INPUT , HIDDEN , OUTPUT   };
 typedef struct
 {
 
-    char type;
+    int type;
     float value;
     int nbWeights;
     float * tabWeights;
@@ -34,6 +34,12 @@ void  setValue(Neuron * neuron, float newValue);
 
 float getWeight(const Neuron * neuron, int i);
 void  setWeight(Neuron * neuron, int i, float newWeight);
+
+int getTypeNeuron(const Neuron * neuron);
+void setTypeNeuron(Neuron * neuron, int newType);
+
+int getNbWeights(const Neuron * neuron);
+void setNbWeights(Neuron * neuron,int newNbWeights);
 
 /* Neuron functions */
 void  updateNeuron(Neuron * neuron);
