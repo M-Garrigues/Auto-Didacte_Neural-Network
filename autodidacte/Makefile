@@ -37,3 +37,7 @@ remove : clean
 .PHONEY : 
 run: 
 	./$(BINDIR)/$(TARGET)
+
+.PHONEY :
+val:
+	valgrind ./$(BINDIR)/$(TARGET) -v
