@@ -1,12 +1,13 @@
 # depslib dependency file v1.0
-1457620675 source:d:\lif7\autodidacte\src\genome.c
+1457988778 source:d:\lif7\autodidacte\src\genome.c
 	"../header/Genome.h"
 	"stdlib.h"
 	"assert.h"
 	"time.h"
 	"stdio.h"
 
-1457620213 d:\lif7\autodidacte\header\genome.h
+1457975957 d:\lif7\autodidacte\header\genome.h
+	"stdio.h"
 
 1457616152 source:d:\lif7\autodidacte\src\layer.c
 	<stdio.h>
@@ -19,15 +20,26 @@
 
 1457616212 d:\lif7\autodidacte\header\neuron.h
 
-1457620706 source:d:\lif7\autodidacte\src\main.c
+1457988555 source:d:\lif7\autodidacte\src\main.c
 	"../header/Genome.h"
 	"stdio.h"
 	"stdlib.h"
 	"time.h"
+	"assert.h"
 
 1457619895 source:d:\lif7\autodidacte\src\neuron.c
 	<stdio.h>
 	<stdlib.h>
 	<assert.h>
 	"../header/Neuron.h"
+
+1457987943 source:d:\lif7\autodidacte\src\generation.c
+	"../header/Generation.h"
+	"../header/Genome.h"
+	"assert.h"
+	"stdlib.h"
+
+1457987901 d:\lif7\autodidacte\header\generation.h
+	"Genome.h"
+	"stdio.h"
 
