@@ -37,7 +37,8 @@ void setFitness(Genome ** genome, float value);
 
 /* general functions */
 Genome * crossover(const Genome * genome1, const Genome * genome2);
-void mutation(Genome ** genome);
+Genome * mutation(const Genome * genome);
+void updateFitnessGenome(Genome ** genome);
 void displayGenome(const Genome * genome);
 void saveGenome(const Genome * genome, FILE * f);
 Genome * loadGenome(FILE * f);

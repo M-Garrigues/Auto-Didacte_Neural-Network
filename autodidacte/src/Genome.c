@@ -112,14 +112,16 @@ Genome * crossover(const Genome * genome1, const Genome * genome2)
     return child;
 }
 
-void mutation(Genome ** genome)
+Genome * mutation(const Genome * genome)
 {
     int i;
-    for(i =0; i<(getNbInput(*genome) + getNbOutput(*genome))*getNbHidden(*genome); i++)
+    Genome * pGenome = newGenomeNull(genome->nbHidden);
+    for(i =0; i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome); i++)
     {
-        if(rand()%(getNbInput(*genome) + getNbOutput(*genome))*getNbHidden(*genome) == 0)
-            setGene(genome, i , getGene((*genome), i) + (rand()/(float)RAND_MAX)-0.5);
+        if(rand()%(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome) == 0)
+            setGene(&pGenome, i , getGene((genome), i) + (rand()/(float)RAND_MAX)-0.5);
     }
+    return pGenome;
 }
 
 void displayGenome(const Genome * genome)
@@ -166,6 +168,16 @@ Genome * loadGenome(FILE * f)
     }
     fscanf(f,"\n");
     return pGenome;
+}
+void updateFitnessGenome(Genome ** genome)
+{
+    /* si les genes sont croissant 2 par deux c'est mieux*/
+    int i;
+    for(i =1; i<(getNbInput(*genome) + getNbOutput(*genome))*getNbHidden(*genome);i++)
+    {
+        if(getGene(*genome,i-1)<=getGene(*genome,i))
+            setFitness(genome, getFitness(*genome)+1);
+    }
 }
 #if 0
 Network * convertToNetwork(const Genome * genome)

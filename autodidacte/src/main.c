@@ -9,33 +9,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "Genome.h"
+#include "Generation.h"
+#include "Layer.h"
+#include "time.h"
+/*
 #include "Network.h"
 
 void regressionTestANN();
-void printNetwork(Network * net);
+void printNetwork(Network * net);*/
 void printLayer(Layer * layer);
 
 
 int main(int argc, char const *argv[])
 {
-	Genome * g1 = newGenomeRandom(19);
-	FILE * f = NULL;
-	f = fopen("data/best.gen", "w");
-	displayGenome(g1);
-	saveGenome(g1, f);
-	fclose(f);
-	deleteGenome(g1);
+	Generation * g1 = newGenerationRandom(30);
+	srand(time(NULL));
+	nextGeneration(&g1);
+	nextGeneration(&g1);
+	nextGeneration(&g1);
+	nextGeneration(&g1);
+	nextGeneration(&g1);
+	nextGeneration(&g1);
+	nextGeneration(&g1);
+	deleteGeneration(g1);
 
 	printf("\n\n\n");
 
-	regressionTestANN();
+	/*regressionTestANN();*/
 
 	return 0;
 }
 
 
-void regressionTestANN(void)
+/*void regressionTestANN(void)
 {
 	float tabFloat[5] = {1, 0.5, -2, 0.8, -0.3};
 
@@ -56,7 +62,7 @@ void regressionTestANN(void)
 
     printf("\nNetwork successfully deleted.\n\n\n");
 }
-
+*/
 
 
 void printLayer(Layer * layer)
@@ -100,13 +106,13 @@ void printLayer(Layer * layer)
 	}
 }
 
-
+/*
 void printNetwork(Network * net)
 {
 	printLayer(net->tabLayers[INPUT]);
 	printLayer(net->tabLayers[HIDDEN]);
 	printLayer(net->tabLayers[OUTPUT]);
-}
+}*/
 
 
 /* void inportGenome(Genome * genome, Network * net)
