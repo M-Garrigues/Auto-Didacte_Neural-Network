@@ -1,10 +1,10 @@
 TARGET = autodidacte
 
 CC = gcc
-CFLAGS = -W -Wall -std=c99 -pedantic -ansi
+CFLAGS = -g -Wall -pedantic -ansi
 
 LINKER = gcc -o
-LDFLAGS = Wall -I. -lm
+LDFLAGS = -Wall -lm
 
 SRCDIR = src
 BINDIR = bin
@@ -15,29 +15,27 @@ OBJDIR = obj
 SOURCES := $(wildcard $(SRCDIR)/*.c)
 INCLUDES := $(wildcard $(SRCDIR)/*.h)
 OBJECTS := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-rm  =  rm -f
+rm  =  rm -rf
 $(BINDIR)/$(TARGET): $(OBJECTS)
-	@$(LINKER) $@ $(FLAGS) $(OBJECTS)
+	@$(LINKER) $@ $(OBJECTS) $(LDFLAGS) 
 	@echo "link ok"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "compiled "$<" ok"
 
-.PHONEY : clean
+.PHONY : remove clean run valgring
+
 clean:
 	@$(rm) $(OBJECTS)
 	@echo "clean ok"
 
-.PHONEY : remove
 remove : clean
 	@$(rm) $(BINDIR)/$(TARGET)
 	@echo "exec removed"
 
-.PHONEY : 
 run: 
 	./$(BINDIR)/$(TARGET)
 
-.PHONEY :
-val:
-	valgrind ./$(BINDIR)/$(TARGET) -v
+valgring:
+	valgrind -v ./$(BINDIR)/$(TARGET) 
