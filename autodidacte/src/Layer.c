@@ -129,13 +129,13 @@ void setNbNeurons(Layer * layer, int newNbNeurons)
 }
 
 
-char getTypeLayer(const Layer * layer)
+int getTypeLayer(const Layer * layer)
 {
 	assert(layer != NULL);
 	return layer->type;
 }
 
-void setTypeLayer(Layer * layer, char newType)
+void setTypeLayer(Layer * layer, int newType)
 {
 	assert(layer != NULL);
 	layer->type = newType;

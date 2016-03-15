@@ -78,14 +78,14 @@ void setNbOutputNeurons(Network * net, int newNbNeurons)
 }
 
 
-Layer * getLayer(const Network * net, char type)
+Layer * getLayer(const Network * net, int type)
 {
 	assert(net != NULL);
 	assert(type >= INPUT && type <= OUTPUT);
 	return net->tabLayers[type];
 }
 
-void setLayer(Network * net, char type, Layer * newLayer)
+void setLayer(Network * net, int type, Layer * newLayer)
 {
 	assert(net != NULL);
 	assert(type >= INPUT && type <= OUTPUT);
@@ -96,8 +96,6 @@ void setLayer(Network * net, char type, Layer * newLayer)
 
 void initialiseNetworkTEST(Network * net)									/*NETWORK FUNCTIONS*/
 {
-	int i, j;
-
 	assert(net != NULL);
 
 	initialiseLayerTEST(getLayer(net, INPUT));
