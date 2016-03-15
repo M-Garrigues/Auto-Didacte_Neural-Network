@@ -1,5 +1,5 @@
-#include "../header/Generation.h"
-#include "../header/Genome.h"
+#include "Generation.h"
+#include "Genome.h"
 #include "assert.h"
 #include "stdlib.h"
 
@@ -63,4 +63,7 @@ void sauverGeneration(const Generation * gen, FILE * f)
 {
 
 }
-void chargerGeneration(Generation ** gen, FILE * f);
+void chargerGeneration(Generation ** gen, FILE * f)
+{
+    
+}

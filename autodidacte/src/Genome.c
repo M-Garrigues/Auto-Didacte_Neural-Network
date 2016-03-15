@@ -1,4 +1,4 @@
-#include "../header/Genome.h"
+#include "Genome.h"
 #include "stdlib.h"
 #include "assert.h"
 #include "time.h"
@@ -12,7 +12,7 @@ Genome * newGenomeRandom(int species)
     assert(pGenome != NULL);
     pGenome->nbInput = 6;
     pGenome->nbHidden = species;
-    pGenome->nbOutput = 2;
+    pGenome->nbOutput = 4;
     pGenome->fitness = 0;
     pGenome->tabGenes = malloc((pGenome->nbInput + pGenome->nbOutput)*pGenome->nbHidden*sizeof(float));
     assert(pGenome->tabGenes != NULL);
@@ -30,7 +30,7 @@ Genome * newGenomeNull(int species)
     assert(pGenome != NULL);
     pGenome->nbInput = 6;
     pGenome->nbHidden = species;
-    pGenome->nbOutput = 2;
+    pGenome->nbOutput = 4;
     pGenome->fitness = 0;
     pGenome->tabGenes = malloc((pGenome->nbInput + pGenome->nbOutput)*pGenome->nbHidden*sizeof(float));
     assert(pGenome != NULL);
@@ -94,7 +94,7 @@ void setFitness(Genome ** genome, float value)
 
 Genome * crossover(const Genome * genome1, const Genome * genome2)
 {
-    assert(genome1->nbHidden == genome2->nbHidden); // same species
+    assert(genome1->nbHidden == genome2->nbHidden);  /*same species*/
     int i;
     Genome * child = malloc(sizeof(Genome));
     child->nbInput = 6;
@@ -167,13 +167,13 @@ Genome * loadGenome(FILE * f)
     fscanf(f,"\n");
     return pGenome;
 }
-
+#if 0
 Network * convertToNetwork(const Genome * genome)
 {
     Network * pNet = malloc(sizeof(Network));
 
 }
-
+#endif
 void regressionTest()
 {
     Genome * p1,p2,p3;
