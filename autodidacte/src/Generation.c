@@ -87,7 +87,7 @@ void nextGeneration(Generation ** gen)
     updateFitnessGeneration(gen);
     pG1 = getBest(*gen);
     printf("Gen: %d -> Bestfitness %f\n",getNbGen(*gen),getFitness(pG1));
-    free(pG1);
+    deleteGenome(pG1);
     /* saveGeneraton */
     crossoverGeneration(gen);
     mutationGeneration(gen);
