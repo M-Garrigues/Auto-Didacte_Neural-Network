@@ -173,13 +173,11 @@ Genome * loadGenome(FILE * f)
 }
 void updateFitnessGenome(Genome ** genome)
 {
-    /* si les genes sont croissant 2 par deux c'est mieux*/
     int i;
     setFitness(genome, 0);
-    for(i =1; i<(getNbInput(*genome) + getNbOutput(*genome))*getNbHidden(*genome);i++)
+    for(i =0; i<(getNbInput(*genome) + getNbOutput(*genome))*getNbHidden(*genome);i++)
     {
-        if(getGene(*genome,i-1)<=getGene(*genome,i))
-            setFitness(genome, getFitness(*genome)+1);
+            setFitness(genome, getFitness(*genome)+getGene(*genome, i));
     }
 }
 #if 0
