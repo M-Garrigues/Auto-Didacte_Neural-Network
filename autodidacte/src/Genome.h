@@ -21,6 +21,9 @@ typedef struct
 /* constructors and destructor */
 Genome * newGenomeRandom(int species);
 Genome * newGenomeNull(int species);
+Genome * newCrossover(const Genome * genome1, const Genome * genome2);
+Genome * newMutation(const Genome * genome);
+Genome * loadGenome(FILE * f);
 void deleteGenome(Genome * genome);
 
 /* getters and setters */
@@ -36,12 +39,9 @@ float getFitness(const Genome * genome);
 void setFitness(Genome ** genome, float value);
 
 /* general functions */
-Genome * crossover(const Genome * genome1, const Genome * genome2);
-Genome * mutation(const Genome * genome);
 void updateFitnessGenome(Genome ** genome);
 void displayGenome(const Genome * genome);
 void saveGenome(const Genome * genome, FILE * f);
-Genome * loadGenome(FILE * f);
 #if 0
 Network * convertToNetwork(const Genome * genome);
 #endif

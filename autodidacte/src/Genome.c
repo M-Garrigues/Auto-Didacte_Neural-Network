@@ -92,7 +92,7 @@ void setFitness(Genome ** genome, float value)
 
 
 
-Genome * crossover(const Genome * genome1, const Genome * genome2)
+Genome * newCrossover(const Genome * genome1, const Genome * genome2)
 {
     assert(genome1->nbHidden == genome2->nbHidden);  /*same species*/
     int i;
@@ -112,7 +112,7 @@ Genome * crossover(const Genome * genome1, const Genome * genome2)
     return child;
 }
 
-Genome * mutation(const Genome * genome)
+Genome * newMutation(const Genome * genome)
 {
     int i;
     Genome * pGenome = newGenomeNull(genome->nbHidden);
@@ -120,6 +120,8 @@ Genome * mutation(const Genome * genome)
     {
         if(rand()%(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome) == 0)
             setGene(&pGenome, i , getGene((genome), i) + (rand()/(float)RAND_MAX)-0.5);
+        else
+            setGene(&pGenome,i,getGene(genome,i));
     }
     return pGenome;
 }
@@ -173,6 +175,7 @@ void updateFitnessGenome(Genome ** genome)
 {
     /* si les genes sont croissant 2 par deux c'est mieux*/
     int i;
+    setFitness(genome, 0);
     for(i =1; i<(getNbInput(*genome) + getNbOutput(*genome))*getNbHidden(*genome);i++)
     {
         if(getGene(*genome,i-1)<=getGene(*genome,i))
