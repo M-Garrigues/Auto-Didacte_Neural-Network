@@ -82,8 +82,12 @@ void chargerGeneration(Generation ** gen, FILE * f)
 
 void nextGeneration(Generation ** gen)
 {
-
+    Genome * pG1;
+    int i;
     updateFitnessGeneration(gen);
+    pG1 = getBest(*gen);
+    printf("Gen: %d -> Bestfitness %f\n",getNbGen(*gen),getFitness(pG1));
+    free(pG1);
     /* saveGeneraton */
     crossoverGeneration(gen);
     mutationGeneration(gen);
@@ -101,35 +105,48 @@ void updateFitnessGeneration(Generation ** gen)
 void crossoverGeneration(Generation ** gen)
 {
     Genome * g1;
-    int * p = malloc(sizeof(float)*(*gen)->nbSubject);
+    float tempF;
+    float * p = malloc(sizeof(float)*(*gen)->nbSubject);
     int * p2 = malloc(sizeof(int)*(*gen)->nbSubject);
     int r1,r2,i,j,k,l,m;
     Generation * temp = newGenerationNull((*gen)->nbSubject);
-    float totalchoix = 0;
-    float totalFitness =0;
+
     setNbGen(&temp, getNbGen(*gen)+1);
+
     for(i =0;i<(*gen)->nbSubject;i++)
     {
-        totalFitness += getFitness(getGenome(*gen, i));
+        p[i] = getFitness(getGenome(*gen, i));
+        p2[i] = i;
     }
-    printf("%f\n",totalFitness/((*gen)->nbSubject));
-    for(i =0;i<(*gen)->nbSubject;i++)
+
+    for(j=0; j<(*gen)->nbSubject;j++)
     {
-        p[i] = ((getFitness(getGenome(*gen, i))/totalFitness)*100);
-        totalchoix += p[i];
+        for(i = 1;i<(*gen)->nbSubject;i++)
+        {
+            if(p[i-1]>p[i])
+            {
+                tempF = p[i-1];
+                p[i-1] = p[i];
+                p[i] = tempF;
+                k = p2[i-1];
+                p2[i-1] = p2[i];
+                p2[i] = k;
+            }
+        }
     }
+    free(p);
     for(j = 1;j<(*gen)->nbSubject;j++)
     {
-        m = totalchoix;
-        r1 =rand()%100;
-        r2 =rand()%100;
+        r1 = rand()%(10*(*gen)->nbSubject*((*gen)->nbSubject+1)/2);
+        r2 = rand()%(10*(*gen)->nbSubject*((*gen)->nbSubject+1)/2);
+        m = ((*gen)->nbSubject)*10;
         for(i = 0; i<(*gen)->nbSubject;i++)
         {
-            m -= p[i];
-            if(r1 >= m)
+            if(r1 <= m)
                 k = i;
-            if(r2 >= m)
+            if(r2 <= m)
                 l = i;
+            m += ((*gen)->nbSubject - (i+1))*10;
         }
         g1 =newCrossover(getGenome(*gen, k), getGenome(*gen,l));
         deleteGenome(getGenome(temp,j));
@@ -137,7 +154,6 @@ void crossoverGeneration(Generation ** gen)
     }
     deleteGenome(getGenome(temp,0));
     setGenome(&temp, 0, getBest(*gen));
-    free(p);
     free(p2);
     deleteGeneration((*gen));
     *gen = temp;
@@ -146,7 +162,7 @@ void mutationGeneration(Generation ** gen)
 {
     int i;
     Genome * temp;
-    for(i = 0; i<(*gen)->nbSubject;i++)
+    for(i = 1; i<(*gen)->nbSubject;i++)
     {
         temp = newMutation(getGenome(*gen, i));
         deleteGenome(getGenome(*gen, i));
@@ -161,9 +177,11 @@ Genome * getBest(const Generation * gen)
     pGenome = NULL;
     for(i = 1; i< gen->nbSubject;i++)
         if(getFitness(gen->tabGenomes[i]) > getFitness(gen->tabGenomes[max]))
-            max = i;    
+            max = i;   
+   
     pGenome = newGenomeNull(getNbHidden(getGenome(gen, max)));
+    setFitness(&pGenome, getFitness(gen->tabGenomes[max]));
     for(i = 0; i< (getNbInput(getGenome(gen, max)) + getNbOutput(getGenome(gen, max)))*getNbHidden(getGenome(gen, max));i++)
-        setGene(&pGenome, i , getGene(getGenome(gen, max), i));
+        setGene(&pGenome, i , getGene(getGenome(gen, max), i)); 
     return pGenome;
 }
