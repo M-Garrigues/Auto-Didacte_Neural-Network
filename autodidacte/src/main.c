@@ -25,12 +25,6 @@ int main(int argc, char const *argv[])
 	Generation * g1 = newGenerationRandom(30);
 	srand(time(NULL));
 	nextGeneration(&g1);
-	nextGeneration(&g1);
-	nextGeneration(&g1);
-	nextGeneration(&g1);
-	nextGeneration(&g1);
-	nextGeneration(&g1);
-	nextGeneration(&g1);
 	deleteGeneration(g1);
 
 	printf("\n\n\n");

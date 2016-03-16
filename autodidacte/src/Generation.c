@@ -35,7 +35,7 @@ Generation * newGenerationNull(int nbSubject)
 void deleteGeneration(Generation * gen)
 {
     int i;
-    for(i =0; i<25; i++)
+    for(i =0; i<gen->nbSubject; i++)
     {
         deleteGenome(getGenome(gen, i));
     }
@@ -100,6 +100,7 @@ void updateFitnessGeneration(Generation ** gen)
 }
 void crossoverGeneration(Generation ** gen)
 {
+    Genome * g1;
     int * p = malloc(sizeof(float)*(*gen)->nbSubject);
     int * p2 = malloc(sizeof(int)*(*gen)->nbSubject);
     int r1,r2,i,j,k,l,m;
@@ -130,9 +131,14 @@ void crossoverGeneration(Generation ** gen)
             if(r2 >= m)
                 l = i;
         }
-        setGenome(&temp,j,crossover(getGenome(*gen, k), getGenome(*gen,l)));
+        g1 =newCrossover(getGenome(*gen, k), getGenome(*gen,l));
+        deleteGenome(getGenome(temp,j));
+        setGenome(&temp,j,g1);
     }
+    deleteGenome(getGenome(temp,0));
     setGenome(&temp, 0, getBest(*gen));
+    free(p);
+    free(p2);
     deleteGeneration((*gen));
     *gen = temp;
 }
@@ -142,7 +148,7 @@ void mutationGeneration(Generation ** gen)
     Genome * temp;
     for(i = 0; i<(*gen)->nbSubject;i++)
     {
-        temp = mutation(getGenome(*gen, i));
+        temp = newMutation(getGenome(*gen, i));
         deleteGenome(getGenome(*gen, i));
         setGenome(gen, i, temp);
     }
