@@ -45,7 +45,7 @@ void saveGenome(const Genome * genome, FILE * f);
 #if 0
 Network * convertToNetwork(const Genome * genome);
 #endif
-void regressionTest();
+void regressionTestGenome();
 
 
 

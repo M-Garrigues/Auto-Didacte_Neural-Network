@@ -99,7 +99,7 @@ Genome * newCrossover(const Genome * genome1, const Genome * genome2)
     Genome * child = malloc(sizeof(Genome));
     child->nbInput = 6;
     child->nbHidden = getNbHidden(genome1);
-    child->nbOutput = 2;
+    child->nbOutput = 4;
     child->fitness =0;
     child->tabGenes = malloc((getNbInput(child)+getNbOutput(child))*getNbHidden(child)*sizeof(float));
     for(i = 0; i< (getNbInput(child) + getNbOutput(child))*getNbHidden(child); i++)
@@ -131,7 +131,7 @@ void displayGenome(const Genome * genome)
     int i;
     for(i = 0; i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome);i++)
     {
-        printf("%f", getGene(genome, i));
+        printf("%f : ", getGene(genome, i));
     }
     printf("\n");
 }
@@ -177,7 +177,8 @@ void updateFitnessGenome(Genome ** genome)
     setFitness(genome, 0);
     for(i =0; i<(getNbInput(*genome) + getNbOutput(*genome))*getNbHidden(*genome);i++)
     {
-            setFitness(genome, getFitness(*genome)+getGene(*genome, i));
+        if(getGene(*genome,i)>4)
+            setFitness(genome, getFitness(*genome)+1);
     }
 }
 #if 0
@@ -187,7 +188,7 @@ Network * convertToNetwork(const Genome * genome)
 
 }
 #endif
-void regressionTest()
+void regressionTestGenome()
 {
     Genome * p1,p2,p3;
 

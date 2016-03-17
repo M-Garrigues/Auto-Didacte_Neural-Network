@@ -23,18 +23,22 @@ void printLayer(Layer * layer);
 int main(int argc, char const *argv[])
 {
 	Generation * g1; 
+	Genome * solution;
 	int i;
 	srand(time(NULL));
-	g1 = newGenerationRandom(30);
-	for(i = 0 ;i <1000;i++)
+	g1 = newGenerationRandom(10);
+	solution = getBest(g1);
+	displayGenome(solution);
+	while(getFitness(solution)<60 && getNbGen(g1)<20000)
 	{
+		deleteGenome(solution);
 		nextGeneration(&g1);
+		updateFitnessGeneration(&g1);
+		solution = getBest(g1);
 	}
-	updateFitnessGeneration(&g1);
-	for(i = 0 ; i <getNbSubject(g1); i++)
-    {
-        printf("Gen: %d -> %d fitness %f\n",getNbGen(g1), i,getFitness(getGenome(g1, i)) );
-    }
+	printf("Gen: %d -> fitness ---> %f\n\n",getNbGen(g1),getFitness(solution));
+	displayGenome(solution);
+	deleteGenome(solution);
 	deleteGeneration(g1);
 
 	printf("\n\n\n");

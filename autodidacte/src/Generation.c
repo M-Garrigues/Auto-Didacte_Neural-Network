@@ -82,13 +82,7 @@ void chargerGeneration(Generation ** gen, FILE * f)
 
 void nextGeneration(Generation ** gen)
 {
-    Genome * pG1;
-    int i;
     updateFitnessGeneration(gen);
-    pG1 = getBest(*gen);
-    printf("Gen: %d -> Bestfitness %f\n",getNbGen(*gen),getFitness(pG1));
-    deleteGenome(pG1);
-    /* saveGeneraton */
     crossoverGeneration(gen);
     mutationGeneration(gen);
 }
@@ -108,7 +102,7 @@ void crossoverGeneration(Generation ** gen)
     float tempF;
     float * p = malloc(sizeof(float)*(*gen)->nbSubject);
     int * p2 = malloc(sizeof(int)*(*gen)->nbSubject);
-    int r1,r2,i,j,k,l,m;
+    int r1,r2,i,j,k,l,m,n;
     Generation * temp = newGenerationNull((*gen)->nbSubject);
 
     setNbGen(&temp, getNbGen(*gen)+1);
@@ -134,19 +128,28 @@ void crossoverGeneration(Generation ** gen)
             }
         }
     }
+    for(j=0; j<(*gen)->nbSubject;j++)
+    {
+        
+    }
     free(p);
+    n = (*gen)->nbSubject;
+    k = 0;
+    l = 0;
     for(j = 1;j<(*gen)->nbSubject;j++)
     {
-        r1 = rand()%(10*(*gen)->nbSubject*((*gen)->nbSubject+1)/2);
-        r2 = rand()%(10*(*gen)->nbSubject*((*gen)->nbSubject+1)/2);
-        m = ((*gen)->nbSubject)*10;
+        r1 = rand()%((n)*(n+1)*(2*n+1)/6);
+        r2 = rand()%((n)*(n+1)*(2*n+1)/6);
+        k = 0;
+        l = 0;
+        m = n*n;
         for(i = 0; i<(*gen)->nbSubject;i++)
         {
-            if(r1 <= m)
+            if(r1 <= m && k == 0)
                 k = i;
-            if(r2 <= m)
+            if(r2 <= m && l == 0)
                 l = i;
-            m += ((*gen)->nbSubject - (i+1))*10;
+            m += (n - (i+1))*(n - (i+1));
         }
         g1 =newCrossover(getGenome(*gen, k), getGenome(*gen,l));
         deleteGenome(getGenome(temp,j));
@@ -163,10 +166,13 @@ void mutationGeneration(Generation ** gen)
     int i;
     Genome * temp;
     for(i = 1; i<(*gen)->nbSubject;i++)
-    {
-        temp = newMutation(getGenome(*gen, i));
-        deleteGenome(getGenome(*gen, i));
-        setGenome(gen, i, temp);
+    {   
+        if(rand()%5 == 0)
+        {
+            temp = newMutation(getGenome(*gen, i));
+            deleteGenome(getGenome(*gen, i));
+            setGenome(gen, i, temp);
+        }
     }
 }
 Genome * getBest(const Generation * gen)
