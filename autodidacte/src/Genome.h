@@ -11,7 +11,7 @@ typedef struct
     int nbInput;
     int nbHidden;
     int nbOutput;
-    float fitness;
+    int fitness;
     float * tabGenes;
 }Genome;
 
@@ -21,27 +21,27 @@ typedef struct
 /* constructors and destructor */
 Genome * newGenomeRandom(int species);
 Genome * newGenomeNull(int species);
-Genome * newCrossover(const Genome * genome1, const Genome * genome2);
-Genome * newMutation(const Genome * genome);
-Genome * loadGenome(FILE * f);
 void deleteGenome(Genome * genome);
 
 /* getters and setters */
 float getGene(const Genome * genome, int i);
-void setGene(Genome ** genome, int i, float value);
+void setGene(Genome * genome, int i, float value);
 int getNbInput(const Genome * genome);
-void setNbInput(Genome ** genome, int nb);
+void setNbInput(Genome * genome, int nb);
 int getNbHidden(const Genome * genome);
-void setNbHidden(Genome ** genome, int nb);
+void setNbHidden(Genome * genome, int nb);
 int getNbOutput(const Genome * genome);
-void setNbOutput(Genome ** genome, int nb);
-float getFitness(const Genome * genome);
-void setFitness(Genome ** genome, float value);
+void setNbOutput(Genome * genome, int nb);
+int getFitness(const Genome * genome);
+void setFitness(Genome * genome, int value);
 
 /* general functions */
-void updateFitnessGenome(Genome ** genome);
+void updateFitnessGenome(Genome * genome);
 void displayGenome(const Genome * genome);
 void saveGenome(const Genome * genome, FILE * f);
+void crossover(const Genome * genome1, const Genome * genome2, Genome * child);
+void mutation(Genome * genome);
+void loadGenome(FILE * f, Genome * genome);
 #if 0
 Network * convertToNetwork(const Genome * genome);
 #endif
