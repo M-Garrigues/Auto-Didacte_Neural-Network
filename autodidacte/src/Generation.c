@@ -14,12 +14,10 @@ int randomProba(int * tabProba, int choices)
     result = 0;
     for(i= 0; i< choices; i++){
         if(random>=result && random < result + tabProba[i]){
-            printf("%d\n",i);
             return i;
         }
         result += tabProba[i];
     }
-    printf("la\n");
     return -1;
 
 }
@@ -96,9 +94,7 @@ void setNbSubject(Generation * gen, int nb)
 void nextGeneration(Generation * gen)
 {
     updateFitnessGeneration(gen);
-    printf("gen fitness\n");
     crossoverGeneration(gen);
-    printf("gen crossover\n");
     mutationGeneration(gen);
 }
 void updateFitnessGeneration(Generation * gen)
