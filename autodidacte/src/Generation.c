@@ -8,15 +8,19 @@ int randomProba(int * tabProba, int choices)
     int i;
     int result, random;
     result = 0;
-    for(i = 0, i < choices;i++)
+    for(i = 0; i < choices;i++)
         result += tabProba[i];
     random = rand()%result;
     result = 0;
     for(i= 0; i< choices; i++){
-        if(random>=result && random < result + tabProba[i])
+        if(random>=result && random < result + tabProba[i]){
+            printf("%d\n",i);
             return i;
+        }
         result += tabProba[i];
     }
+    printf("la\n");
+    return -1;
 
 }
 Generation * newGenerationRandom(int nbSubject)
@@ -65,7 +69,7 @@ Genome * getGenome(const Generation * gen, int i)
     return gen->tabGenomes[i];
 }
 
-void setGenome(Generation * gen, int i,const Genome * genome)
+void setGenome(Generation * gen, int i, Genome * genome)
 {
     gen->tabGenomes[i] = genome;
 }
@@ -88,19 +92,13 @@ void setNbSubject(Generation * gen, int nb)
     (gen)->nbSubject =nb;
 }
 
-void sauverGeneration(const Generation * gen, FILE * f)
-{
-
-}
-void chargerGeneration(Generation * gen, FILE * f)
-{
-    
-}
 
 void nextGeneration(Generation * gen)
 {
     updateFitnessGeneration(gen);
+    printf("gen fitness\n");
     crossoverGeneration(gen);
+    printf("gen crossover\n");
     mutationGeneration(gen);
 }
 void updateFitnessGeneration(Generation * gen)
@@ -115,21 +113,28 @@ void updateFitnessGeneration(Generation * gen)
 }
 void crossoverGeneration(Generation * gen)
 {
+    Genome * genome;
     int * p = malloc(sizeof(int)*gen->nbSubject);
-    int i,j,subject1, subject2;
+    int i,subject1, subject2;
     Genome ** pGenomes = gen->tabGenomes;
-    gen->tabGenomes = malloc(sizeof(Genome*)*gen->nbSubject)
+    gen->tabGenomes = malloc(sizeof(Genome*)*gen->nbSubject);
     setNbGen(gen , getNbGen(gen)+1);
     for(i =0;i<(gen)->nbSubject;i++)
     {
-        p[i] = getFitness(getGenome(gen, i));
+        p[i] = getFitness(pGenomes[i]);
     }
     for(i = 0; i<gen->nbSubject;i++)
     {
+        genome = newGenomeNull(12);
         subject1 = randomProba(p, gen->nbSubject);
         subject2 = randomProba(p, gen->nbSubject);
-        crossoverGenome(pGenome[subject1]
-    } 
+        crossover(pGenomes[subject1] ,pGenomes[subject2], genome);
+        setGenome(gen, i, genome);
+    }
+    free(p);
+    for(i =0; i<gen->nbSubject;i++)
+        deleteGenome(pGenomes[i]);
+    free(pGenomes);
 }
 void mutationGeneration(Generation * gen)
 {
@@ -145,9 +150,8 @@ void mutationGeneration(Generation * gen)
 int getBest(const Generation * gen)
 {
     int i,max;
-    Genome * pGenome;
     max = 0;
-    pGenome = NULL;
+
     for(i = 1; i< gen->nbSubject;i++)
         if(getFitness(gen->tabGenomes[i]) > getFitness(gen->tabGenomes[max]))
             max = i;   
