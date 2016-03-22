@@ -37,9 +37,6 @@ remove : clean
 run: 
 	./$(BINDIR)/$(TARGET)
 
-# valgrind:
-# <<<<<<< local
-# 	valgrind -v ./$(BINDIR)/$(TARGET) 
-# =======
-# 	valgrind --leak-check=full -v ./$(BINDIR)/$(TARGET) 
-# >>>>>>> other
+valgrind:
+
+	valgrind --leak-check=full -v ./$(BINDIR)/$(TARGET) 

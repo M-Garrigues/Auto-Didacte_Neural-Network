@@ -170,10 +170,10 @@ void loadGenome(FILE * f, Genome * genome)
 void updateFitnessGenome(Genome * genome)
 {
     int i;
-    setFitness(genome, 0);
+    setFitness(genome, 1);
     for(i =0; i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome);i++)
     {
-        if(getGene(genome,i)>4)
+        if(getGene(genome,i)<0)
             setFitness(genome, getFitness(genome)+1);
     }
 }
