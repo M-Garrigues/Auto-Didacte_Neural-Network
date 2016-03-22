@@ -94,13 +94,14 @@ void setFitness(Genome * genome, int value)
 
 void crossover(const Genome * genome1, const Genome * genome2, Genome * child)
 {
+    int i;
     assert(genome1->nbHidden == genome2->nbHidden);  /*same species*/
     child->nbInput = genome1->nbInput;
     child->nbHidden = genome1->nbHidden;
     child->nbOutput = genome1->nbOutput;
+    child->fitness = 0;
     free(child->tabGenes);
-    malloc(sizeof(float)*(getNbInput(child) + getNbOutput(child))*getNbHidden(child));
-    int i;
+    child->tabGenes = malloc(sizeof(float)*(getNbInput(child) + getNbOutput(child))*getNbHidden(child));
     for(i = 0; i< (getNbInput(child) + getNbOutput(child))*getNbHidden(child); i++)
     {
         if(rand()%2)
@@ -139,7 +140,7 @@ void saveGenome(const Genome * genome, FILE * f)
     fprintf(f,"#nbInput:%d\n",getNbInput(genome));
     fprintf(f,"#nbHidden:%d\n",getNbHidden(genome));
     fprintf(f,"#nbOutput:%d\n",getNbOutput(genome));
-    fprintf(f,"#fitness:%f\n",getFitness(genome));
+    fprintf(f,"#fitness:%d\n",getFitness(genome));
     for(i=0;i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome);i++)
         fprintf(f, "%f ", getGene(genome, i));
     fprintf(f, "\n");
@@ -155,11 +156,11 @@ void loadGenome(FILE * f, Genome * genome)
     setNbHidden(genome, i);
     fscanf(f,"#nbOutput:%d\n",&i);
     setNbOutput(genome, i);
-    fscanf(f, "#fitness:%f\n",&a);
-    setFitness(genome, a);
+    fscanf(f, "#fitness:%d\n",&i);
+    setFitness(genome, i);
     free(genome->tabGenes);
-    malloc(sizeof(float)*(getNbInput(pGenome) + getNbOutput(pGenome))*getNbHidden(pGenome));
-    for(i = 0; i< (getNbInput(pGenome) + getNbOutput(pGenome))*getNbHidden(pGenome); i++)
+    genome->tabGenes = malloc(sizeof(float)*(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome));
+    for(i = 0; i< (getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome); i++)
     {
         fscanf(f,"%f ", &a);
         setGene(genome, i, a);

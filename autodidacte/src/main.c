@@ -22,25 +22,9 @@ void printLayer(Layer * layer);
 
 int main(int argc, char const *argv[])
 {
-	Generation * g1; 
-	Genome * solution;
-	int i;
-	srand(time(NULL));
-	g1 = newGenerationRandom(10);
-	solution = getBest(g1);
-	displayGenome(solution);
-	while(getFitness(solution)<60 && getNbGen(g1)<20000)
-	{
-		deleteGenome(solution);
-		nextGeneration(&g1);
-		updateFitnessGeneration(&g1);
-		solution = getBest(g1);
-	}
-	printf("Gen: %d -> fitness ---> %f\n\n",getNbGen(g1),getFitness(solution));
-	displayGenome(solution);
-	deleteGenome(solution);
-	deleteGeneration(g1);
-
+	Generation * gen1 = newGenerationRandom(30);
+	nextGeneration(gen1);
+	deleteGeneration(gen1);
 	printf("\n\n\n");
 
 	/*regressionTestANN();*/

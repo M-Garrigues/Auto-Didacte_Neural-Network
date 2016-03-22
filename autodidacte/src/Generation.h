@@ -25,7 +25,7 @@ void setNbSubject(Generation * gen, int nb);
 
 
 void saveGeneration(const Generation * gen, FILE * f);
-void loadGeneration(FILE * f, Genration * );
+void loadGeneration(FILE * f, Generation * gen);
 void nextGeneration(Generation * gen);
 int getBest(const Generation * gen);
 void updateFitnessGeneration(Generation * gen);
