@@ -3,7 +3,22 @@
 #include "assert.h"
 #include "stdlib.h"
 
+int randomProba(int * tabProba, int choices)
+{
+    int i;
+    int result, random;
+    result = 0;
+    for(i = 0, i < choices;i++)
+        result += tabProba[i];
+    random = rand()%result;
+    result = 0;
+    for(i= 0; i< choices; i++){
+        if(random>=result && random < result + tabProba[i])
+            return i;
+        result += tabProba[i];
+    }
 
+}
 Generation * newGenerationRandom(int nbSubject)
 {
     int i;
@@ -12,9 +27,10 @@ Generation * newGenerationRandom(int nbSubject)
     pGen->nbGen = 0;
     pGen->nbSubject = nbSubject;
     pGen->tabGenomes = malloc(sizeof(Genome *)*nbSubject);
+    assert(pGen->tabGenomes != NULL);
     for(i = 0; i<nbSubject;i++)
     {
-        setGenome(&pGen, i, newGenomeRandom(12));
+        setGenome(pGen, i, newGenomeRandom(12));
     }
     return pGen;
 }
@@ -26,9 +42,10 @@ Generation * newGenerationNull(int nbSubject)
     pGen->nbGen = 0;
     pGen->nbSubject = nbSubject;
     pGen->tabGenomes = malloc(sizeof(Genome *)*nbSubject);
+    assert(pGen->tabGenomes != NULL);
     for(i = 0; i<nbSubject;i++)
     {
-        setGenome(&pGen, i, newGenomeNull(12));
+        setGenome(pGen, i, newGenomeNull(12));
     }
     return pGen;
 }
@@ -48,9 +65,9 @@ Genome * getGenome(const Generation * gen, int i)
     return gen->tabGenomes[i];
 }
 
-void setGenome(Generation ** gen, int i, Genome * genome)
+void setGenome(Generation * gen, int i,const Genome * genome)
 {
-    (*gen)->tabGenomes[i] = genome;
+    gen->tabGenomes[i] = genome;
 }
 
 int getNbGen(const Generation * gen)
@@ -58,124 +75,74 @@ int getNbGen(const Generation * gen)
     return gen->nbGen;
 }
 
-void setNbGen(Generation ** gen, int num)
+void setNbGen(Generation * gen, int num)
 {
-    (*gen)->nbGen = num;
+    gen->nbGen = num;
 }
 int getNbSubject(const Generation * gen)
 {
     return gen->nbSubject;
 }
-void setNbSubject(Generation ** gen, int nb)
+void setNbSubject(Generation * gen, int nb)
 {
-    (*gen)->nbSubject =nb;
+    (gen)->nbSubject =nb;
 }
 
 void sauverGeneration(const Generation * gen, FILE * f)
 {
 
 }
-void chargerGeneration(Generation ** gen, FILE * f)
+void chargerGeneration(Generation * gen, FILE * f)
 {
     
 }
 
-void nextGeneration(Generation ** gen)
+void nextGeneration(Generation * gen)
 {
     updateFitnessGeneration(gen);
     crossoverGeneration(gen);
     mutationGeneration(gen);
 }
-void updateFitnessGeneration(Generation ** gen)
+void updateFitnessGeneration(Generation * gen)
 {
     int i;
 
-    for(i = 0; i<getNbSubject(*gen);i++)
+    for(i = 0; i<getNbSubject(gen);i++)
     {
         
-        updateFitnessGenome(&(*gen)->tabGenomes[i]);
+        updateFitnessGenome(gen->tabGenomes[i]);
     }
 }
-void crossoverGeneration(Generation ** gen)
+void crossoverGeneration(Generation * gen)
 {
-    Genome * g1;
-    float tempF;
-    float * p = malloc(sizeof(float)*(*gen)->nbSubject);
-    int * p2 = malloc(sizeof(int)*(*gen)->nbSubject);
-    int r1,r2,i,j,k,l,m,n;
-    Generation * temp = newGenerationNull((*gen)->nbSubject);
-
-    setNbGen(&temp, getNbGen(*gen)+1);
-
-    for(i =0;i<(*gen)->nbSubject;i++)
+    int * p = malloc(sizeof(int)*gen->nbSubject);
+    int i,j,subject1, subject2;
+    Genome ** pGenomes = gen->tabGenomes;
+    gen->tabGenomes = malloc(sizeof(Genome*)*gen->nbSubject)
+    setNbGen(gen , getNbGen(gen)+1);
+    for(i =0;i<(gen)->nbSubject;i++)
     {
-        p[i] = getFitness(getGenome(*gen, i));
-        p2[i] = i;
+        p[i] = getFitness(getGenome(gen, i));
     }
-
-    for(j=0; j<(*gen)->nbSubject;j++)
+    for(i = 0; i<gen->nbSubject;i++)
     {
-        for(i = 1;i<(*gen)->nbSubject;i++)
-        {
-            if(p[i-1]>p[i])
-            {
-                tempF = p[i-1];
-                p[i-1] = p[i];
-                p[i] = tempF;
-                k = p2[i-1];
-                p2[i-1] = p2[i];
-                p2[i] = k;
-            }
-        }
-    }
-    for(j=0; j<(*gen)->nbSubject;j++)
-    {
-        
-    }
-    free(p);
-    n = (*gen)->nbSubject;
-    k = 0;
-    l = 0;
-    for(j = 1;j<(*gen)->nbSubject;j++)
-    {
-        r1 = rand()%((n)*(n+1)*(2*n+1)/6);
-        r2 = rand()%((n)*(n+1)*(2*n+1)/6);
-        k = 0;
-        l = 0;
-        m = n*n;
-        for(i = 0; i<(*gen)->nbSubject;i++)
-        {
-            if(r1 <= m && k == 0)
-                k = i;
-            if(r2 <= m && l == 0)
-                l = i;
-            m += (n - (i+1))*(n - (i+1));
-        }
-        g1 =newCrossover(getGenome(*gen, k), getGenome(*gen,l));
-        deleteGenome(getGenome(temp,j));
-        setGenome(&temp,j,g1);
-    }
-    deleteGenome(getGenome(temp,0));
-    setGenome(&temp, 0, getBest(*gen));
-    free(p2);
-    deleteGeneration((*gen));
-    *gen = temp;
+        subject1 = randomProba(p, gen->nbSubject);
+        subject2 = randomProba(p, gen->nbSubject);
+        crossoverGenome(pGenome[subject1]
+    } 
 }
-void mutationGeneration(Generation ** gen)
+void mutationGeneration(Generation * gen)
 {
     int i;
-    Genome * temp;
-    for(i = 1; i<(*gen)->nbSubject;i++)
+    for(i = 1; i<(gen)->nbSubject;i++)
     {   
         if(rand()%5 == 0)
         {
-            temp = newMutation(getGenome(*gen, i));
-            deleteGenome(getGenome(*gen, i));
-            setGenome(gen, i, temp);
+            mutation(getGenome(gen, i));
         }
     }
 }
-Genome * getBest(const Generation * gen)
+int getBest(const Generation * gen)
 {
     int i,max;
     Genome * pGenome;
@@ -184,10 +151,5 @@ Genome * getBest(const Generation * gen)
     for(i = 1; i< gen->nbSubject;i++)
         if(getFitness(gen->tabGenomes[i]) > getFitness(gen->tabGenomes[max]))
             max = i;   
-   
-    pGenome = newGenomeNull(getNbHidden(getGenome(gen, max)));
-    setFitness(&pGenome, getFitness(gen->tabGenomes[max]));
-    for(i = 0; i< (getNbInput(getGenome(gen, max)) + getNbOutput(getGenome(gen, max)))*getNbHidden(getGenome(gen, max));i++)
-        setGene(&pGenome, i , getGene(getGenome(gen, max), i)); 
-    return pGenome;
+   return max;
 }

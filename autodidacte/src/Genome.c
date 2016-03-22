@@ -18,7 +18,7 @@ Genome * newGenomeRandom(int species)
     assert(pGenome->tabGenes != NULL);
     for(i = 0; i < (pGenome->nbInput + pGenome->nbOutput)*pGenome->nbHidden; i++)
     {
-        setGene(&pGenome,i,(rand()/(float)RAND_MAX)*(10) - 5);
+        setGene(pGenome,i,(rand()/(float)RAND_MAX)*(10) - 5);
     }
     return pGenome;
 }
@@ -36,7 +36,7 @@ Genome * newGenomeNull(int species)
     assert(pGenome != NULL);
     for(i = 0; i < (pGenome->nbInput + pGenome->nbOutput)*pGenome->nbHidden; i++)
     {
-        setGene(&pGenome,i, 0);
+        setGene(pGenome,i, 0);
     }
     return pGenome;
 }
@@ -51,79 +51,75 @@ float getGene(const Genome * genome, int i)
     return genome->tabGenes[i];
 }
 
-void setGene(Genome ** genome, int i, float value)
+void setGene(Genome * genome, int i, float value)
 {
-    (*genome)->tabGenes[i] = value;
+    genome->tabGenes[i] = value;
 }
 
 int getNbInput(const Genome * genome)
 {
     return genome->nbInput;
 }
-void setNbInput(Genome ** genome, int nb)
+void setNbInput(Genome * genome, int nb)
 {
-    (*genome)->nbInput = nb;
+    genome->nbInput = nb;
 }
 int getNbHidden(const Genome * genome)
 {
     return genome->nbHidden;
 }
-void setNbHidden(Genome ** genome, int nb)
+void setNbHidden(Genome * genome, int nb)
 {
-    (*genome)->nbHidden = nb;
+    genome->nbHidden = nb;
 }
 int getNbOutput(const Genome * genome)
 {
     return genome->nbOutput;
 }
-void setNbOutput(Genome ** genome, int nb)
+void setNbOutput(Genome * genome, int nb)
 {
-    (*genome)->nbOutput = nb;
+    genome->nbOutput = nb;
 }
-float getFitness(const Genome * genome)
+int getFitness(const Genome * genome)
 {
     return genome->fitness;
 }
-void setFitness(Genome ** genome, float value)
+void setFitness(Genome * genome, int value)
 {
-    (*genome)->fitness = value;
+    genome->fitness = value;
 }
 
 
 
 
-Genome * newCrossover(const Genome * genome1, const Genome * genome2)
+void crossover(const Genome * genome1, const Genome * genome2, Genome * child)
 {
     assert(genome1->nbHidden == genome2->nbHidden);  /*same species*/
+    child->nbInput = genome1->nbInput;
+    child->nbHidden = genome1->nbHidden;
+    child->nbOutput = genome1->nbOutput;
+    free(child->tabGenes);
+    malloc(sizeof(float)*(getNbInput(child) + getNbOutput(child))*getNbHidden(child));
     int i;
-    Genome * child = malloc(sizeof(Genome));
-    child->nbInput = 6;
-    child->nbHidden = getNbHidden(genome1);
-    child->nbOutput = 4;
-    child->fitness =0;
-    child->tabGenes = malloc((getNbInput(child)+getNbOutput(child))*getNbHidden(child)*sizeof(float));
     for(i = 0; i< (getNbInput(child) + getNbOutput(child))*getNbHidden(child); i++)
     {
         if(rand()%2)
-            setGene(&child, i , getGene(genome1, i));
+            setGene(child, i , getGene(genome1, i));
         else
-            setGene(&child, i , getGene(genome2, i));
+            setGene(child, i , getGene(genome2, i));
     }
-    return child;
 }
 
-Genome * newMutation(const Genome * genome)
+void mutation(Genome * genome)
 {
     int i;
-    Genome * pGenome = newGenomeNull(genome->nbHidden);
     for(i =0; i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome); i++)
     {
         if(rand()%(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome) == 0)
-            setGene(&pGenome, i , getGene((genome), i) + (rand()/(float)RAND_MAX)-0.5);
+            setGene(genome, i , getGene((genome), i) + (rand()/(float)RAND_MAX)-0.5);
         else
-            setGene(&pGenome,i,getGene(genome,i));
+            setGene(genome,i,getGene(genome,i));
     }
-    return pGenome;
 }
 
 void displayGenome(const Genome * genome)
@@ -149,36 +145,35 @@ void saveGenome(const Genome * genome, FILE * f)
     fprintf(f, "\n");
 }
 
-Genome * loadGenome(FILE * f)
+void loadGenome(FILE * f, Genome * genome)
 {
     int i;
     float a;
-    Genome * pGenome = malloc(sizeof(Genome));
     fscanf(f,"#nbInput:%d\n",&i);
-    setNbInput(&pGenome, i);
+    setNbInput(genome, i);
     fscanf(f,"#nbHidden:%d\n",&i);
-    setNbHidden(&pGenome, i);
+    setNbHidden(genome, i);
     fscanf(f,"#nbOutput:%d\n",&i);
-    setNbOutput(&pGenome, i);
+    setNbOutput(genome, i);
     fscanf(f, "#fitness:%f\n",&a);
-    setFitness(&pGenome, a);
-    pGenome->tabGenes = malloc((getNbInput(pGenome) + getNbOutput(pGenome))*getNbHidden(pGenome)*sizeof(float));
+    setFitness(genome, a);
+    free(genome->tabGenes);
+    malloc(sizeof(float)*(getNbInput(pGenome) + getNbOutput(pGenome))*getNbHidden(pGenome));
     for(i = 0; i< (getNbInput(pGenome) + getNbOutput(pGenome))*getNbHidden(pGenome); i++)
     {
         fscanf(f,"%f ", &a);
-        setGene(&pGenome, i, a);
+        setGene(genome, i, a);
     }
     fscanf(f,"\n");
-    return pGenome;
 }
-void updateFitnessGenome(Genome ** genome)
+void updateFitnessGenome(Genome * genome)
 {
     int i;
     setFitness(genome, 0);
-    for(i =0; i<(getNbInput(*genome) + getNbOutput(*genome))*getNbHidden(*genome);i++)
+    for(i =0; i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome);i++)
     {
-        if(getGene(*genome,i)>4)
-            setFitness(genome, getFitness(*genome)+1);
+        if(getGene(genome,i)>4)
+            setFitness(genome, getFitness(genome)+1);
     }
 }
 #if 0
@@ -190,7 +185,6 @@ Network * convertToNetwork(const Genome * genome)
 #endif
 void regressionTestGenome()
 {
-    Genome * p1,p2,p3;
 
 }
 

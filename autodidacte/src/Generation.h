@@ -15,21 +15,21 @@ Generation * newGenerationNull(int nbSubject);
 void deleteGeneration(Generation * gen);
 
 Genome * getGenome(const Generation * gen, int i);
-void setGenome(Generation ** gen, int i, Genome * genome);
+void setGenome(Generation * gen, int i, Genome * genome);
 int getNbGen(const Generation * gen);
-void setNbGen(Generation ** gen, int nb);
+void setNbGen(Generation * gen, int nb);
 int getNbSubject(const Generation * gen);
-void setNbSubject(Generation ** gen, int nb);
+void setNbSubject(Generation * gen, int nb);
 int getNbSubject(const Generation * gen);
-void setNbSubject(Generation ** gen, int nb);
+void setNbSubject(Generation * gen, int nb);
 
 
 void saveGeneration(const Generation * gen, FILE * f);
-Generation * loadGeneration(FILE * f);
-void nextGeneration(Generation ** gen);
-Genome * getBest(const Generation * gen);
-void updateFitnessGeneration(Generation ** gen);
-void crossoverGeneration(Generation ** gen);
-void mutationGeneration(Generation ** gen);
+void loadGeneration(FILE * f, Genration * );
+void nextGeneration(Generation * gen);
+int getBest(const Generation * gen);
+void updateFitnessGeneration(Generation * gen);
+void crossoverGeneration(Generation * gen);
+void mutationGeneration(Generation * gen);
 
 #endif
