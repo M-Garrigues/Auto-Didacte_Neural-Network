@@ -15,8 +15,8 @@
 /*
 #include "Network.h"
 
-void regressionTestANN();
-void printNetwork(Network * net);*/
+void regressionTestANN();*/
+void printNetwork(Network * net);
 void printLayer(Layer * layer);
 
 
@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
 	Generation * gen1 = newGenerationRandom(30);
 	srand(time(NULL));
 	f = fopen("data/generationEnd.gen","w");
-	for(i = 0;i<10000;i++)
+	for(i = 0;i<1000;i++)
 	{
 		nextGeneration(gen1);
 		updateFitnessGeneration(gen1);
