@@ -112,6 +112,7 @@ void crossoverGeneration(Generation * gen)
     Genome * genome;
     int * p = malloc(sizeof(int)*gen->nbSubject);
     int i,subject1, subject2;
+    int bestGenome = getBest(gen);
     Genome ** pGenomes = gen->tabGenomes;
     gen->tabGenomes = malloc(sizeof(Genome*)*gen->nbSubject);
     setNbGen(gen , getNbGen(gen)+1);
@@ -119,7 +120,7 @@ void crossoverGeneration(Generation * gen)
     {
         p[i] = getFitness(pGenomes[i]);
     }
-    for(i = 0; i<gen->nbSubject;i++)
+    for(i = 1; i<gen->nbSubject;i++)
     {
         genome = newGenomeNull(12);
         subject1 = randomProba(p, gen->nbSubject);
@@ -128,8 +129,12 @@ void crossoverGeneration(Generation * gen)
         setGenome(gen, i, genome);
     }
     free(p);
-    for(i =0; i<gen->nbSubject;i++)
-        deleteGenome(pGenomes[i]);
+    setGenome(gen,0,pGenomes[bestGenome]);
+    for(i =0; i<gen->nbSubject;i++){
+        if(i != bestGenome){
+            deleteGenome(pGenomes[i]);
+        }
+    }
     free(pGenomes);
 }
 void mutationGeneration(Generation * gen)
@@ -152,4 +157,25 @@ int getBest(const Generation * gen)
         if(getFitness(gen->tabGenomes[i]) > getFitness(gen->tabGenomes[max]))
             max = i;   
    return max;
+}
+
+void loadGeneration(FILE * f, Generation * gen)
+{
+    int i;
+    fscanf(f,"#nbGen:%d\n",&i);
+    setNbGen(gen, i);
+    fscanf(f,"#nbSubject:%d\n",&i);
+    assert(i == getNbSubject(gen));
+    for(i=0;i<getNbSubject(gen);i++)
+    {
+        loadGenome(f,getGenome(gen,i));
+    }
+}
+void saveGeneration(const Generation * gen, FILE * f)
+{
+    int i;
+    fprintf(f,"#nbGen:%d\n",getNbGen(gen));
+    fprintf(f,"#nbSubject:%d\n",getNbSubject(gen));
+    for(i=0;i<getNbSubject(gen);i++)
+        saveGenome(getGenome(gen,i),f);
 }

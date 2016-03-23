@@ -23,14 +23,18 @@ void printLayer(Layer * layer);
 int main(int argc, char const *argv[])
 {
 	int i;
+	FILE * f = NULL;
 	Generation * gen1 = newGenerationRandom(30);
 	srand(time(NULL));
+	f = fopen("data/generationEnd.gen","w");
 	for(i = 0;i<10000;i++)
 	{
 		nextGeneration(gen1);
 		updateFitnessGeneration(gen1);
 		printf("Gen %d: bestfitness ----> %d\n",gen1->nbGen,getFitness(getGenome(gen1,getBest(gen1))));
 	}
+	saveGeneration(gen1,f);
+	fclose(f);
 	deleteGeneration(gen1);
 	printf("\n\n\n");
 
