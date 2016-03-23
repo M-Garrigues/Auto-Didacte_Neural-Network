@@ -221,7 +221,7 @@ Network * convertToNetwork(const Genome * genome)
     	}
     }
 
-    assert(c == -1 + tailleTab);
+    assert(c == tailleTab);
 
     return net;
 }
