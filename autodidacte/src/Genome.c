@@ -42,50 +42,61 @@ Genome * newGenomeNull(int species)
 }
 void deleteGenome(Genome * genome)
 {
+	assert(genome != NULL);
     free(genome->tabGenes);
     free(genome);
 }
 
 float getGene(const Genome * genome, int i)
 {
+	assert(genome != NULL);
     return genome->tabGenes[i];
 }
 
 void setGene(Genome * genome, int i, float value)
 {
+	assert(genome != NULL);
     genome->tabGenes[i] = value;
 }
 
 int getNbInput(const Genome * genome)
 {
+	assert(genome != NULL);
     return genome->nbInput;
 }
 void setNbInput(Genome * genome, int nb)
 {
+	assert(genome != NULL);
     genome->nbInput = nb;
 }
 int getNbHidden(const Genome * genome)
 {
+	assert(genome != NULL);
     return genome->nbHidden;
 }
 void setNbHidden(Genome * genome, int nb)
 {
+	assert(genome != NULL);
     genome->nbHidden = nb;
 }
 int getNbOutput(const Genome * genome)
 {
+	assert(genome != NULL);
     return genome->nbOutput;
 }
 void setNbOutput(Genome * genome, int nb)
 {
+	assert(genome != NULL);
     genome->nbOutput = nb;
 }
 int getFitness(const Genome * genome)
 {
+	assert(genome != NULL);
     return genome->fitness;
 }
 void setFitness(Genome * genome, int value)
 {
+	assert(genome != NULL);
     genome->fitness = value;
 }
 

@@ -40,6 +40,7 @@ int main(int argc, char const *argv[])
 	net = convertToNetwork(getGenome(gen1,getBest(gen1)));
 	printf("\n\n Meilleur genome de la generation transfere en network:\n\n");
 	printNetwork(net);
+	deleteNetwork(net);
 
 	deleteGeneration(gen1);
 	printf("\n\n\n");
