@@ -181,21 +181,6 @@ void updateLayer(Layer * layer1, Layer * layer2)
 	assert(layer1 !=NULL && layer2 != NULL);
 	assert((layer2->type == HIDDEN && layer1->type == INPUT)||(layer2->type == OUTPUT && layer1->type == HIDDEN));
 
-	if (layer1->type == HIDDEN) 
-	{
-		for (i = 0; i < layer2->nbNeurons; ++i)
-		{
-			setValue(getNeuron(layer2,i), 0);
-
-			for (j = 0; j < layer1->nbNeurons; ++j)
-			{
-				/*summing all the entries*/
-				setValue(getNeuron(layer2, i), getValue(getNeuron(layer2, i)) + getWeight(getNeuron(layer1,j), i) * getValue(getNeuron(layer1,j)));
-			}
-		}
-	}
-	else
-	{
 		for (i = 0; i < layer2->nbNeurons; ++i)
 		{
 			layer2->tabNeurons[i]->value = 0;
@@ -208,7 +193,6 @@ void updateLayer(Layer * layer1, Layer * layer2)
 
 			setValue(getNeuron(layer2, i), sigmoid(getValue(getNeuron(layer2, i))));
 		}
-	}
 }	
 
 
