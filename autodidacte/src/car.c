@@ -1,3 +1,11 @@
+#ifdef __cplusplus
+#error This source file is not C++ but rather C. Please use a C-compiler
+#endif
+
+
+	/*  Car.c    -----   LIF7 Auto-Didacte */
+
+
 #include "car.h"
 #include "math.h"
 #include <stdio.h>

@@ -177,13 +177,55 @@ void updateFitnessGenome(Genome * genome)
             setFitness(genome, getFitness(genome)+1);
     }
 }
-#if 0
+
 Network * convertToNetwork(const Genome * genome)
 {
-    Network * pNet = malloc(sizeof(Network));
+	int i, j, c;
 
+    Network * net = NULL;
+    Layer * InLayer = NULL;
+   	Layer * HidLayer = NULL;
+	int nbWeightsIn, nbWeightsHid, tailleTab;
+
+	assert(genome != NULL);
+
+    net = newNetwork(getNbInput(genome),getNbHidden(genome),getNbOutput(genome));
+    assert(net != NULL);
+
+    InLayer = getLayer(net, INPUT);
+    HidLayer = getLayer(net, HIDDEN);
+
+    nbWeightsIn = getNbWeights(getNeuron(InLayer, 0));
+    nbWeightsHid = getNbWeights(getNeuron(HidLayer, 0));
+
+    tailleTab = getNbNeurons(InLayer)*nbWeightsIn + getNbNeurons(HidLayer)*nbWeightsHid;
+    c = 0;
+
+    for (i = 0; i < getNbNeurons(InLayer); ++i)  /*Setting all weights for Input Layer*/
+    {
+    	for (j = 0; j < nbWeightsIn; ++j)
+    	{
+    		assert(c < tailleTab);
+    		setWeight(getNeuron(InLayer, i), j, getGene(genome, c));
+    		c++;
+    	}
+    }
+
+    for (i = 0; i < getNbNeurons(HidLayer); ++i)  /*Setting all weights for Hidden Layer*/
+    {
+    	for (j = 0; j < nbWeightsHid; ++j)
+    	{
+    		assert(c < tailleTab);
+    		setWeight(getNeuron(HidLayer, i), j, getGene(genome, c));
+    		c++;
+    	}
+    }
+
+    assert(c == -1 + tailleTab);
+
+    return net;
 }
-#endif
+
 void regressionTestGenome()
 {
 
