@@ -1,7 +1,11 @@
 #ifndef H_GENOME
 #define H_GENOME
-#include "stdio.h"
+
+
 /*  Genome.h ----- LIF7 Auto-Didacte */
+
+#include "stdio.h"
+#include "Network.h"
 
 
 /* Structure Genome */
@@ -42,9 +46,7 @@ void saveGenome(const Genome * genome, FILE * f);
 void crossover(const Genome * genome1, const Genome * genome2, Genome * child);
 void mutation(Genome * genome);
 void loadGenome(FILE * f, Genome * genome);
-#if 0
 Network * convertToNetwork(const Genome * genome);
-#endif
 void regressionTestGenome();
 
 

@@ -24,6 +24,7 @@ int main(int argc, char const *argv[])
 {
 	int i;
 	FILE * f = NULL;
+	Network * net = NULL;
 	Generation * gen1 = newGenerationRandom(30);
 	srand(time(NULL));
 	f = fopen("data/generationEnd.gen","w");
@@ -35,6 +36,11 @@ int main(int argc, char const *argv[])
 	}
 	saveGeneration(gen1,f);
 	fclose(f);
+
+	net = convertToNetwork(getGenome(gen1,getBest(gen1)));
+	printf("\n\n Meilleur genome de la generation transfere en network:\n\n");
+	printNetwork(net);
+
 	deleteGeneration(gen1);
 	printf("\n\n\n");
 
@@ -109,13 +115,13 @@ void printLayer(Layer * layer)
 	}
 }
 
-/*
+
 void printNetwork(Network * net)
 {
 	printLayer(net->tabLayers[INPUT]);
 	printLayer(net->tabLayers[HIDDEN]);
 	printLayer(net->tabLayers[OUTPUT]);
-}*/
+}
 
 
 /* void inportGenome(Genome * genome, Network * net)
