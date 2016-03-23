@@ -23,6 +23,7 @@ void printLayer(Layer * layer);
 int main(int argc, char const *argv[])
 {
 	int i;
+	float tabFloat[6] = {1, 0.5, 1, 0.8, 0.3, 0.4};
 	FILE * f = NULL;
 	Network * net = NULL;
 	Generation * gen1 = newGenerationRandom(30);
@@ -40,6 +41,12 @@ int main(int argc, char const *argv[])
 	net = convertToNetwork(getGenome(gen1,getBest(gen1)));
 	printf("\n\n Meilleur genome de la generation transfere en network:\n\n");
 	printNetwork(net);
+
+	feedForward(net, tabFloat);
+	printf("\n\n Apres feeed feedForward:\n\n");
+	printNetwork(net);
+
+
 	deleteNetwork(net);
 
 	deleteGeneration(gen1);
