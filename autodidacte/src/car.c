@@ -8,13 +8,16 @@
 
 #include "car.h"
 #include "math.h"
+#include "assert.h"
 #include <stdio.h>
 #include <stdlib.h>
+
 
 const float PI = 3.14159265359;
 
 Car * newCar () {
 	Car * nCar = malloc(sizeof(Car));
+	assert(nCar != NULL);
 	
 	(nCar->frontLeft).x = 0;
 	(nCar->frontLeft).y = 0;
@@ -39,6 +42,8 @@ Car * newCar () {
 
 
 void initCar (Car * nCar, Point init) {
+	assert(nCar != NULL);
+
 	(nCar->frontLeft).x = init.x;
 	(nCar->frontLeft).y = init.y;
 	
@@ -56,6 +61,8 @@ void initCar (Car * nCar, Point init) {
 }
 
 void printCar (Car * car) {
+
+	assert(car != NULL);
 	printf("\n\n\n\nPositions :\n");
 	printf("frontLeft : %f    %f\n",(car->frontLeft).x , (car->frontLeft).y);
 	printf("frontRight : %f    %f\n",(car->frontRight).x , (car->frontRight).y);
@@ -67,6 +74,7 @@ void printCar (Car * car) {
 }
 
 void deleteCar (Car * car) {
+	assert(car != NULL);
 	free(car);
 }
 
@@ -80,6 +88,8 @@ Point rotation (Point pointInit, Point centre ,float angle){
 }
 
 void changeOrientation (Car * car , float angle) {
+
+	assert(car != NULL);
 	car->frontLeft = rotation (car->frontLeft , car->center , angle);
 	car->frontRight = rotation (car->frontRight , car->center , angle);
 	car->backLeft = rotation (car->backLeft , car->center , angle);
@@ -93,21 +103,25 @@ void changeOrientation (Car * car , float angle) {
 
 
 void turnLeft (Car * car) {
+	assert(car != NULL);
 	changeOrientation(car, PI/16);
 	printCar(car);
 
 }
 
-void turnRight (Car * car) {	
+void turnRight (Car * car) {
+	assert(car != NULL);	
 	changeOrientation(car, -PI/16);
 	printCar(car);
 }
 
 void moveStraight (Car * car, float timeM) {
+	
 	float distance;
 	float diffAbcisse;
 	float diffOrdonnee ;
 
+	assert(car != NULL);
 	distance = (car->speed)*timeM;
 
 	diffAbcisse = cos (car->orientation) * distance;

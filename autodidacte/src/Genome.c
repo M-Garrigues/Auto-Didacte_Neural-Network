@@ -1,3 +1,11 @@
+#ifdef __cplusplus
+#error This source file is not C++ but rather C. Please use a C-compiler
+#endif
+
+
+	/*  Genome.C   -----   LIF7 Auto-Didacte */
+
+
 #include "Genome.h"
 #include "stdlib.h"
 #include "assert.h"
