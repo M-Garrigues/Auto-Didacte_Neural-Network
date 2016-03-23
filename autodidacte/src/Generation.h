@@ -8,6 +8,8 @@
 #include "Genome.h"
 #include "stdio.h"
 
+/* structure Generation*/
+
 typedef struct
 {
     int nbGen;
@@ -15,10 +17,15 @@ typedef struct
     Genome ** tabGenomes;
 }Generation;
 
+
+/* Functions Genome */
+
+/* Constructors and destructor */
 Generation * newGenerationRandom(int nbSubject);
 Generation * newGenerationNull(int nbSubject);
 void deleteGeneration(Generation * gen);
 
+/* Getters / Setters */
 Genome * getGenome(const Generation * gen, int i);
 void setGenome(Generation * gen, int i, Genome * genome);
 int getNbGen(const Generation * gen);
@@ -28,7 +35,7 @@ void setNbSubject(Generation * gen, int nb);
 int getNbSubject(const Generation * gen);
 void setNbSubject(Generation * gen, int nb);
 
-
+/* general functions */
 void saveGeneration(const Generation * gen, FILE * f);
 void loadGeneration(FILE * f, Generation * gen);
 void nextGeneration(Generation * gen);

@@ -9,7 +9,6 @@
 #include "Genome.h"
 #include "stdlib.h"
 #include "assert.h"
-#include "time.h"
 #include "stdio.h"
 
 
