@@ -1,5 +1,10 @@
-#ifndef H_GENERATION
-#define H_GENERATION
+#ifndef H_VG_GENERATION
+#define H_VG_GENERATION
+
+
+  /* Generation.h    -----   LIF7 Auto-Didacte */
+
+
 #include "Genome.h"
 #include "stdio.h"
 
