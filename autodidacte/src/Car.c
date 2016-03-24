@@ -6,7 +6,7 @@
 	/*  Car.c    -----   LIF7 Auto-Didacte */
 
 
-#include "car.h"
+#include "Car.h"
 #include "math.h"
 #include "assert.h"
 #include <stdio.h>
