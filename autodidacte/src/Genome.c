@@ -271,6 +271,7 @@ void regressionTestGenome()
     deleteGenome(g1);
     deleteGenome(g2);
     deleteGenome(g3);
+    deleteNetwork(net);
     fclose(f);
     printf("Genome ... OK\n");
 }
