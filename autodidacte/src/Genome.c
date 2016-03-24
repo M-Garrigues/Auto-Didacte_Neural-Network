@@ -154,6 +154,7 @@ void displayGenome(const Genome * genome)
 
 void saveGenome(const Genome * genome, FILE * f)
 {
+    assert(f != NULL);
     int i;
     fprintf(f,"#nbInput:%d\n",getNbInput(genome));
     fprintf(f,"#nbHidden:%d\n",getNbHidden(genome));
@@ -166,6 +167,7 @@ void saveGenome(const Genome * genome, FILE * f)
 
 void loadGenome(FILE * f, Genome * genome)
 {
+    assert(f != NULL);
     int i;
     float a;
     fscanf(f,"#nbInput:%d\n",&i);
@@ -194,6 +196,7 @@ void updateFitnessGenome(Genome * genome)
         if(getGene(genome,i)<0)
             setFitness(genome, getFitness(genome)+1);
     }
+    assert(getFitness(genome)!=0);
 }
 
 Network * convertToNetwork(const Genome * genome)
@@ -246,6 +249,22 @@ Network * convertToNetwork(const Genome * genome)
 
 void regressionTestGenome()
 {
-
+    FILE * f = fopen("data/test.gen","w+");
+    Genome * g1,g2,g3;
+    Network * net;
+    g1 = newGenomeRandom(10);
+    g2 = newGenomeRandom(10);
+    g3 = newGenomeNull(10);
+    crossover(g1,g2,g3);
+    mutation(g3);
+    updateFitnessGenome(g3);
+    saveGenome(g3,f);
+    loadGenome(f,g1);
+    net = convertToNetwork(g3);
+    deleteGenome(g1);
+    deleteGenome(g2);
+    deleteGenome(g3);
+    fclose(f);
+    printf("Genome ... OK");
 }
 
