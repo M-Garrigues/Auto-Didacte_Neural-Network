@@ -27,7 +27,7 @@ int main(int argc, char const *argv[])
 	Generation * gen1 = newGenerationRandom(30);
 	srand(time(NULL));
 	f = fopen("data/generationEnd.gen","w");
-	for(i = 0;i<1000;i++)
+	for(i = 0;i<10;i++)
 	{
 		nextGeneration(gen1);
 		updateFitnessGeneration(gen1);
