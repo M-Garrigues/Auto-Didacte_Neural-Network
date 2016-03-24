@@ -12,10 +12,8 @@
 #include "Generation.h"
 #include "Layer.h"
 #include "time.h"
-/*
-#include "Network.h"
 
-void regressionTestANN();*/
+void regressionTestANN();
 void printNetwork(Network * net);
 void printLayer(Layer * layer);
 
