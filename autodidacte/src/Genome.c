@@ -257,11 +257,10 @@ Network * convertToNetwork(const Genome * genome)
 void regressionTestGenome()
 {
     FILE * f = fopen("data/test.gen","w+");
-    Genome * g1,g2,g3;
     Network * net;
-    g1 = newGenomeRandom(10);
-    g2 = newGenomeRandom(10);
-    g3 = newGenomeNull(10);
+    Genome * g1 = newGenomeRandom(10);
+    Genome * g2 = newGenomeRandom(10);
+    Genome * g3 = newGenomeNull(10);
     crossover(g1,g2,g3);
     mutation(g3);
     updateFitnessGenome(g3);
@@ -273,6 +272,6 @@ void regressionTestGenome()
     deleteGenome(g2);
     deleteGenome(g3);
     fclose(f);
-    printf("Genome ... OK");
+    printf("Genome ... OK\n");
 }
 

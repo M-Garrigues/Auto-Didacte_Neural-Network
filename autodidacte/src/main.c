@@ -31,7 +31,7 @@ int main(int argc, char const *argv[])
 	{
 		nextGeneration(gen1);
 		updateFitnessGeneration(gen1);
-		printf("Gen %d: bestfitness ----> %d\n",gen1->nbGen,getFitness(getGenome(gen1,getBest(gen1))));
+		printf("Gen %d: bestfitness ----> %d\n",getNbGen(gen1),getFitness(getGenome(gen1,getBest(gen1))));
 	}
 	saveGeneration(gen1,f);
 	fclose(f);
@@ -48,6 +48,8 @@ int main(int argc, char const *argv[])
 	deleteNetwork(net);
 
 	deleteGeneration(gen1);
+	regressionTestGenome();
+	regressionTestGeneration();
 	printf("\n\n\n");
 
 	/*regressionTestANN();*/

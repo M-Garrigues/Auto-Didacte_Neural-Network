@@ -13,9 +13,9 @@
 
 int randomProba(int * tabProba, int choices)
 {
-    assert(tabProba != NULL && choices > 0);
     int i;
     int result, random;
+    assert(tabProba != NULL && choices > 0);
     result = 0;
     for(i = 0; i < choices;i++)
         result += tabProba[i];
@@ -31,9 +31,9 @@ int randomProba(int * tabProba, int choices)
 }
 Generation * newGenerationRandom(int nbSubject)
 {
-    assert(nbSubject>0);
     int i;
     Generation * pGen = malloc(sizeof(Generation));
+    assert(nbSubject>0);
     assert(pGen != NULL);
     pGen->nbGen = 1;
     pGen->nbSubject = nbSubject;
@@ -47,9 +47,9 @@ Generation * newGenerationRandom(int nbSubject)
 }
 Generation * newGenerationNull(int nbSubject)
 {
-    assert(nbSubject>0);
     int i;
     Generation * pGen = malloc(sizeof(Generation));
+    assert(nbSubject>0);
     assert(pGen != NULL);
     pGen->nbGen = 1;
     pGen->nbSubject = nbSubject;
@@ -131,12 +131,12 @@ void updateFitnessGeneration(Generation * gen)
 }
 void crossoverGeneration(Generation * gen)
 {
-    assert(gen != NULL);
     Genome * genome;
-    int * p = malloc(sizeof(int)*gen->nbSubject);
+    int * p = malloc(sizeof(int)*getNbSubject(gen));
     int i,subject1, subject2;
     int bestGenome = getBest(gen);
     Genome ** pGenomes = gen->tabGenomes;
+    assert(gen != NULL);
     gen->tabGenomes = malloc(sizeof(Genome*)*gen->nbSubject);
     setNbGen(gen , getNbGen(gen)+1);
     for(i =0;i<(gen)->nbSubject;i++)
@@ -208,12 +208,11 @@ void saveGeneration(const Generation * gen, FILE * f)
     for(i=0;i<getNbSubject(gen);i++)
         saveGenome(getGenome(gen,i),f);
 }
-void regressionTestGenration()
+void regressionTestGeneration()
 {
-    FILE * f = fopen("data/testGen.gen");
-    Generation * g1,g2;
-    g1 = newGenerationRandom(20);
-    g2 = newGenerationNull(12);
+    FILE * f = fopen("data/testGen.gen","w+");
+    Generation * g1 = newGenerationRandom(20);
+    Generation * g2 = newGenerationNull(20);
     nextGeneration(g1);
     saveGeneration(g1, f);
     rewind(f);
@@ -221,5 +220,5 @@ void regressionTestGenration()
     deleteGeneration(g1);
     deleteGeneration(g2);
     fclose(f);
-    printf("Generation ... OK");
+    printf("Generation ... OK\n");
 }
