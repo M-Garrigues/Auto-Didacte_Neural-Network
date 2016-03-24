@@ -4,7 +4,7 @@ CC = gcc
 CFLAGS = -g -Wall -pedantic -ansi -std=c99
 
 LINKER = gcc -o
-LDFLAGS = -Wall -lm
+LDFLAGS = -Wall 
 
 SRCDIR = src
 BINDIR = bin
@@ -15,12 +15,12 @@ LIBDIR = lib
 
 SOURCES := $(wildcard $(SRCDIR)/*.c)
 INCLUDES := $(wildcard $(SRCDIR)/*.h)
-CHIPMUNK := -lchipmunk
+CHIPMUNK := -lchipmunk -static
 SDL := -lSDL
 OBJECTS := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm  =  rm -rf
 $(BINDIR)/$(TARGET): $(OBJECTS)
-	@$(LINKER) $@ $(OBJECTS) $(LDFLAGS) $(SDL) $(CHIPMUNK)
+	@$(LINKER) $@ $(OBJECTS) $(LDFLAGS) $(SDL) $(CHIPMUNK) -lm
 	@echo "link ok"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
