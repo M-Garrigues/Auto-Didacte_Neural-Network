@@ -48,7 +48,7 @@ int main(int argc, char const *argv[])
 
 	deleteNetwork(net);
 
-	deleteGeneration(gen1);
+	deleteGenerati	on(gen1);
 	regressionTestGenome();
 	regressionTestGeneration();
 	printf("\n\n\n");
