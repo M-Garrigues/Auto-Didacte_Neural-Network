@@ -1,44 +1,43 @@
 TARGET = autodidacte
 
 CC = gcc
-CFLAGS = -g -Wall -pedantic -ansi
+CFLAGS = -W -Wall -std=c99 -pedantic -ansi
 
 LINKER = gcc -o
-LDFLAGS = -Wall -lm
+LDFLAGS = Wall -I. -lm
 
 SRCDIR = src
 BINDIR = bin
 OBJDIR = obj
-LIBDIR = lib
 
 
 
 SOURCES := $(wildcard $(SRCDIR)/*.c)
 INCLUDES := $(wildcard $(SRCDIR)/*.h)
-LIBS := $(-L/$(LIBDIR). -llibchipmunk)
 OBJECTS := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-rm  =  rm -rf
+rm  =  rm -f
 $(BINDIR)/$(TARGET): $(OBJECTS)
-	@$(LINKER) $@ $(OBJECTS) $(LDFLAGS) $(LIBS)
+	@$(LINKER) $@ $(FLAGS) $(OBJECTS)
 	@echo "link ok"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "compiled "$<" ok"
 
-.PHONY : remove clean run valgrind
-
+.PHONEY : clean
 clean:
 	@$(rm) $(OBJECTS)
 	@echo "clean ok"
 
+.PHONEY : remove
 remove : clean
 	@$(rm) $(BINDIR)/$(TARGET)
 	@echo "exec removed"
 
+.PHONEY : 
 run: 
 	./$(BINDIR)/$(TARGET)
 
-valgrind:
-
-	valgrind --leak-check=full -v ./$(BINDIR)/$(TARGET) 
+.PHONEY :
+val:
+	valgrind ./$(BINDIR)/$(TARGET) -v
