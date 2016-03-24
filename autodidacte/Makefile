@@ -1,7 +1,7 @@
 TARGET = autodidacte
 
 CC = gcc
-CFLAGS = -g -Wall -pedantic -ansi
+CFLAGS = -g -Wall -pedantic -ansi -std=c99
 
 LINKER = gcc -o
 LDFLAGS = -Wall -lm
@@ -15,11 +15,12 @@ LIBDIR = lib
 
 SOURCES := $(wildcard $(SRCDIR)/*.c)
 INCLUDES := $(wildcard $(SRCDIR)/*.h)
-LIBS := $(-L/$(LIBDIR). -llibchipmunk)
+CHIPMUNK := -lchipmunk
+SDL := -lSDL
 OBJECTS := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm  =  rm -rf
 $(BINDIR)/$(TARGET): $(OBJECTS)
-	@$(LINKER) $@ $(OBJECTS) $(LDFLAGS) $(LIBS)
+	@$(LINKER) $@ $(OBJECTS) $(LDFLAGS) $(SDL) $(CHIPMUNK)
 	@echo "link ok"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
