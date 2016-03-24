@@ -41,4 +41,4 @@ run:
 
 valgrind:
 
-	valgrind --leak-check=full -v ./$(BINDIR)/$(TARGET) 
+	valgrind --leak-check=full --show-leak-kinds=all -v ./$(BINDIR)/$(TARGET) 
