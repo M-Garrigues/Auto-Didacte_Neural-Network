@@ -6,7 +6,6 @@
 
 
 #include "Genome.h"
-#include "stdio.h"
 
 /* structure Generation*/
 
@@ -43,5 +42,5 @@ int getBest(const Generation * gen);
 void updateFitnessGeneration(Generation * gen);
 void crossoverGeneration(Generation * gen);
 void mutationGeneration(Generation * gen);
-
+void regressionTestGeneration();
 #endif
