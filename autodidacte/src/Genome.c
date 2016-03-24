@@ -112,7 +112,9 @@ void setFitness(Genome * genome, int value)
 
 void crossover(const Genome * genome1, const Genome * genome2, Genome * child)
 {
+
     int i;
+    assert(genome1 !=NULL && genome2 !=NULL && child != NULL);
     assert(genome1->nbHidden == genome2->nbHidden);  /*same species*/
     child->nbInput = genome1->nbInput;
     child->nbHidden = genome1->nbHidden;
@@ -132,6 +134,7 @@ void crossover(const Genome * genome1, const Genome * genome2, Genome * child)
 void mutation(Genome * genome)
 {
     int i;
+    assert(genome != NULL);
     for(i =0; i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome); i++)
     {
         if(rand()%(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome) == 0)
@@ -143,6 +146,7 @@ void mutation(Genome * genome)
 
 void displayGenome(const Genome * genome)
 {
+    assert(genome != NULL);
     int i;
     for(i = 0; i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome);i++)
     {
@@ -155,6 +159,7 @@ void displayGenome(const Genome * genome)
 void saveGenome(const Genome * genome, FILE * f)
 {
     assert(f != NULL);
+    assert(genome != NULL);
     int i;
     fprintf(f,"#nbInput:%d\n",getNbInput(genome));
     fprintf(f,"#nbHidden:%d\n",getNbHidden(genome));
@@ -168,6 +173,7 @@ void saveGenome(const Genome * genome, FILE * f)
 void loadGenome(FILE * f, Genome * genome)
 {
     assert(f != NULL);
+    assert(genome != NULL);
     int i;
     float a;
     fscanf(f,"#nbInput:%d\n",&i);
@@ -189,6 +195,7 @@ void loadGenome(FILE * f, Genome * genome)
 }
 void updateFitnessGenome(Genome * genome)
 {
+    assert(genome != NULL);
     int i;
     setFitness(genome, 1);
     for(i =0; i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome);i++)
@@ -259,6 +266,7 @@ void regressionTestGenome()
     mutation(g3);
     updateFitnessGenome(g3);
     saveGenome(g3,f);
+    rewind(f);
     loadGenome(f,g1);
     net = convertToNetwork(g3);
     deleteGenome(g1);
