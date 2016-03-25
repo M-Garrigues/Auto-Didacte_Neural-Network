@@ -197,7 +197,7 @@ void printNetwork(Network * net)
 int main(void){
   // cpVect is a 2D vector and cpv() is a shortcut for initializing them.
   cpVect gravity = cpv(0, -100);
-  
+  printf("ca marche\n");
   // Create an empty space.
   cpSpace * space = cpSpaceNew();
   cpSpaceSetGravity(space, gravity);

@@ -5,8 +5,7 @@
   /* Display_SDL.h    -----   LIF7 Auto-Didacte */
 
 
-#include "Simulation.h"
-
+#include "Simulation.h"	
 
 /* structure Display_SDL */
 
