@@ -8,16 +8,38 @@
 
 
 /* Track structure*/
+typedef struct
+{
+	float x;
+	float y;
+}Point;
+
+
+typedef struct {
+	Point * tabPoints;
+	int nbPoints;
+
+}Track;
+
 
 /* Track constructors */
+Track * newTrack ();
+void initTrack (Track * Track);
 
 /* Track get/set */
 
 
 /* Track functions */
+void printTrack (Track * Track);
 
 
 /* Track destructor */
+void deleteTrack (Track * Track);
+
+
+
+
+
 
 
 #endif
