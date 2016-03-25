@@ -16,7 +16,7 @@ LIBDIR = lib
 SOURCES := $(wildcard $(SRCDIR)/*.c)
 INCLUDES := $(wildcard $(SRCDIR)/*.h)
 CHIPMUNK := -lchipmunk -static
-SDL := -lSDL
+SDL := -lSDL2 
 OBJECTS := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm  =  rm -rf
 $(BINDIR)/$(TARGET): $(OBJECTS)
