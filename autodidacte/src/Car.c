@@ -135,7 +135,7 @@ void moveStraight (Car * car, float timeM) {
 	distance = (car->speed)*timeM;
 
 	diffAbcisse = cos (car->orientation) * distance;
-	diffOrdonnee = sin (car->orientation) * distance;
+	diffOrdonnee = -sin (car->orientation) * distance;
 
 	(car->center.x)+=diffAbcisse;
 	(car->center.y)+=diffOrdonnee;
