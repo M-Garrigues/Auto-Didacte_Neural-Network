@@ -115,6 +115,16 @@ void turnRight (Car * car) {
 	printCar(car);
 }
 
+
+void accelerate (Car * car){
+	car->speed += 1;
+}
+
+void decelerate (Car * car){
+	car->speed -= 1;
+}
+
+
 void moveStraight (Car * car, float timeM) {
 	
 	float distance;
@@ -143,4 +153,81 @@ void moveStraight (Car * car, float timeM) {
 	(car->backLeft.y)+=diffOrdonnee;
 
 	printCar(car);
+}
+
+Point * getFrontLeft(Car * car)
+{
+	assert(car != NULL);
+	return(&(car->frontLeft));
+}
+void setFrontLeft(Car * car, Point * newPoint)
+{
+	assert(car != NULL);
+	car->frontLeft = *newPoint;
+}
+
+Point  * getFrontRight(Car * car)
+{
+	assert(car != NULL);
+	return(&(car->frontRight));
+}
+void setFrontRight(Car * car, Point * newPoint)
+{
+	assert(car != NULL);
+	car->frontRight = *newPoint;
+}
+
+Point  * getCenter(Car * car)
+{
+	assert(car != NULL);
+	return(&(car->center));
+}
+void setCenter(Car * car, Point * newPoint)
+{
+	assert(car != NULL);
+	car->center = *newPoint;
+}
+
+Point * getBackLeft(Car * car)
+{
+	assert(car != NULL);
+	return(&(car->backLeft));
+}
+void setBackLeft(Car * car, Point * newPoint)
+{
+	assert(car != NULL);
+	car->backLeft = *newPoint;
+}
+
+Point * getBackRight(Car * car)
+{
+	assert(car != NULL);
+	return(&(car->backRight));
+}
+void setBackRight(Car * car, Point * newPoint)
+{
+	assert(car != NULL);
+	car->backRight = *newPoint;
+}
+
+float getSpeed(Car * car)
+{
+	assert(car != NULL);
+	return(car->speed);
+}
+void setSpeed(Car * car, float newSpeed)
+{
+	assert(car != NULL);
+	car->speed = newSpeed;
+}
+
+float getOrientation(Car * car)
+{
+	assert(car != NULL);
+	return(car->orientation);
+}
+void setOrientation(Car * car, float newOrientation)
+{
+	assert(car != NULL);
+	car->orientation = newOrientation;
 }

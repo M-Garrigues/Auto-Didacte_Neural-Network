@@ -58,12 +58,12 @@ void setOrientation(Car * car, float newOrientation);
 
 /* Car functions */
 void printCar (Car * car);
-void refreshOrientation (Car * car);
+void changeOrientation (Car * car , float angle);
 void turnLeft (Car * car);
 void turnRight (Car * car);
 void moveStraight (Car * car, float time);
 void accelerate (Car * car);
-void decellerate (Car * car);
+void decelerate (Car * car);
 Point rotation (Point pointInit, Point centre ,float angle);
 
 
