@@ -9,22 +9,15 @@
 #include "Point.h"
 
 
-
-typedef struct
-{
-	float x;
-	float y;
-}Point;
-
 /* Structure Car */
 
 typedef struct
 {
-	Point frontLeft;
-	Point frontRight;
-	Point center;
-	Point backLeft;
-	Point backRight;
+	Point * frontLeft;
+	Point * frontRight;
+	Point * center;
+	Point * backLeft;
+	Point * backRight;
 	float speed;
 	float orientation;
 }Car;
@@ -65,7 +58,6 @@ void turnRight (Car * car);
 void moveStraight (Car * car, float time);
 void accelerate (Car * car);
 void decelerate (Car * car);
-Point rotation (Point pointInit, Point centre ,float angle);
 
 
 /* Car destructor */

@@ -9,6 +9,7 @@
 #include "Point.h"
 #include "stdlib.h"
 #include "assert.h"
+#include "math.h"
 #include "stdio.h"
 
 
@@ -37,12 +38,12 @@ float getY(Point * p)
 	return(p->y);
 }
 
-void setX(Point * p, newX)
+void setX(Point * p, float newX)
 {
 	assert(p != NULL);
 	p->x = newX;
 }
-void setY(Point * p, newY)
+void setY(Point * p, float newY)
 {
 	assert(p != NULL);
 	p->y = newY;
@@ -50,6 +51,25 @@ void setY(Point * p, newY)
 
 /* Point functions */
 
+Point * rotation (Point * pointInit, Point * centre ,float angle){
+
+	float pfX, pfY, piX, piY, cX, cY;
+	Point * pointFinal = newPoint(0,0);
+
+	piX = getX(pointInit);
+	piY = getY(pointInit);
+
+	cX = getX(centre);
+	cY = getY(centre);
+
+	pfX = (piX - cX)*cos(angle) - (piY - cY)*sin(angle) + cX;
+	pfY = (piY - cY)*cos(angle) + (piX - cX)*sin(angle) + cY;
+
+	setX(pointFinal, pfX);
+	setY(pointFinal, pfY);
+
+	return pointFinal;	
+}
 
 /* Point destructor */
 void deletePoint(Point * p)
