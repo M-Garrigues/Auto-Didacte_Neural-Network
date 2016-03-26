@@ -5,15 +5,9 @@
   /* Track.h    -----   LIF7 Auto-Didacte */
 
 
-
+#include "Point.h"
 
 /* Track structure*/
-typedef struct
-{
-	float x;
-	float y;
-}Point;
-
 
 typedef struct {
 	Point * tabPoints;

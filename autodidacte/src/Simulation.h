@@ -11,8 +11,18 @@
 
 
 /* Simulation structure*/
+typedef struct
+{
+    float speed;
+    Car * car;
+    Track * track;
+    Point * initPosition;
+    float initOrientation;
+
+}Simulation;
 
 /* Simulation constructors */
+Neuron * newSimulation(float speed, Car * car, Track * track, Point * initPosition, float initOrientation);
 
 /* Simulation get/set */
 
@@ -21,6 +31,6 @@
 
 
 /* Simulation destructor */
-
+void endSimulation(Simulation * sim);
 
 #endif
