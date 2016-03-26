@@ -22,7 +22,7 @@ typedef struct
 }Simulation;
 
 /* Simulation constructors */
-Neuron * newSimulation(float speed, Car * car, Track * track, Point * initPosition, float initOrientation);
+Simulation * newSimulation(float speed, Car * car, Track * track, Point * initPosition, float initOrientation);
 
 /* Simulation get/set */
 
