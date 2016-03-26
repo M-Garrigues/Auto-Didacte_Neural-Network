@@ -41,7 +41,7 @@ Car * newCar () {
 }
 
 
-void initCar (Car * nCar, Point init) {
+void initCar (Car * nCar, Point init, float initOrientation) {
 	assert(nCar != NULL);
 
 	(nCar->frontLeft).x = init.x;
@@ -58,6 +58,8 @@ void initCar (Car * nCar, Point init) {
 	
 	(nCar->center).x = init.x - 5;
 	(nCar->center).y = init.y -5;
+	
+	nCar->orientation = initOrientation;
 }
 
 void printCar (Car * car) {
