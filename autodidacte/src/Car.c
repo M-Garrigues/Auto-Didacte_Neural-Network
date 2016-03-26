@@ -41,23 +41,23 @@ Car * newCar () {
 }
 
 
-void initCar (Car * nCar, Point init, float initOrientation) {
+void initCar (Car * nCar, Point * init, float initOrientation) {
 	assert(nCar != NULL);
 
-	(nCar->frontLeft).x = init.x;
-	(nCar->frontLeft).y = init.y;
+	setX(nCar->frontLeft, getX(init));
+	setY(nCar->frontLeft, getY(init));
 	
-	(nCar->frontRight).x = init.x - 10;
-	(nCar->frontRight).y = init.y;
+	setX(nCar->frontRight, getX(init) - 10);
+	setY(nCar->frontRight, getY(init));
 	
-	(nCar->backRight).x = init.x - 10;
-	(nCar->backRight).y = init.y - 10;
+	setX(nCar->backRight, getX(init) - 10);
+	setY(nCar->backRight, getY(init) - 10);
 	
-	(nCar->backLeft).x = init.x;
-	(nCar->backLeft).y = init.y - 10;		
+	setX(nCar->backLeft, getX(init));
+	setY(nCar->backLeft, getY(init) - 10);
 	
-	(nCar->center).x = init.x - 5;
-	(nCar->center).y = init.y -5;
+	setX(nCar->center, getX(init) - 5);
+	setY(nCar->center, getX(init) - 5);
 	
 	nCar->orientation = initOrientation;
 }

@@ -32,7 +32,7 @@ typedef struct
 
 /* Car constructors */
 Car * newCar ();
-void initCar (Car * car, Point frontLeft, float initOrientation);
+void initCar (Car * car, Point * frontLeft, float initOrientation);
 
 
 /* Car get/set */
