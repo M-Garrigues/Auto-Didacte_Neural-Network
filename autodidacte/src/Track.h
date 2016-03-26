@@ -1,39 +1,42 @@
- #ifndef H_FB_TRACK
- #define H_FB_TRACK
-
-
-  /* Track.h    -----   LIF7 Auto-Didacte */
-
+ #ifndef H_TRACK
+ #define H_TRACK
 
 #include "Point.h"
+  /* Track.h    -----   LIF7 Auto-Didacte */
 
-/* Track structure*/
-
+/* structure Track */
 typedef struct {
-	Point * tabPoints;
-	int nbPoints;
+
+	Point ** trackOut;
+	Point ** trackIn;
+	int nbPointIn;
+	int nbPointOut;
 
 }Track;
 
-
 /* Track constructors */
 Track * newTrack ();
-void initTrack (Track * Track);
+void initTrack (Track * track , int IN , int OUT);
 
-/* Track get/set */
+
+/* Track Get/Set */
+Point * getTrackOut (const Track * track , int position);
+void setTrackOut (Track * track, int position , Point * newPoint);
+Point * getTrackIn (const Track * track , int position);
+void setTrackIn (Track * track, int position , Point * newPoint);
+int getnbPointIn (const Track * track);
+void setnbPointIn (Track * track , int nbPoints);
+int getnbPointOut (const Track * track);
+void setnbPointOut (Track * track , int nbPoints);
+void printTrack (Track * track);
 
 
 /* Track functions */
-void printTrack (Track * Track);
+void printTrack (Track * track);
+
+
 
 
 /* Track destructor */
-void deleteTrack (Track * Track);
-
-
-
-
-
-
-
+void deleteTrack (Track * track);
 #endif
