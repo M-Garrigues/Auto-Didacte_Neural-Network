@@ -66,11 +66,11 @@ void printCar (Car * car) {
 
 	assert(car != NULL);
 	printf("\n\n\n\nPositions :\n");
-	printf("frontLeft : %f    %f\n",(car->frontLeft).x , (car->frontLeft).y);
-	printf("frontRight : %f    %f\n",(car->frontRight).x , (car->frontRight).y);
-	printf("backLeft : %f    %f\n",(car->backLeft).x , (car->backLeft).y);
-	printf("backRight : %f    %f\n",(car->backRight).x , (car->backRight).y);
-	printf("center : %f    %f\n",(car->center).x , (car->center).y);
+	printf("frontLeft : %f    %f\n",(getX(car->frontLeft) , getY(car->frontLeft));
+	printf("frontRight : %f    %f\n",(getX(car->frontRight) , getY(car->frontRight));
+	printf("backLeft : %f    %f\n",(getX(car->backLeft) , getY(car->backLeft));
+	printf("backRight : %f    %f\n",(getX(car->backRight) , getY(car->backRight));
+	printf("center : %f    %f\n",(getX(car->center) , getY(car->center));
 	printf("Vitesse : %f\n",car->speed);
 	printf("Orientation : %f\n\n\n\n",car->orientation);
 }
@@ -80,11 +80,22 @@ void deleteCar (Car * car) {
 	free(car);
 }
 
-Point rotation (Point pointInit, Point centre ,float angle){
-	Point pointFinal;
+Point rotation (Point * pointInit, Point * centre ,float angle){
 
-	pointFinal.x = (pointInit.x-centre.x)*cos(angle) - (pointInit.y-centre.y)*sin(angle) + centre.x;
-	pointFinal.y = (pointInit.y-centre.y)*cos(angle) + (pointInit.x-centre.x)*sin(angle) + centre.y;
+	float pfX, pfY, piX, piY, cX, cY;
+	Point * pointFinal newPoint(0,0);
+
+	piX = getX(pointInit);
+	piY = getY(pointInit);
+
+	cX = getX(centre);
+	cY = getY(centre);
+
+	pfX = (piX - cX)*cos(angle) - (piY - cY)*sin(angle) + cX;
+	pfY = (piY - cY)*cos(angle) + (piX - cX)*sin(angle) + cY;
+
+	setX(pointFinal, pfX);
+	setY(pointFinal, pfY);
 
 	return pointFinal;	
 }
@@ -139,20 +150,20 @@ void moveStraight (Car * car, float timeM) {
 	diffAbcisse = cos (car->orientation) * distance;
 	diffOrdonnee = -sin (car->orientation) * distance;
 
-	(car->center.x)+=diffAbcisse;
-	(car->center.y)+=diffOrdonnee;
+	setX(car->center, getX(car->center) + diffAbcisse));
+	setY(car->center, getY(car->center) + diffOrdonnee));
 
-	(car->frontLeft.x)+=diffAbcisse;
-	(car->frontLeft.y)+=diffOrdonnee;
+	setX(car->frontLeft, getX(car->frontLeft) + diffAbcisse));
+	setY(car->frontLeft, getY(car->frontLeft) + diffOrdonnee));
 
-	(car->frontRight.x)+=diffAbcisse;
-	(car->frontRight.y)+=diffOrdonnee;
+	setX(car->frontRight, getX(car->frontRight) + diffAbcisse));
+	setY(car->frontRight, getY(car->frontRight) + diffOrdonnee));
 
-	(car->backRight.x)+=diffAbcisse;
-	(car->backRight.y)+=diffOrdonnee;
+	setX(car->backRight, getX(car->backRight) + diffAbcisse));
+	setY(car->backRight, getY(car->backRight) + diffOrdonnee));
 	
-	(car->backLeft.x)+=diffAbcisse;
-	(car->backLeft.y)+=diffOrdonnee;
+	setX(car->backLeft, getX(car->backLeft) + diffAbcisse));
+	setY(car->backLeft, getY(car->backLeft) + diffOrdonnee));
 
 	printCar(car);
 }
