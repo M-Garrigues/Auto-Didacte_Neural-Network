@@ -202,12 +202,13 @@ void display(Display_SDL * display)
 	displaySim(display->sim, display->imgCar, display->renderer);
 	updateScreen(display);
 }
-
-void displayManagement(Simulation * sim, int x, int y , int fps, char * file)
+#if 0
+void displayManagement(Generation * gen, int x, int y , int fps, char * file)
 {
 	if(initSDL())
 	{
 		SDL_Event event;
+		/*Simulation * sim = newSimulationFromGenome(Generation->tabGenomes[0]);*/
 		Display_SDL * disp = newDisplay_SDL(sim,x,y,fps,file);
 		int ticks = SDL_GetTicks();
 		int continuer = 1;
@@ -233,3 +234,4 @@ void displayManagement(Simulation * sim, int x, int y , int fps, char * file)
 		SDL_Quit();
 	}
 }
+#endif
