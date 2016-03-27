@@ -28,7 +28,7 @@ void displayImage(int x,int y,float angle,SDL_Surface * image,SDL_Renderer * ren
    	SDL_DestroyTexture(tex);
 }
 
-void displayCar(Car * car, SDL_Surface * image, SDL_Renderer * renderer)
+void displayCar(const Car * car, SDL_Surface * image, SDL_Renderer * renderer)
 {
 	float angleDeg = car->orientation*180/3.14159265359; /* On devrait définir une constante PI*/
 	float x,y;
@@ -51,10 +51,10 @@ void drawTrack(int nbPoint, Point * pA, Point * pB ,SDL_Renderer * renderer)
 	drawLine(pA[0],pA[nbPoint-1],renderer);
 	drawLine(pB[0],pB[nbPoint-1],renderer);
 }
-void displaySim(Simulation * sim,SDL_Renderer * renderer)
+void displaySim(Simulation * sim, SDL_Surface imgCar, SDL_Renderer * renderer)
 {
-	
-
+	cleanScreen(renderer);
+	displayCar()	
 }
 void loadCarImg(SDL_Surface ** img, char * filename)
 {
@@ -66,7 +66,7 @@ void loadCarImg(SDL_Surface ** img, char * filename)
 }
 void cleanScreen(SDL_Renderer * renderer)
 {
-	SDL_SetRenderDrawColor(renderer, 50, 50, 255, 255);
+	SDL_SetRenderDrawColor(renderer, 50, 50, 50, 255);
    	SDL_RenderClear(renderer);
 }
 
