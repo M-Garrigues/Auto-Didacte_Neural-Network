@@ -28,11 +28,8 @@ void deleteDisplay_SDL(Display_SDL * disp);
 
 
 /* getters and setters*/
-Simulation getSimulation(Display_SDL * display);
-void setSimulation(Display_SDL * display, Simulation sim);
-
-SDL_Renderer * getRenderer(Display_SDL * display);
-void setRenderer(Display_SDL * display, SDL_Renderer * renderer);
+Simulation * getSimulation(Display_SDL * display);
+void setSimulation(Display_SDL * display, Simulation * newSim);
 
 int getDimx(Display_SDL * display);
 void setDimx(Display_SDL * display, int x);
@@ -59,7 +56,10 @@ void displayImage(Point * p,float angle,SDL_Surface * image,SDL_Renderer * rende
 void drawLine(Point * a, Point * b, SDL_Renderer * renderer);
 void drawTrack(Track * track ,SDL_Renderer * renderer);
 void delay(int * lastTime, int frameRate);
+void display(Display_SDL * display);
 void updateScreen(SDL_Display * disp);
+int initSDL();
+
 
 
 #endif
