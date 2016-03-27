@@ -16,7 +16,7 @@ LIBDIR = lib
 SOURCES := $(wildcard $(SRCDIR)/*.c)
 INCLUDES := $(wildcard $(SRCDIR)/*.h)
 CHIPMUNK := -lchipmunk -static
-SDL := -lSDL2 
+SDL := -I/usr/include/SDL2 -lSDL2 -lSDL2_gfx -lSDL2_image
 OBJECTS := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm  =  rm -rf
 $(BINDIR)/$(TARGET): $(OBJECTS)
@@ -24,7 +24,7 @@ $(BINDIR)/$(TARGET): $(OBJECTS)
 	@echo "link ok"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@ $(SDL)
 	@echo "compiled "$<" ok"
 
 .PHONY : remove clean run valgrind
