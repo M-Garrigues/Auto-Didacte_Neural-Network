@@ -8,6 +8,8 @@
 
 #include "Display_SDL.h"
 #include "stdlib.h"
+#include <SDL2/SDL2_rotozoom.h>
+#include <SDL2/SDL_image.h>
 #include "assert.h"
 #include "stdio.h"
 
@@ -15,12 +17,15 @@
 Display_SDL * newDisplay_SDL(Simulation * sim, int x,int y,int fps,char * file)
 {
 	Display_SDL * pDisp = malloc(sizeof(Display_SDL));
-	SDL_Window * pScreen;
-	SDL_Surface * img;
-	SDL_Renderer * pRen;
+	SDL_Window * pScreen = NULL;
+	SDL_Surface * img = NULL;
+	SDL_Renderer * pRen = NULL;
 	loadCarImg(&img, file);
+	assert(img);
 	pScreen = SDL_CreateWindow("Auto-Didacte", SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,x,y,SDL_WINDOW_SHOWN);
+	assert(pScreen);
 	pRen = SDL_CreateRenderer(pScreen, -1, SDL_RENDERER_ACCELERATED);
+	assert(pRen);
 	setSimulation(pDisp, sim);
 	setDimx(pDisp, x);
 	setDimy(pDisp, y);
@@ -32,8 +37,8 @@ Display_SDL * newDisplay_SDL(Simulation * sim, int x,int y,int fps,char * file)
 }
 void deleteDisplay_SDL(Display_SDL * disp)
 {
-	deleteSimulation(disp->sim);
-	SDL_FreeSurface(imgCar);
+	endSimulation(disp->sim);
+	SDL_FreeSurface(disp->imgCar);
 	SDL_DestroyRenderer(disp->renderer);
 	SDL_DestroyWindow(disp->screen);
 	free(disp);
@@ -112,19 +117,19 @@ void displayImage(const Point * p,float angle,SDL_Surface * image,SDL_Renderer *
 	imageM = rotozoomSurface(image, -angle, 1.0, 1);
 	dist.h = imageM->h;
 	dist.w = imageM->w;
-	dist.x = x - imageM->w /2;
-	dist.y = y - imageM->h /2;
+	dist.x = p->x - imageM->w /2;
+	dist.y = p->y - imageM->h /2;
 	tex = SDL_CreateTextureFromSurface(renderer,imageM);	
 	SDL_RenderCopy(renderer, tex, NULL, &dist);
     SDL_FreeSurface(imageM);
    	SDL_DestroyTexture(tex);
 }
 
-void displayCar(const Car * car, SDL_Surface * image, SDL_Renderer * renderer)
+void displayCar(Car * car, SDL_Surface * image, SDL_Renderer * renderer)
 {
 	float angleDeg = car->orientation*180/3.14159265359; /* On devrait définir une constante PI*/
 	Point p;
-	p.x = getCenter(car)->x; /* a changer avec les getters*/
+	p.x = getCenter(car)->x;
 	p.y = getCenter(car)->y;
 	displayImage(&p ,angleDeg,image,renderer);
 }
@@ -136,16 +141,16 @@ void drawLine(Point * a, Point * b, SDL_Renderer * renderer)
 void drawTrack(Track * track,SDL_Renderer * renderer)
 {
 	int i;
-	for(i =1 ; i< track->nbIn;i++)
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255,255);
+	for(i =1 ; i< track->nbPointIn;i++)
 		drawLine(track->trackIn[i-1],track->trackIn[i],renderer);
-	for(i =1 ; i< track->nbOut;i++)
+	for(i =1 ; i< track->nbPointOut;i++)
 		drawLine(track->trackOut[i-1],track->trackOut[i],renderer);
-	drawLine(track->trackIn[0],track->trackIn[track->nbIn-1],renderer);
-	drawLine(track->trackOut[0],track->trackOut[track->nbOut-1],renderer);
+	drawLine(track->trackIn[0],track->trackIn[track->nbPointIn-1],renderer);
+	drawLine(track->trackOut[0],track->trackOut[track->nbPointOut-1],renderer);
 }
-void displaySim(Simulation * sim, SDL_Surface imgCar, SDL_Renderer * renderer)
+void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 {
-	cleanScreen(renderer);
 	displayCar(sim->car,imgCar,renderer);
 	drawTrack(sim->track, renderer);
 }
@@ -157,10 +162,10 @@ void loadCarImg(SDL_Surface ** img, char * filename)
 		printf("L'image n'a pas pu être chargée! SDL_Error : %s\n", SDL_GetError());
 	}
 }
-void cleanScreen(SDL_Renderer * renderer)
+void cleanScreen(Display_SDL * display)
 {
-	SDL_SetRenderDrawColor(renderer, 50, 50, 50, 255);
-   	SDL_RenderClear(renderer);
+	SDL_SetRenderDrawColor(display->renderer, 50, 50, 50, 255);
+   	SDL_RenderClear(display->renderer);
 }
 
 void delay(int * lastTime, int frameRate)
@@ -176,7 +181,7 @@ void delay(int * lastTime, int frameRate)
 		delay(lastTime,frameRate);
 	}
 }
-void updateScreen(SDL_Display * disp)
+void updateScreen(Display_SDL * disp)
 {
 	SDL_RenderPresent(disp->renderer);
 }
@@ -196,4 +201,35 @@ void display(Display_SDL * display)
 {
 	displaySim(display->sim, display->imgCar, display->renderer);
 	updateScreen(display);
+}
+
+void displayManagement(Simulation * sim, int x, int y , int fps, char * file)
+{
+	if(initSDL())
+	{
+		SDL_Event event;
+		Display_SDL * disp = newDisplay_SDL(sim,x,y,fps,file);
+		int ticks = SDL_GetTicks();
+		int continuer = 1;
+		while(continuer)
+		{
+			while (SDL_PollEvent(&event))/* gestion des evenements */
+    		{
+    		    switch(event.type)
+    		    {
+        	    case SDL_QUIT:
+            	   continuer = 0;
+            	   break;
+            	default:
+            		break;
+            	}
+        	}
+        	delay(&ticks, fps);
+        	/*oneStepSimulation(disp->sim);*/
+        	cleanScreen(disp);
+        	display(disp);
+		}
+		deleteDisplay_SDL(disp);
+		SDL_Quit();
+	}
 }

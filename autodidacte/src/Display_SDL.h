@@ -6,6 +6,8 @@
 
 
 #include "Simulation.h"	
+#include "SDL2/SDL.h"
+
 
 /* structure Display_SDL */
 
@@ -50,14 +52,16 @@ SDL_Surface * getImgCar(Display_SDL * display);
 void setImgCar(Display_SDL * display, SDL_Surface * newImg);
 
 /*general functions */
-void displaySimulation(Simulation * sim,SDL_Surface * image, SDL_Renderer * renderer);
-void displayCar(Car * car, SDL_Surface * imageCar, SDL_Renderer);
-void displayImage(Point * p,float angle,SDL_Surface * image,SDL_Renderer * renderer);
+void displaySim(Simulation * sim,SDL_Surface * image, SDL_Renderer * renderer);
+void displayCar(Car * car, SDL_Surface * imageCar, SDL_Renderer * renderer);
 void drawLine(Point * a, Point * b, SDL_Renderer * renderer);
 void drawTrack(Track * track ,SDL_Renderer * renderer);
 void delay(int * lastTime, int frameRate);
+void loadCarImg(SDL_Surface ** img, char * filename);
+void displayImage(const Point * p,float angle,SDL_Surface * image,SDL_Renderer * renderer);
 void display(Display_SDL * display);
-void updateScreen(SDL_Display * disp);
+void updateScreen(Display_SDL * disp);
+void cleanScreen(Display_SDL * display);
 int initSDL();
 
 
