@@ -34,6 +34,50 @@ Simulation * newSimulation(float speed, Car * car, Track * track, Point * initPo
 	return sim;
 }
 
+float getSimSpeed(Simulation * sim)
+{
+	assert(sim != NULL);
+	return sim->speed;
+}
+void setSimSpeed(Simulation * sim, float newSpeed)
+{
+	assert(sim != NULL);
+	sim->speed = newSpeed;
+}
+
+Car * getCar(Simulation * sim)
+{
+	assert(sim != NULL);
+	return sim->car;
+}
+void setCar(Simulation * sim, Car * newCar)
+{
+	assert(sim != NULL);
+	sim->car = newCar;
+}
+
+Point * getInitPosition(Simulation * sim)
+{
+	assert(sim != NULL);
+	return sim->initPosition;
+}
+void setInitPosition(Simulation * sim, Point * newInitPos)
+{
+	assert(sim != NULL);
+	sim->initPosition = newInitPos;
+}
+
+float getInitOrientation(Simulation * sim)
+{
+	assert(sim != NULL);
+	return sim->initOrientation;
+}
+void setInitOrientation(Simulation * sim, float newOrientation)
+{
+	assert(sim != NULL);
+	sim->initOrientation = newOrientation;
+}
+
 void endSimulation(Simulation * sim)
 {
 	assert(sim != NULL);

@@ -71,6 +71,31 @@ Point * rotation (Point * pointInit, Point * centre ,float angle){
 	return pointFinal;	
 }
 
+/* droites p1p2 et p3p4 */
+int intersect (Point * p1 , Point * p2 , Point * p3 , Point * p4){
+
+    float a1, b1 , a2 , b2, xInter;
+    /* y = ax+b*/
+    a1 = (getY(p2) - getY(p1)) / (getX(p2) - getX(p1));
+    b1 = getY(p1) - a1 * getX(p1);
+
+    a2 = (getY(p4) - getY(p3)) / (getX(p4) - getX(p3));
+    b2 = getY(p3) - a2 * getX(p3);
+
+    xInter = (b1 - b2)/(a2 - a1);
+
+    if (((xInter <= getX(p1))&&(xInter >= getX(p2)))||((xInter <= getX(p2))&&(xInter >= getX(p1))))
+    {
+        if (((xInter <= getX(p3))&&(xInter >= getX(p4)))||((xInter <= getX(p4))&&(xInter >= getX(p3))))
+        {
+            return 1;
+        }
+        else return 0;
+    }
+    return 0;
+
+}
+
 /* Point destructor */
 void deletePoint(Point * p)
 {
