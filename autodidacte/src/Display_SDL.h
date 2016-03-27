@@ -63,6 +63,7 @@ void display(Display_SDL * display);
 void updateScreen(Display_SDL * disp);
 void cleanScreen(Display_SDL * display);
 int initSDL();
+void displayManagement(Simulation * sim, int x, int y , int fps, char * file);
 
 
 
