@@ -22,6 +22,8 @@ void setY(Point * p, float newY);
 
 /* Point functions */
 Point * rotation (Point * pointInit, Point * centre ,float angle);
+/* droites p1p2 et p3p4 */
+int intersect (Point * p1 , Point * p2 , Point * p3 , Point * p4);
 
 /* Point destructor */
 void deletePoint(Point * p);
