@@ -11,8 +11,8 @@
 #include "assert.h"
 #include "stdio.h"
 
-#if 0
-void displayImage(int x,int y,float angle,SDL_Surface * image,SDL_Renderer * renderer)
+
+void displayImage(const Point * p,float angle,SDL_Surface * image,SDL_Renderer * renderer)
 {
 	SDL_Texture * tex;
 	SDL_Surface * imageM;
@@ -31,13 +31,13 @@ void displayImage(int x,int y,float angle,SDL_Surface * image,SDL_Renderer * ren
 void displayCar(const Car * car, SDL_Surface * image, SDL_Renderer * renderer)
 {
 	float angleDeg = car->orientation*180/3.14159265359; /* On devrait définir une constante PI*/
-	float x,y;
-	x = (car->center).x; /* a changer avec les getters*/
-	y = (car->center).y;
-	displayImage(x,y,angleDeg,image,renderer);
+	Point p;
+	p.x = getCenter(car)->x; /* a changer avec les getters*/
+	p.y = getCenter(car)->y;
+	displayImage(&p ,angleDeg,image,renderer);
 }
 
-void drawLine(Point a, Point b, SDL_Renderer * renderer)
+void drawLine(Point * a, Point * b, SDL_Renderer * renderer)
 {
 	SDL_RenderDrawLine(renderer,a.x,a.y,b.x,b.y);
 }
@@ -83,4 +83,3 @@ void delay(int * lastTime, int frameRate)
 		delay(lastTime,frameRate);
 	}
 }
-#endif
