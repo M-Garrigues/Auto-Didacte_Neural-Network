@@ -62,25 +62,30 @@ void initCar (Car * nCar, Genome * genome, Point * init, float initOrientation, 
 	assert(nCar != NULL);
 	assert(genome != NULL);
 	assert(init != NULL);
+	printf("%f\n",width);
+	printf("%f\n",lenght);
+	setX(nCar->center, getX(init));
+	setY(nCar->center, getY(init));
+	printf("%f\n",getX(init));
+	printf("%f\n",getY(init));
+	setX(nCar->frontRight, getX(init) + lenght/2);
+	setY(nCar->frontRight, getY(init) - width/2);
+	printf("%f\n", getX(init) + lenght/2);
+	printf("%f\n", getY(init) + width/2);	
+	setX(nCar->backRight, getX(init) - lenght/2);
+	setY(nCar->backRight, getY(init) - width/2);
+	
+	setX(nCar->backLeft, getX(init) - lenght/2);
+	setY(nCar->backLeft, getY(init) + width/2);
+	
+	setX(nCar->frontLeft, getX(init) + width/2);
+	setY(nCar->frontLeft, getY(init) + lenght/2);
 
-	setX(nCar->frontLeft, getX(init));
-	setY(nCar->frontLeft, getY(init));
-	
-	setX(nCar->frontRight, getX(init) + width);
-	setY(nCar->frontRight, getY(init));
-	
-	setX(nCar->backRight, getX(init) + width);
-	setY(nCar->backRight, getY(init) - lenght);
-	
-	setX(nCar->backLeft, getX(init));
-	setY(nCar->backLeft, getY(init) - lenght);
-	
-	setX(nCar->center, getX(init) + width/2);
-	setY(nCar->center, getY	(init) - lenght/2);
-	
-	changeOrientation(nCar, initOrientation);
+	printCar(nCar);
 
 	nCar->net = convertToNetwork(genome);
+	printCar(nCar);
+
 }
 
 void printCar (Car * car) {

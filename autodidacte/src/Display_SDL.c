@@ -148,6 +148,16 @@ void drawTrack(Track * track,SDL_Renderer * renderer)
 		drawLine(track->trackOut[i-1],track->trackOut[i],renderer);
 	drawLine(track->trackIn[0],track->trackIn[track->nbPoints-1],renderer);
 	drawLine(track->trackOut[0],track->trackOut[track->nbPoints-1],renderer);
+	drawLine(track->trackIn[0],track->trackOut[0],renderer);
+	drawLine(track->trackIn[1],track->trackOut[1],renderer);
+	drawLine(track->trackIn[2],track->trackOut[2],renderer);
+	drawLine(track->trackIn[3],track->trackOut[3],renderer);
+	drawLine(track->trackIn[4],track->trackOut[4],renderer);
+	drawLine(track->trackIn[5],track->trackOut[5],renderer);
+	drawLine(track->trackIn[6],track->trackOut[6],renderer);
+	drawLine(track->trackIn[7],track->trackOut[7],renderer);
+	drawLine(track->trackIn[8],track->trackOut[8],renderer);
+	drawLine(track->trackIn[9],track->trackOut[9],renderer);
 }
 void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 {
