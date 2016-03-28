@@ -92,25 +92,89 @@ Point * rotation (Point * pointInit, Point * centre ,float angle){
 /* droites p1p2 et p3p4 */
 int intersect (Point * p1 , Point * p2 , Point * p3 , Point * p4){
 
-    float a1, b1 , a2 , b2, xInter;
-    /* y = ax+b*/
-    a1 = (getY(p2) - getY(p1)) / (getX(p2) - getX(p1));
-    b1 = getY(p1) - a1 * getX(p1);
-
-    a2 = (getY(p4) - getY(p3)) / (getX(p4) - getX(p3));
-    b2 = getY(p3) - a2 * getX(p3);
-
-    xInter = (b1 - b2)/(a2 - a1);
-
-    if (((xInter <= getX(p1))&&(xInter >= getX(p2)))||((xInter <= getX(p2))&&(xInter >= getX(p1))))
+    float a1, b1 , a2 , b2, xInter,yInter;
+    if(getX(p1) == getX(p2))
     {
-        if (((xInter <= getX(p3))&&(xInter >= getX(p4)))||((xInter <= getX(p4))&&(xInter >= getX(p3))))
-        {
-            return 1;
-        }
-        else return 0;
+    	
+    	if(getX(p3) == getX(p4))
+    		return 0;
+    	else
+    	{
+    		if(getY(p3) == getY(p4))
+    		{
+    			xInter = getX(p1);
+    			yInter = getY(p3);
+    			if ((((xInter <= getX(p3))&&(xInter >= getX(p4)))||((xInter <= getX(p4))&&(xInter >= getX(p3))))&&(((yInter <= getY(p1))&&(yInter >= getY(p2)))||((yInter <= getY(p2))&&(yInter >= getY(p1)))))
+    			{
+    				return 1;
+    			}
+    			else
+    				return 0;
+    		} 
+    		else
+    		{
+    			a2 = (getY(p4) - getY(p3)) / (getX(p4) - getX(p3));
+    			b2 = getY(p3) - a2 * getX(p3);
+    			xInter = (getX(p1) - b2)/a2;
+    			if (((xInter <= getX(p3))&&(xInter >= getX(p4)))||((xInter <= getX(p4))&&(xInter >= getX(p3))))
+    			{
+    				return 1;
+    			}
+    			else
+  					return 0;
+    		}
+    	}
+
     }
-    return 0;
+    else if((getX(p3) == getX(p4)))
+    {
+    	if(getY(p1) == getY(p2))
+    	{
+    		xInter = getX(p3);
+    		yInter = getY(p1);
+    		if ((((yInter <= getY(p3))&&(yInter >= getY(p4)))||((yInter <= getY(p4))&&(yInter >= getY(p3))))&&(((xInter <= getX(p1))&&(xInter >= getX(p2)))||((xInter <= getX(p2))&&(xInter >= getX(p1)))))
+    		{
+    			return 1;
+    		}
+    		else return 0;	
+
+    	}
+    	else{
+    	a1 = (getY(p2) - getY(p1)) / (getX(p2) - getX(p1));
+    	b1 = getY(p1) - a1 * getX(p1);
+    	xInter =(getX(p3) - b1)/a1;
+    	if (((xInter <= getX(p1))&&(xInter >= getX(p2)))||((xInter <= getX(p2))&&(xInter >= getX(p1))))
+    	{
+    		return 1;
+    	}
+    	else
+    	{
+    		return 0;
+    	}
+    }
+
+    }
+    else
+    {
+    /* y = ax+b*/
+   		a1 = (getY(p2) - getY(p1)) / (getX(p2) - getX(p1));
+    	b1 = getY(p1) - a1 * getX(p1);
+
+    	a2 = (getY(p4) - getY(p3)) / (getX(p4) - getX(p3));
+    	b2 = getY(p3) - a2 * getX(p3);
+
+    	xInter = (b1 - b2)/(a2 - a1);
+
+    	if (((xInter <= getX(p1))&&(xInter >= getX(p2)))||((xInter <= getX(p2))&&(xInter >= getX(p1))))
+    	{
+        	if (((xInter <= getX(p3))&&(xInter >= getX(p4)))||((xInter <= getX(p4))&&(xInter >= getX(p3))))
+        	{
+            	return 1;
+        	}
+        	else return 0;
+    	}
+    	return 0;
+	}
 
 }
 
