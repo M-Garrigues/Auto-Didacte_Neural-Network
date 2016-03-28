@@ -55,8 +55,7 @@ int tickSimulation(Simulation * sim)
 
 	sim->nbTicks++;
 
-	/* UPDATESENSORS  Première étape, si vous voyez ça c'est que j'ai eu la flemme de le coder, déso <3
-					  Elle sera à mettre dans Simulation.* */
+	updateSensors(sim, sim->sector);	
 
 	tabSensors = getSensors(sim->car);
 	net = getCarNetwork(sim->car);
@@ -120,7 +119,7 @@ void updateSensors(Simulation * sim, int sector){
 	newTabSensors = malloc ( 5*sizeof(float));
 
 	carUpdate = getCar(sim);
-
+	free (getSensors(carUpdate));
 	pFLeft = getFrontLeft(carUpdate); /*Capteur 1 */
 	pCenter = getCenter (carUpdate);
 	pFRight = getFrontRight(carUpdate); /*Capteur 2*/
@@ -170,7 +169,6 @@ void updateSensors(Simulation * sim, int sector){
 	newTabSensors[4] = c5;
 
 	setSensors(carUpdate , newTabSensors);
-	free (newTabSensors);
 }
 
 int detectCheckPointCrossed(Simulation * sim)
