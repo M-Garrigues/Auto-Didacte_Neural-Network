@@ -270,3 +270,23 @@ void drawHitboxCar(Car * car, SDL_Renderer * renderer)
 	drawLine(pCar->frontLeft,pCar->frontRight, renderer);
 }
 #endif
+
+#if 0
+int main()
+{
+	FILE * f = fopen("data/track.txt", "r");
+	int * tab[3] = {5, 8, 3};
+	float initOrient = 0;
+	Generation * pGen = newGenerationRandom(20, tab);
+	Track * pTrack = newTrack();
+	Point * pInit = newPoint(120,120);
+	initTrackFile(pTrack,f);
+	displayManagement(pGen , pTrack, pInit, initOrient, 640, 480 , 60, "data/car.jpg");
+	return 0;
+
+}
+
+
+
+
+#endif
