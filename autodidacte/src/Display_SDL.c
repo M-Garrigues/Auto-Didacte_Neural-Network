@@ -152,6 +152,7 @@ void drawTrack(Track * track,SDL_Renderer * renderer)
 void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 {
 	displayCar(sim->car,imgCar,renderer);
+	drawHitboxCar(sim->car, renderer);
 	drawTrack(sim->track, renderer);
 }
 void loadCarImg(SDL_Surface ** img, char * filename)
@@ -202,36 +203,70 @@ void display(Display_SDL * display)
 	displaySim(display->sim, display->imgCar, display->renderer);
 	updateScreen(display);
 }
-#if 0
-void displayManagement(Generation * gen, int x, int y , int fps, char * file)
+#if 1
+void displayManagement(Generation * gen ,Track * track,Point * pInit, float initOrient, int x, int y , int fps, char * file)
 {
 	if(initSDL())
-	{
-		SDL_Event event;
-		/*Simulation * sim = newSimulationFromGenome(Generation->tabGenomes[0]);*/
-		Display_SDL * disp = newDisplay_SDL(sim,x,y,fps,file);
-		int ticks = SDL_GetTicks();
-		int continuer = 1;
-		while(continuer)
-		{
-			while (SDL_PollEvent(&event))/* gestion des evenements */
-    		{
-    		    switch(event.type)
-    		    {
-        	    case SDL_QUIT:
-            	   continuer = 0;
-            	   break;
-            	default:
-            		break;
-            	}
-        	}
-        	delay(&ticks, fps);
-        	/*oneStepSimulation(disp->sim);*/
-        	cleanScreen(disp);
-        	display(disp);
-		}
-		deleteDisplay_SDL(disp);
-		SDL_Quit();
-	}
+    {
+        SDL_Event event;
+        Simulation * sim = newSimulation(1 ,gen->tabGenomes[0], track, pInit, initOrient);
+        Display_SDL * disp = newDisplay_SDL(sim,x,y,fps,file);
+        int ticks = SDL_GetTicks();
+        int fitness = -1;
+        int i; /* indique le genome en cours de simulation */
+        int continuer = 1;
+        while(continuer)
+        {
+            while (SDL_PollEvent(&event))/* gestion des evenements */
+            {
+                switch(event.type)
+                {
+	                case SDL_QUIT:
+	                    continuer = 0;
+	                    break;
+	                default:
+                        break;
+                }
+            }
+            delay(&ticks, fps);
+	        if(fitness == -1)
+            {
+              	fitness = tickSimulation(disp->sim);
+				cleanScreen(disp);
+	            display(disp);
+            }
+            else
+            {
+                setFitness(gen->tabGenomes[i],fitness);
+                i++;
+                if(i == getNbSubject(gen))
+                {
+                    nextGeneration(gen);
+                    i = 0;
+                }
+                else
+                {
+                    sim = newSimulation(1, gen->tabGenomes[i], track, pointInit, initOrient);
+                    endSimulation(getSimulation(disp));
+                    setSimulation(disp, sim);
+                }
+            }
+
+        }
+        deleteDisplay_SDL(disp);
+        SDL_Quit();
+    }
+
+}
+
+
+}
+void drawHitboxCar(Car * car, SDL_Renderer * renderer)
+{
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0,255);
+	drawLine(pCar->backLeft,pCar->backRight,renderer);
+	drawLine(pCar->backRight,pCar->frontRight,renderer);
+	drawLine(pCar->backLeft,pCar->frontLeft,renderer);
+	drawLine(pCar->frontLeft,pCar->frontRight, renderer);
 }
 #endif

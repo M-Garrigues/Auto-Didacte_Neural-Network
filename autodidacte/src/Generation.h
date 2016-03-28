@@ -20,8 +20,8 @@ typedef struct
 /* Functions Genome */
 
 /* Constructors and destructor */
-Generation * newGenerationRandom(int nbSubject);
-Generation * newGenerationNull(int nbSubject);
+Generation * newGenerationRandom(int nbSubject, int * species);
+Generation * newGenerationNull(int nbSubject, int * species);
 void deleteGeneration(Generation * gen);
 
 /* Getters / Setters */

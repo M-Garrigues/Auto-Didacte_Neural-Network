@@ -12,14 +12,14 @@
 #include "stdio.h"
 
 
-Genome * newGenomeRandom(int species)
+Genome * newGenomeRandom(int * species)
 {
     int i;
     Genome * pGenome = malloc(sizeof(Genome));
     assert(pGenome != NULL);
-    pGenome->nbInput = 6;
-    pGenome->nbHidden = species;
-    pGenome->nbOutput = 4;
+    pGenome->nbInput = species[0];
+    pGenome->nbHidden = species[1];
+    pGenome->nbOutput = species[2];
     pGenome->fitness = 0;
     pGenome->tabGenes = malloc((pGenome->nbInput + pGenome->nbOutput)*pGenome->nbHidden*sizeof(float));
     assert(pGenome->tabGenes != NULL);
@@ -30,14 +30,14 @@ Genome * newGenomeRandom(int species)
     return pGenome;
 }
 
-Genome * newGenomeNull(int species)
+Genome * newGenomeNull(int * species)
 {
     int i;
     Genome * pGenome = malloc(sizeof(Genome));
     assert(pGenome != NULL);
-    pGenome->nbInput = 6;
-    pGenome->nbHidden = species;
-    pGenome->nbOutput = 4;
+    pGenome->nbInput = species[0];
+    pGenome->nbHidden = species[1];
+    pGenome->nbOutput = species[2];
     pGenome->fitness = 0;
     pGenome->tabGenes = malloc((pGenome->nbInput + pGenome->nbOutput)*pGenome->nbHidden*sizeof(float));
     assert(pGenome != NULL);
