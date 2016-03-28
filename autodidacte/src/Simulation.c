@@ -27,7 +27,7 @@ Simulation * newSimulation(float speed, Genome * genome, Track * track, Point * 
 	sim->car = NULL;
 	sim->car = newCar();
 	assert(sim->car != NULL);
-	initCar(sim->car, genome, initPosition, initOrientation);/* Le point initial ne pourrait pas etre dans track ? 
+	initCar(sim->car, genome, initPosition, initOrientation, 50 , 25);/* Le point initial ne pourrait pas etre dans track ? 
 	a priori ca ne changera pas sur un circuit donné ?  meme chose pour init orientation Valentin*/
 	sim->speed = speed;
 
