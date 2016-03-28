@@ -209,9 +209,13 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 	if(initSDL())
     {
         SDL_Event event;
+        printf("ici\n");
         Simulation * sim = newSimulation(1 ,gen->tabGenomes[0], track, pInit, initOrient);
+        printf("ici\n");
         Display_SDL * disp = newDisplay_SDL(sim,x,y,fps,file);
+        printf("ici\n");
         int ticks = SDL_GetTicks();
+        printf("ici\n");
         int fitness = -1;
         int i; /* indique le genome en cours de simulation */
         int continuer = 1;

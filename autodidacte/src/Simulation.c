@@ -25,12 +25,12 @@ Simulation * newSimulation(float speed, Genome * genome, Track * track, Point * 
 	assert(sim != NULL);
 
 	sim->car = NULL;
-	sim->car = malloc(sizeof(Car));
+	sim->car = newCar();
 	assert(sim->car != NULL);
-
+	printf("ici\n");
 	initCar(sim->car, genome, initPosition, initOrientation);/* Le point initial ne pourrait pas etre dans track ? 
 	a priori ca ne changera pas sur un circuit donné ?  meme chose pour init orientation Valentin*/
-
+    printf("ici\n");
 	sim->speed = speed;
 
 
