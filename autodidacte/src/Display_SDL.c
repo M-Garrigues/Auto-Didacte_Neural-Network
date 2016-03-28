@@ -164,6 +164,8 @@ void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 	displayCar(sim->car,imgCar,renderer);
 	drawTrack(sim->track, renderer);
 	drawHitboxCar(sim->car, renderer);
+		SDL_SetRenderDrawColor(renderer, 255, 0, 0,255);
+	drawLine(getTrackIn(sim->track, sim->sector+1),getTrackOut(sim->track, sim->sector+1),renderer);
 }
 void loadCarImg(SDL_Surface ** img, char * filename)
 {
