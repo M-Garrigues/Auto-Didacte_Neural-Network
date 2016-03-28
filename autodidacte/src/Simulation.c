@@ -109,8 +109,7 @@ int tickSimulation(Simulation * sim)
 }
 
 
-void updateSensors(Simulation * sim)
-{
+void updateSensors(Simulation * sim){
 
 }
 
