@@ -27,7 +27,7 @@ Simulation * newSimulation(float speed, Genome * genome, Track * track, Point * 
 	sim->car = NULL;
 	sim->car = newCar();
 	assert(sim->car != NULL);
-	initCar(sim->car, genome, initPosition, initOrientation, 25 , 50);/* Le point initial ne pourrait pas etre dans track ? 
+	initCar(sim->car, genome, initPosition, initOrientation, 50 , 25);/* Le point initial ne pourrait pas etre dans track ? 
 	a priori ca ne changera pas sur un circuit donné ?  meme chose pour init orientation Valentin*/
 	sim->speed = speed;
 
@@ -88,6 +88,7 @@ int tickSimulation(Simulation * sim)
 
 	if(detectCheckPointCrossed(sim)) /*The car entered a new sector, fitness improves*/
 	{
+		printf("ici");
 		sim->sector++;
 
 		if (!(detectCollision(sim, sim->sector))&&!(detectCollision(sim, sim->sector-1)))
@@ -197,7 +198,6 @@ int detectCheckPointCrossed(Simulation * sim)
 	else
 		return 0;
 }
-
 
 int detectCollision(Simulation * sim, int sector)/* Here we consider the Inside of the track is always on the car's right*/
 {
