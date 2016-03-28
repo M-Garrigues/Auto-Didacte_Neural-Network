@@ -176,7 +176,6 @@ void moveStraight (Car * car, float timeM) {
 	setX(car->backLeft, getX(car->backLeft) + diffAbcisse);
 	setY(car->backLeft, getY(car->backLeft) + diffOrdonnee);
 
-	printCar(car);
 }
 
 Point * getFrontLeft(Car * car)

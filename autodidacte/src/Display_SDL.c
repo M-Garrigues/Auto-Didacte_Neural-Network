@@ -152,8 +152,8 @@ void drawTrack(Track * track,SDL_Renderer * renderer)
 void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 {
 	displayCar(sim->car,imgCar,renderer);
-	drawHitboxCar(sim->car, renderer);
 	drawTrack(sim->track, renderer);
+	drawHitboxCar(sim->car, renderer);
 }
 void loadCarImg(SDL_Surface ** img, char * filename)
 {
@@ -231,10 +231,11 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
             delay(&ticks, fps);
 	        if(fitness == -1)
             {
-            	printf("ici\n");
               	fitness = tickSimulation(disp->sim);
-              	printf("ici\n");
-				cleanScreen(disp);
+              	/*printf("1: %f:%f::%f::%f::%f\n",getSensors(disp->sim->car)[0],getSensors(disp->sim->car)[1],getSensors(disp->sim->car)[2],getSensors(disp->sim->car)[3],getSensors(disp->sim->car)[4]);
+				*/
+				printf("%d\n",getSector(disp->sim));
+              	cleanScreen(disp);
 	            display(disp);
             }
             else
@@ -264,11 +265,15 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 
 void drawHitboxCar(Car * car, SDL_Renderer * renderer)
 {
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0,255);
+	SDL_SetRenderDrawColor(renderer, 0, 255, 0,255);
 	drawLine(car->backLeft,car->backRight,renderer);
 	drawLine(car->backRight,car->frontRight,renderer);
 	drawLine(car->backLeft,car->frontLeft,renderer);
 	drawLine(car->frontLeft,car->frontRight, renderer);
+	drawLine(car->center,car->frontRight, renderer);
+	drawLine(car->frontLeft,car->center, renderer);
+	drawLine(car->center,car->backRight, renderer);
+	drawLine(car->backLeft,car->center, renderer);
 }
 #endif
 

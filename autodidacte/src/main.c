@@ -224,8 +224,9 @@ int main()
 	float initOrient = 0;
 	Generation * pGen = newGenerationRandom(20, tab);
 	Track * pTrack = newTrack();
-	Point * pInit = newPoint(120,120);
+	Point * pInit;
 	initTrackFile(pTrack,f);
+	pInit = intersectPoint (pTrack->trackIn[0] , pTrack->trackOut[1] , pTrack->trackOut[0] , pTrack->trackIn[1]);
 	displayManagement(pGen , pTrack, pInit, initOrient, 640, 480 , 60, "data/car.png");
 	return 0;
 
