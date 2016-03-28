@@ -28,7 +28,7 @@ typedef struct
 
 /* Car constructors */
 Car * newCar ();
-void initCar (Car * car, Genome * genome, Point * frontLeft, float initOrientation);
+void initCar (Car * car, Genome * genome, Point * frontLeft, float initOrientation , float lenght, float width);
 
 
 /* Car get/set */
