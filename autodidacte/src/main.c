@@ -225,7 +225,9 @@ int main()
 	Generation * pGen = newGenerationRandom(20, tab);
 	Track * pTrack = newTrack();
 	Point * pInit = newPoint(120,120);
+	printf("ici\n");
 	initTrackFile(pTrack,f);
+	printf("ici\n");
 	displayManagement(pGen , pTrack, pInit, initOrient, 640, 480 , 60, "data/car.jpg");
 	return 0;
 

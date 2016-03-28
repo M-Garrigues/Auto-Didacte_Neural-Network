@@ -95,14 +95,12 @@ void initTrackFile (Track * track, FILE * f){
 	initTrack (track , i);
 	for (i=0 ; i< getnbPoints(track); i++){
 		fscanf(f,"%f %f\n", &temp1 , &temp2);
-		setX(pointTemp, temp1);
-		setY(pointTemp, temp2);
+		pointTemp = newPoint(temp1,temp2);
 		setTrackIn(track ,i, pointTemp);
 	}
 	for (i=0 ; i< getnbPoints(track); i++){
 		fscanf(f,"%f %f\n", &temp1 , &temp2);
-		setX(pointTemp, temp1);
-		setY(pointTemp, temp2);
+		pointTemp = newPoint(temp1,temp2);
 		setTrackOut(track ,i, pointTemp);
 	}
 }
