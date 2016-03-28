@@ -38,8 +38,8 @@ void setNeuron(Layer * layer, int i, Neuron * newNeuron);
 void updateInputLayer(Layer * layer, float * tabNewValues);
 void updateLayer(Layer * layer1, Layer* layer2);
 void initialiseLayerTEST(Layer * layer);
+int selectHigherValue(Layer * layer);
 float sigmoid(float x);
-
 
 /* Layer destructor */
 void deleteLayer(Layer * layer);

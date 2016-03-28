@@ -42,7 +42,7 @@ int getNbWeights(const Neuron * neuron);
 void setNbWeights(Neuron * neuron,int newNbWeights);
 
 /* Neuron functions */
-void  updateNeuron(Neuron * neuron);
+
 
 /* Neuron destructor */
 void deleteNeuron(Neuron * neuron);

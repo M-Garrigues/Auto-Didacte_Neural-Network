@@ -9,14 +9,13 @@ typedef struct {
 
 	Point ** trackOut;
 	Point ** trackIn;
-	int nbPointIn;
-	int nbPointOut;
+	int nbPoints;
 
 }Track;
 
 /* Track constructors */
 Track * newTrack ();
-void initTrack (Track * track , int IN , int OUT);
+void initTrack (Track * track , int nbPoints);
 
 
 /* Track Get/Set */
@@ -24,10 +23,8 @@ Point * getTrackOut (const Track * track , int position);
 void setTrackOut (Track * track, int position , Point * newPoint);
 Point * getTrackIn (const Track * track , int position);
 void setTrackIn (Track * track, int position , Point * newPoint);
-int getnbPointIn (const Track * track);
-void setnbPointIn (Track * track , int nbPoints);
-int getnbPointOut (const Track * track);
-void setnbPointOut (Track * track , int nbPoints);
+int getnbPoints(const Track * track);
+void setnbPoints(Track * track , int nbPoints);
 void printTrack (Track * track);
 
 

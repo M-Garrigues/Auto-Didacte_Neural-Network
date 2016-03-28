@@ -1,5 +1,5 @@
-#ifndef H_FB_CAR
-#define H_FB_CAR
+#ifndef H_FB_MG_CAR
+#define H_FB_MG_CAR
 
 
 /* Car.h   ----- LIF7 Auto-Didacte */
@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include "Point.h"
+#include "Genome.h"
 
 
 /* Structure Car */
@@ -20,12 +21,14 @@ typedef struct
 	Point * backRight;
 	float speed;
 	float orientation;
+	Network * net;
+	float * tabSensors;
 }Car;
 
 
 /* Car constructors */
 Car * newCar ();
-void initCar (Car * car, Point * frontLeft, float initOrientation);
+void initCar (Car * car, Genome * genome, Point * frontLeft, float initOrientation);
 
 
 /* Car get/set */
@@ -49,6 +52,12 @@ void setSpeed(Car * car, float newSpeed);
 
 float getOrientation(Car * car);
 void setOrientation(Car * car, float newOrientation);
+
+Network * getCarNetwork(Car * car);
+void setCarNetwork(Car * car, Network * newNetwork);
+
+float * getSensors(Car * car);
+void setSensors(Car * car, float * newTabSensors);
 
 /* Car functions */
 void printCar (Car * car);

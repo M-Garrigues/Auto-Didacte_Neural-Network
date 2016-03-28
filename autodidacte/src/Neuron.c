@@ -169,4 +169,5 @@ void setNbWeights(Neuron * neuron,int newNbWeights)
 
 
 
+/* Neuron functions */
 
