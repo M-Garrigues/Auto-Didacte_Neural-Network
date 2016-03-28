@@ -212,6 +212,27 @@ void initialiseLayerTEST(Layer * layer)
 	}
 }
 
+int selectHigherValue(Layer * layer)
+{
+	int i;
+	int maxValue = -10;
+	int max = 0;
+	int tempValue;
+
+	for (i = 0; i < layer->nbNeurons; ++i)
+	{
+		tempValue = getValue(getNeuron(layer,i));
+
+		if (tempValue > maxValue)
+		{
+			maxValue = tempValue;
+			max = i;
+		}
+	}
+
+	return max;
+}
+
 float sigmoid(float x)
 {
     return (1/(1+exp(-x)));

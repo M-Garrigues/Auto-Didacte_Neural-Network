@@ -50,12 +50,18 @@ Car * newCar () {
 	nCar->speed = 1;
 	nCar->orientation = 0;
 
+	nCar->net = NULL;
+	nCar->net = malloc(sizeof(Network));
+	assert(nCar->net != NULL);
+
 	return nCar;
 }
 
 
-void initCar (Car * nCar, Point * init, float initOrientation) {
+void initCar (Car * nCar, Genome * genome, Point * init, float initOrientation) {
 	assert(nCar != NULL);
+	assert(genome != NULL);
+	assert(init != NULL);
 
 	setX(nCar->frontLeft, getX(init));
 	setY(nCar->frontLeft, getY(init));
@@ -73,6 +79,8 @@ void initCar (Car * nCar, Point * init, float initOrientation) {
 	setY(nCar->center, getX(init) - 5);
 	
 	changeOrientation(nCar, initOrientation);
+
+	nCar->net = convertToNetwork(genome);
 }
 
 void printCar (Car * car) {
@@ -97,6 +105,7 @@ void deleteCar (Car * car) {
 	deletePoint(car->backLeft);
 	deletePoint(car->center);
 
+	deleteNetwork(car->net);
 	free(car);
 }
 
@@ -245,4 +254,26 @@ void setOrientation(Car * car, float newOrientation)
 {
 	assert(car != NULL);
 	car->orientation = newOrientation;
+}
+
+Network * getCarNetwork(Car * car)
+{
+	assert(car != NULL);
+	return car->net;
+}
+void setCarNetwork(Car * car, Network * newNetwork)
+{
+	assert(car != NULL);
+	car->net = newNetwork;
+}
+
+float * getSensors(Car * car)
+{
+	assert(car != NULL);
+	return car->tabSensors;
+}
+void setSensors(Car * car, float * newTabSensors)
+{
+	assert(car != NULL);
+	car->tabSensors = newTabSensors;
 }

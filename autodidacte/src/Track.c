@@ -20,12 +20,11 @@ Track * newTrack (){
 	return nTrack;
 
 }
-void initTrack (Track * track , int IN , int OUT){
+void initTrack (Track * track , int nbPoints){
 	assert (track != NULL);
-	setnbPointIn (track , IN);
-	setnbPointOut (track , OUT);
-	track->trackIn = malloc(IN * sizeof(Point));
-	track->trackOut = malloc(OUT * sizeof(Point));
+	setnbPoints(track, nbPoints);
+	track->trackIn = malloc(nbPoints * sizeof(Point));
+	track->trackOut = malloc(nbPoints * sizeof(Point));
 	assert (track->trackIn != NULL);
 	assert (track->trackOut != NULL);
 
@@ -36,42 +35,36 @@ void initTrack (Track * track , int IN , int OUT){
 
 Point * getTrackOut (const Track * track , int position){
 	assert (track != NULL);
-	assert (position < getnbPointOut(track));
+	assert (position < getnbPoints(track));
 	return track->trackOut[position];
 
 }
 
 void setTrackOut (Track * track , int position , Point * newPoint){
 	assert (track != NULL);
-	assert (position < getnbPointOut(track));
+	assert (position < getnbPoints(track));
 	track->trackOut[position] = newPoint;
 }
 
-int getnbPointIn (const Track * track){
+int getnbPoints(const Track * track){
 	assert (track != NULL);
-	return track->nbPointIn;
+	return track->nbPoints;
 }
-void setnbPointIn (Track * track , int nbPoints){
+void setnbPoints(Track * track , int newNbPoints){
 	assert (track != NULL);
-	track->nbPointIn = nbPoints;
+	track->nbPoints = newNbPoints;
 }
-int getnbPointOut (const Track * track){
-	assert (track != NULL);
-	return track->nbPointOut;
-}
-void setnbPointOut (Track * track , int nbPoints){
-	assert (track != NULL);
-	track->nbPointOut = nbPoints;
-}
+
+	
 
 Point * getTrackIn (const Track * track , int position){
 	assert (track != NULL);
-	assert (position < getnbPointIn(track));
+	assert (position < getnbPoints(track));
 	return track->trackIn[position];
 }
 void setTrackIn (Track * track , int position , Point * newPoint){
 	assert (track != NULL);
-	assert (position < getnbPointIn(track));
+	assert (position < getnbPoints(track));
 	track->trackIn[position] = newPoint;
 }
 
@@ -82,11 +75,11 @@ void printTrack (Track * track){
 	Point * pointTemp;
 	int counter;
 	assert (track != NULL);
-	for (counter = 0 ; counter < getnbPointIn(track) ; counter++){
+	for (counter = 0 ; counter < getnbPoints(track) ; counter++){
 		pointTemp = getTrackIn(track , counter);
 		printf("Point intérieur n° %d : %f , %f\n",counter ,getX(pointTemp), getY(pointTemp));
 	}
-	for (counter = 0 ; counter < getnbPointOut(track) ; counter++){
+	for (counter = 0 ; counter < getnbPoints(track) ; counter++){
 		pointTemp = getTrackOut(track , counter);
 		printf("Point extérieur n° %d : %f , %f\n",counter ,getX(pointTemp), getY(pointTemp));
 	}
