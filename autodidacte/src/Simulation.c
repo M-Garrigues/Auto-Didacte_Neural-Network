@@ -27,7 +27,7 @@ Simulation * newSimulation(float speed, Genome * genome, Track * track, Point * 
 	sim->car = NULL;
 	sim->car = newCar();
 	assert(sim->car != NULL);
-	initCar(sim->car, genome, initPosition, initOrientation, 50 , 25);/* Le point initial ne pourrait pas etre dans track ? 
+	initCar(sim->car, genome, initPosition, initOrientation, 25 , 50);/* Le point initial ne pourrait pas etre dans track ? 
 	a priori ca ne changera pas sur un circuit donné ?  meme chose pour init orientation Valentin*/
 	sim->speed = speed;
 
@@ -142,6 +142,7 @@ void updateSensors(Simulation * sim, int sector){
 	if (distance(pInter,pCenter) < distance(pInter,pFLeft)){
 			pInter = intersectPoint (pFLeft , pCenter, TrOutUp , TrOutDown);
 	}
+	printf("",pInter->x,pInter->y);
 	c1 = distanceCheck (pInter,pFLeft);
 
 	pInter = intersectPoint (pFRight , pCenter, TrInUp , TrInDown);
