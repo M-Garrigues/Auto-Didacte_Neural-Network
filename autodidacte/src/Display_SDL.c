@@ -142,12 +142,12 @@ void drawTrack(Track * track,SDL_Renderer * renderer)
 {
 	int i;
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255,255);
-	for(i =1 ; i< track->nbPointIn;i++)
+	for(i =1 ; i< track->nbPoints;i++)
 		drawLine(track->trackIn[i-1],track->trackIn[i],renderer);
-	for(i =1 ; i< track->nbPointOut;i++)
+	for(i =1 ; i< track->nbPoints;i++)
 		drawLine(track->trackOut[i-1],track->trackOut[i],renderer);
-	drawLine(track->trackIn[0],track->trackIn[track->nbPointIn-1],renderer);
-	drawLine(track->trackOut[0],track->trackOut[track->nbPointOut-1],renderer);
+	drawLine(track->trackIn[0],track->trackIn[track->nbPoints-1],renderer);
+	drawLine(track->trackOut[0],track->trackOut[track->nbPoints-1],renderer);
 }
 void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 {
