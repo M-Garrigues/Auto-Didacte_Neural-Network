@@ -115,8 +115,8 @@ void updateSensors(Simulation * sim, int sector){
 	float c1,c2,c3,c4,c5;
 	float * newTabSensors;
 	Car * carUpdate;
-	Point * pLeft , pRight , pCenter;
-	Point * pFLeft , pFRight , pFCenter ;
+	Point * pLeft , * pRight , * pCenter;
+	Point * pFLeft , * pFRight , * pFCenter ;
 	Point * pInter;
 	Point * TrInUp,* TrInDown, * TrOutUp, * TrOutDown;
 

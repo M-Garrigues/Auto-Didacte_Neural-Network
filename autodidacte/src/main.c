@@ -12,6 +12,7 @@
 #include "Generation.h"
 #include "Layer.h"
 #include "Track.h"
+#include "Display_SDL.h"
 #if 0 
 #include "time.h"
 
@@ -189,6 +190,7 @@ void printNetwork(Network * net)
 
 // } */
 #endif
+#if 0
 int main (){
   FILE * f = NULL;
   Point * p1;
@@ -213,3 +215,23 @@ int main (){
 
   return 0;
 }
+#endif
+#if 1
+int main()
+{
+	FILE * f = fopen("data/track.txt", "r");
+	int tab[3] = {5, 8, 3};
+	float initOrient = 0;
+	Generation * pGen = newGenerationRandom(20, tab);
+	Track * pTrack = newTrack();
+	Point * pInit = newPoint(120,120);
+	initTrackFile(pTrack,f);
+	displayManagement(pGen , pTrack, pInit, initOrient, 640, 480 , 60, "data/car.jpg");
+	return 0;
+
+}
+
+
+
+
+#endif
