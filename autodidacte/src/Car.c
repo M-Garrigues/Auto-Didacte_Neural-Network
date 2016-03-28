@@ -76,7 +76,7 @@ void initCar (Car * nCar, Genome * genome, Point * init, float initOrientation, 
 	setY(nCar->backLeft, getY(init) - lenght);
 	
 	setX(nCar->center, getX(init) + width/2);
-	setY(nCar->center, getX(init) - lenght/2);
+	setY(nCar->center, getY	(init) - lenght/2);
 	
 	changeOrientation(nCar, initOrientation);
 
