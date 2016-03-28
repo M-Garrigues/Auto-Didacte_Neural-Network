@@ -58,7 +58,7 @@ Car * newCar () {
 }
 
 
-void initCar (Car * nCar, Genome * genome, Point * init, float initOrientation) {
+void initCar (Car * nCar, Genome * genome, Point * init, float initOrientation, float lenght, float width) {
 	assert(nCar != NULL);
 	assert(genome != NULL);
 	assert(init != NULL);
@@ -66,17 +66,17 @@ void initCar (Car * nCar, Genome * genome, Point * init, float initOrientation) 
 	setX(nCar->frontLeft, getX(init));
 	setY(nCar->frontLeft, getY(init));
 	
-	setX(nCar->frontRight, getX(init) - 10);
+	setX(nCar->frontRight, getX(init) + width);
 	setY(nCar->frontRight, getY(init));
 	
-	setX(nCar->backRight, getX(init) - 10);
-	setY(nCar->backRight, getY(init) - 10);
+	setX(nCar->backRight, getX(init) + width);
+	setY(nCar->backRight, getY(init) - lenght);
 	
 	setX(nCar->backLeft, getX(init));
-	setY(nCar->backLeft, getY(init) - 10);
+	setY(nCar->backLeft, getY(init) - lenght);
 	
-	setX(nCar->center, getX(init) - 5);
-	setY(nCar->center, getX(init) - 5);
+	setX(nCar->center, getX(init) + width/2);
+	setY(nCar->center, getX(init) - lenght/2);
 	
 	changeOrientation(nCar, initOrientation);
 
