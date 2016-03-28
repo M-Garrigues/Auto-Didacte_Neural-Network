@@ -258,9 +258,10 @@ void regressionTestGenome()
 {
     FILE * f = fopen("data/test.gen","w+");
     Network * net;
-    Genome * g1 = newGenomeRandom(10);
-    Genome * g2 = newGenomeRandom(10);
-    Genome * g3 = newGenomeNull(10);
+    int tab[3] = {5, 8, 3};
+    Genome * g1 = newGenomeRandom(tab);
+    Genome * g2 = newGenomeRandom(tab);
+    Genome * g3 = newGenomeNull(tab);
     crossover(g1,g2,g3);
     mutation(g3);
     updateFitnessGenome(g3);

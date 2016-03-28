@@ -50,6 +50,26 @@ void setY(Point * p, float newY)
 }
 
 /* Point functions */
+Point * middle (Point * p1, Point * p2){
+	Point * pointMiddle;
+	setX(pointMiddle) = (getX(p1) + getX(p2))/2;
+	setY(pointMiddle) = (getY(p1) + getY(p2))/2;
+	return pointMiddle;
+}
+
+float distance (Point * p1, Point * p2){
+	float distance;
+	distance = sqrt ((getX(p1)-getX(p2))*(getX(p1)-getX(p2)) +(getY(p1)-getY(p2))*(getY(p1)-getY(p2)));
+	return distance;
+}
+
+float distanceCheck (Point * p1,Point * p2){
+	if (distance(p1,p2) >= 20)
+	{
+		return 0;
+	}
+	else return (distance(p1,p2));
+}
 
 Point * rotation (Point * pointInit, Point * centre ,float angle){
 
@@ -93,6 +113,28 @@ int intersect (Point * p1 , Point * p2 , Point * p3 , Point * p4){
         else return 0;
     }
     return 0;
+
+}
+
+Point * intersectPoint (Point * p1 , Point * p2 , Point * p3 , Point * p4){
+
+    float a1, b1 , a2 , b2, xInter , yInter;
+    Point * pointInter;
+    /* y = ax+b*/
+    a1 = (getY(p2) - getY(p1)) / (getX(p2) - getX(p1));
+    b1 = getY(p1) - a1 * getX(p1);
+
+    a2 = (getY(p4) - getY(p3)) / (getX(p4) - getX(p3));
+    b2 = getY(p3) - a2 * getX(p3);
+
+    xInter = (b1 - b2)/(a2 - a1);
+    yInter = a1 * xInter + b1;
+    pointInter = newPoint (xInter,yInter);
+    if (((xInter <= getX(p3))&&(xInter >= getX(p4)))||((xInter <= getX(p4))&&(xInter >= getX(p3))))
+    {
+    	return pointInter;
+    }
+    else newPoint (10000,10000);
 
 }
 
