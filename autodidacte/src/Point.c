@@ -51,9 +51,7 @@ void setY(Point * p, float newY)
 
 /* Point functions */
 Point * middle (Point * p1, Point * p2){
-	Point * pointMiddle;
-	setX(pointMiddle) = (getX(p1) + getX(p2))/2;
-	setY(pointMiddle) = (getY(p1) + getY(p2))/2;
+	Point * pointMiddle = newPoint((getX(p1) + getX(p2))/2,(getY(p1) + getY(p2))/2);
 	return pointMiddle;
 }
 
@@ -134,7 +132,8 @@ Point * intersectPoint (Point * p1 , Point * p2 , Point * p3 , Point * p4){
     {
     	return pointInter;
     }
-    else newPoint (10000,10000);
+    else
+    	return newPoint (10000,10000);
 
 }
 

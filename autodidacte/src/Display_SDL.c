@@ -246,7 +246,7 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
                 }
                 else
                 {
-                    sim = newSimulation(1, gen->tabGenomes[i], track, pointInit, initOrient);
+                    sim = newSimulation(1, gen->tabGenomes[i], track, pInit, initOrient);
                     endSimulation(getSimulation(disp));
                     setSimulation(disp, sim);
                 }
@@ -260,33 +260,13 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 }
 
 
-}
 void drawHitboxCar(Car * car, SDL_Renderer * renderer)
 {
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0,255);
-	drawLine(pCar->backLeft,pCar->backRight,renderer);
-	drawLine(pCar->backRight,pCar->frontRight,renderer);
-	drawLine(pCar->backLeft,pCar->frontLeft,renderer);
-	drawLine(pCar->frontLeft,pCar->frontRight, renderer);
+	drawLine(car->backLeft,car->backRight,renderer);
+	drawLine(car->backRight,car->frontRight,renderer);
+	drawLine(car->backLeft,car->frontLeft,renderer);
+	drawLine(car->frontLeft,car->frontRight, renderer);
 }
 #endif
 
-#if 0
-int main()
-{
-	FILE * f = fopen("data/track.txt", "r");
-	int * tab[3] = {5, 8, 3};
-	float initOrient = 0;
-	Generation * pGen = newGenerationRandom(20, tab);
-	Track * pTrack = newTrack();
-	Point * pInit = newPoint(120,120);
-	initTrackFile(pTrack,f);
-	displayManagement(pGen , pTrack, pInit, initOrient, 640, 480 , 60, "data/car.jpg");
-	return 0;
-
-}
-
-
-
-
-#endif
