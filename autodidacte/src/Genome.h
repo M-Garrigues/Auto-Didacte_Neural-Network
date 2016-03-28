@@ -24,8 +24,8 @@ typedef struct
 
 
 /* constructors and destructor */
-Genome * newGenomeRandom(int species);
-Genome * newGenomeNull(int species);
+Genome * newGenomeRandom(int * species);
+Genome * newGenomeNull(int * species);
 void deleteGenome(Genome * genome);
 
 /* getters and setters */
