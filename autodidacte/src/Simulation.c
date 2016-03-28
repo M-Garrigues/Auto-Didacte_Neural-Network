@@ -27,10 +27,8 @@ Simulation * newSimulation(float speed, Genome * genome, Track * track, Point * 
 	sim->car = NULL;
 	sim->car = newCar();
 	assert(sim->car != NULL);
-	printf("ici\n");
 	initCar(sim->car, genome, initPosition, initOrientation);/* Le point initial ne pourrait pas etre dans track ? 
 	a priori ca ne changera pas sur un circuit donné ?  meme chose pour init orientation Valentin*/
-    printf("ici\n");
 	sim->speed = speed;
 
 
@@ -59,13 +57,12 @@ int tickSimulation(Simulation * sim)
 
 	/* UPDATESENSORS  Première étape, si vous voyez ça c'est que j'ai eu la flemme de le coder, déso <3
 					  Elle sera à mettre dans Simulation.* */
+
 	tabSensors = getSensors(sim->car);
 	net = getCarNetwork(sim->car);
 
 	feedForward(net, tabSensors);
-
 	action = selectHigherValue(getLayer(net, OUTPUT));
-
 
 	switch (action) {
 
