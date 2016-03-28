@@ -9,6 +9,7 @@
 #include "assert.h"
 #include "stdio.h"
 #include "Point.h"
+#include "stdlib.h"
 
 
 
@@ -39,7 +40,6 @@ Point * getTrackOut (const Track * track , int position){
 	return track->trackOut[position];
 
 }
-
 void setTrackOut (Track * track , int position , Point * newPoint){
 	assert (track != NULL);
 	assert (position < getnbPoints(track));
@@ -55,7 +55,6 @@ void setnbPoints(Track * track , int newNbPoints){
 	track->nbPoints = newNbPoints;
 }
 
-	
 
 Point * getTrackIn (const Track * track , int position){
 	assert (track != NULL);
@@ -85,9 +84,52 @@ void printTrack (Track * track){
 	}
 }
 
+void initTrackFile (Track * track, FILE * f){
+	int i;
+	float temp1;
+	float temp2;
+	Point * pointTemp;
+	assert (track != NULL);
+	assert (f != NULL);
+	fscanf (f,"#nbPoints:%d\n",&i);
+	initTrack (track , i);
+	for (i=0 ; i< getnbPoints(track); i++){
+		fscanf(f,"%f %f\n", &temp1 , &temp2);
+		setX(pointTemp, temp1);
+		setY(pointTemp, temp2);
+		setTrackIn(track ,i, pointTemp);
+	}
+	for (i=0 ; i< getnbPoints(track); i++){
+		fscanf(f,"%f %f\n", &temp1 , &temp2);
+		setX(pointTemp, temp1);
+		setY(pointTemp, temp2);
+		setTrackOut(track ,i, pointTemp);
+	}
+}
+
+void saveTrackFile (Track * track, FILE * f){
+	int i;
+	assert (track != NULL);
+	assert (f != NULL);
+	fprintf(f,"#nbPoints:%d\n",getnbPoints(track));
+	for (i=0 ; i < getnbPoints(track); i++){
+		fprintf(f, "%f %f\n",getX(getTrackIn(track,i)),getX(getTrackIn(track,i)));
+	}
+	for (i=0 ; i < getnbPoints(track); i++){
+		fprintf(f, "%f %f\n",getX(getTrackOut(track,i)),getX(getTrackOut(track,i)));
+	}
+}
 
 /* Track destructor */
 void deleteTrack (Track * track){
+	Point * pointTemp;
+	int i;
+	for (i=0 ; i < getnbPoints(track); i++){
+		pointTemp = getTrackIn (track, i);
+		deletePoint (pointTemp);
+		pointTemp = getTrackOut (track, i);
+		deletePoint (pointTemp);
+	}
 	free (track->trackIn);
 	free (track->trackOut);
 	free (track);

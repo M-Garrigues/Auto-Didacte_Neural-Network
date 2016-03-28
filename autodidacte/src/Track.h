@@ -2,6 +2,7 @@
  #define H_TRACK
 
 #include "Point.h"
+#include "stdio.h"
   /* Track.h    -----   LIF7 Auto-Didacte */
 
 /* structure Track */
@@ -30,7 +31,8 @@ void printTrack (Track * track);
 
 /* Track functions */
 void printTrack (Track * track);
-
+void initTrackFile (Track * track, FILE * f);
+void saveTrackFile (Track * track, FILE * f);
 
 
 
