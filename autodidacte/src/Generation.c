@@ -57,7 +57,7 @@ Generation * newGenerationNull(int nbSubject, int * species)
     assert(pGen->tabGenomes != NULL);
     for(i = 0; i<nbSubject;i++)
     {
-        setGenome(pGen, i, newGenomeNull(spceies));
+        setGenome(pGen, i, newGenomeNull(species));
     }
     return pGen;
 }
@@ -211,8 +211,9 @@ void saveGeneration(const Generation * gen, FILE * f)
 void regressionTestGeneration()
 {
     FILE * f = fopen("data/testGen.gen","w+");
-    Generation * g1 = newGenerationRandom(20);
-    Generation * g2 = newGenerationNull(20);
+    int tab[3] = {5, 8, 3};
+    Generation * g1 = newGenerationRandom(20, tab);
+    Generation * g2 = newGenerationNull(20 , tab);
     nextGeneration(g1);
     saveGeneration(g1, f);
     rewind(f);
