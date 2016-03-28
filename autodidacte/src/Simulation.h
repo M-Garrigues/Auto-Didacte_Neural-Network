@@ -10,7 +10,7 @@
 #include "Generation.h"
 
 
-enum{	NONE , LEFT , RIGHT   };
+enum{ LEFT , RIGHT  , NONE };
 
 
 /* Simulation structure*/

@@ -52,6 +52,7 @@ int tickSimulation(Simulation * sim)
 	float * tabSensors;
 	int action;
 	Network * net;
+	Layer * out;
 
 	sim->nbTicks++;
 
@@ -59,9 +60,14 @@ int tickSimulation(Simulation * sim)
 
 	tabSensors = getSensors(sim->car);
 	net = getCarNetwork(sim->car);
+	out = getLayer(net, OUTPUT);
 
 	feedForward(net, tabSensors);
-	action = selectHigherValue(getLayer(net, OUTPUT));
+
+	action = selectHigherValue(out);
+	if(getValue(getNeuron(out, action)) < 1) /*We check if the highest neuron is activated*/
+		action = NONE;/*If not, no action will be done this tick*/
+
 
 	switch (action) {
 
