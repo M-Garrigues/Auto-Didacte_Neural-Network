@@ -28,7 +28,8 @@ Simulation * newSimulation(float speed, Genome * genome, Track * track, Point * 
 	sim->car = malloc(sizeof(Car));
 	assert(sim->car != NULL);
 
-	initCar(sim->car, genome, initPosition, initOrientation);
+	initCar(sim->car, genome, initPosition, initOrientation);/* Le point initial ne pourrait pas etre dans track ? 
+	a priori ca ne changera pas sur un circuit donné ?  meme chose pour init orientation Valentin*/
 
 	sim->speed = speed;
 
@@ -109,11 +110,71 @@ int tickSimulation(Simulation * sim)
 }
 
 
-void updateSensors(Simulation * sim)
-{
+void updateSensors(Simulation * sim, int sector){
+	assert (sim != NULL);
+	float c1,c2,c3,c4,c5;
+	float * newTabSensors;
+	Car * carUpdate;
+	Point * pLeft , pRight , pCenter;
+	Point * pFLeft , pFRight , pFCenter ;
+	Point * pInter;
+	Point * TrInUp,* TrInDown, * TrOutUp, * TrOutDown;
 
+	newTabSensors = malloc ( 5*sizeof(float));
+
+	carUpdate = getCar(sim);
+
+	pFLeft = getFrontLeft(carUpdate); /*Capteur 1 */
+	pCenter = getCenter (carUpdate);
+	pFRight = getFrontRight(carUpdate); /*Capteur 2*/
+	pFCenter = middle(pFRight,pFLeft); /*Capteur 3 */
+	pRight = middle(pFRight,getBackRight(carUpdate)); /*Capteur 4 */
+	pLeft = middle(pFLeft,getBackLeft(carUpdate)); /*Capteur 5 */
+
+	TrInUp = getTrackIn(sim->track, sim->sector+1);
+	TrInDown = getTrackIn(sim->track, sim->sector);
+	TrOutUp = getTrackOut(sim->track, sim->sector+1);
+	TrOutDown = getTrackOut(sim->track, sim->sector);
+
+	pInter = intersectPoint (pFLeft , pCenter, TrInUp , TrInDown);
+	if (distance(pInter,pCenter) < distance(pInter,pFLeft)){
+			pInter = intersectPoint (pFLeft , pCenter, TrOutUp , TrOutDown);
+	}
+	c1 = distanceCheck (pInter,pFLeft);
+
+	pInter = intersectPoint (pFRight , pCenter, TrInUp , TrInDown);
+	if (distance(pInter,pCenter) < distance(pInter,pFRight)){
+			pInter = intersectPoint (pFRight , pCenter, TrOutUp , TrOutDown);
+	}
+	c2 = distanceCheck (pInter,pFRight);
+
+	pInter = intersectPoint (pFCenter , pCenter, TrInUp , TrInDown);
+	if (distance(pInter,pCenter) < distance(pInter,pFCenter)){
+			pInter = intersectPoint (pFCenter , pCenter, TrOutUp , TrOutDown);
+	}
+	c3 = distanceCheck (pInter,pFCenter);
+
+	pInter = intersectPoint (pRight , pCenter, TrInUp , TrInDown);
+	if (distance(pInter,pCenter) < distance(pInter,pRight)){
+			pInter = intersectPoint (pRight , pCenter, TrOutUp , TrOutDown);
+	}
+	c4 = distanceCheck (pInter,pRight);
+
+	pInter = intersectPoint (pLeft , pCenter, TrInUp , TrInDown);
+	if (distance(pInter,pCenter) < distance(pInter,pLeft)){
+			pInter = intersectPoint (pLeft , pCenter, TrOutUp , TrOutDown);
+	}
+	c5 = distanceCheck (pInter,pLeft);
+
+	newTabSensors[0] = c1;
+	newTabSensors[1] = c2;
+	newTabSensors[2] = c3;
+	newTabSensors[3] = c4;
+	newTabSensors[4] = c5;
+
+	setSensors(carUpdate , newTabSensors);
+	free (newTabSensors);
 }
-
 
 int detectCheckPointCrossed(Simulation * sim)
 {
