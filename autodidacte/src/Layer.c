@@ -35,8 +35,7 @@ Layer * newInputLayer(int nbNeurons, int nbHiddenNeuron)            /*INPUT LAYE
 	{
 		setNeuron(layer, i, newInputNeuron(nbHiddenNeuron));
 	}
-
-	printf("Layer created\n");
+	
 	return layer;
 }
 
@@ -62,8 +61,6 @@ Layer * newHiddenLayer(int nbNeurons, int nbOutputNeuron)              /*HIDDEN 
 		setNeuron(layer, i, newHiddenNeuron(nbOutputNeuron));
 	}
 
-	printf("Layer created\n");
-
 	return layer;
 }
 
@@ -88,8 +85,6 @@ Layer * newOutputLayer(int nbNeurons)                                  /*OUTPUT 
 	{
 		setNeuron(layer, i, newOutputNeuron());
 	}
-
-	printf("Layer created\n\n");
 
 	return layer;
 }
