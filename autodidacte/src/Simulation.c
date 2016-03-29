@@ -167,7 +167,7 @@ void updateSensors(Simulation * sim, int sector){
 			pInter = intersectPoint (pLeft , pCenter, TrOutUp , TrOutDown);
 	}
 	c5 = distanceCheck (pInter,pLeft);
-
+	printf("%f,%f,%f,%f,%f\n",c1,c2,c3,c4,c5);
 	newTabSensors[0] = c1;
 	newTabSensors[1] = c2;
 	newTabSensors[2] = c3;
@@ -182,7 +182,7 @@ int detectCheckPointCrossed(Simulation * sim)
 	assert(sim != NULL);
 
 	Point * CPin,* CPout;
-	Point * carFL,  * carFR, * carBR;
+	Point * carFL,  * carFR, * carBR, * carBL;
 
 	CPin = getTrackIn(sim->track, sim->sector+1);
 	CPout = getTrackOut(sim->track, sim->sector+1);
@@ -190,8 +190,9 @@ int detectCheckPointCrossed(Simulation * sim)
 	carFL = getFrontLeft(sim->car);
 	carFR = getFrontRight(sim->car);
 	carBR = getBackRight(sim->car);
+	carBL = getBackLeft(sim->car);
 
-	if(intersect(CPin, CPout, carFL, carFR) || intersect(CPin, CPout, carFR, carBR))
+	if(intersect(CPin, CPout, carFR, carBR)||intersect(CPin, CPout,carFL,carBL))
 		return 1;
 	else
 		return 0;
