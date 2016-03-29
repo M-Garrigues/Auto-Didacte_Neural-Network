@@ -79,9 +79,6 @@ void initCar (Car * nCar, Genome * genome, Point * init, float initOrientation, 
 	
 	setX(nCar->frontLeft, getX(init) + width/2);
 	setY(nCar->frontLeft, getY(init) + lenght/2);
-	printf("%f\n", getX(init) + lenght/2);
-	printf("%f\n", getY(init) + width/2);	
-	printCar(nCar);
 
 	setX(nCar->frontLeft, getX(init) + lenght/2);
 	setY(nCar->frontLeft, getY(init) + width/2);
