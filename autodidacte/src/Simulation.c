@@ -341,6 +341,7 @@ void endSimulation(Simulation * sim)
 	sim->track = NULL; // A CHANGER PEUT ETRE, EN FONCTION DE TRACK.
 	sim->initPosition = NULL; // DE MEME
 	sim->initOrientation = 0;
+	sim->fitness = 0;
 
 	free(sim);
 }
