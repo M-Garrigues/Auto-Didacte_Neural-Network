@@ -214,7 +214,7 @@ int selectHigherValue(Layer * layer)
 	int max = 0;
 	int tempValue;
 
-	for (i = 0; i < layer->nbNeurons; ++i)
+	for (i = 1; i < layer->nbNeurons; ++i)
 	{
 		tempValue = getValue(getNeuron(layer,i));
 
