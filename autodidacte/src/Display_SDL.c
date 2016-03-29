@@ -151,18 +151,19 @@ void drawTrack(Track * track,SDL_Renderer * renderer)
 }
 void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 {
+	float const PI = 3.14159265359;
+	float tailleSensor = 60;
 	displayCar(sim->car,imgCar,renderer);
 	drawTrack(sim->track, renderer);
 	drawHitboxCar(sim->car, renderer);
-		SDL_SetRenderDrawColor(renderer, 255, 0, 0,255);
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0,255);
 	drawLine(getTrackIn(sim->track, sim->sector+1),getTrackOut(sim->track, sim->sector+1),renderer);
-	drawLine(getFrontLeft(sim->car),getBackLeft(sim->car),renderer);
-	drawLine(getFrontRight(sim->car),getBackRight(sim->car), renderer);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 255,255);
-	drawLine(getFrontLeft(sim->car), intersectPoint(getFrontLeft(sim->car),getCenter(sim->car),getTrackIn(sim->track,sim->sector+1),getTrackIn(sim->track,sim->sector)),renderer);
-	drawLine(getFrontRight(sim->car), intersectPoint(getFrontRight(sim->car),getCenter(sim->car),getTrackOut(sim->track,sim->sector+1),getTrackOut(sim->track,sim->sector)),renderer);
-	drawLine(middle(getFrontRight(sim->car),getBackRight(sim->car)), intersectPoint(middle(getFrontRight(sim->car),getBackRight(sim->car)),getCenter(sim->car),getTrackOut(sim->track,sim->sector+1),getTrackOut(sim->track,sim->sector)),renderer);
-	drawLine(middle(getFrontLeft(sim->car),getBackLeft(sim->car)), intersectPoint(middle(getFrontLeft(sim->car),getBackLeft(sim->car)),getCenter(sim->car),getTrackIn(sim->track,sim->sector+1),getTrackIn(sim->track,sim->sector)),renderer);
+	drawLine(newPoint(getX(getCenter(getCar(sim)))+cos(-(PI/2) + getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin((-PI/2)+getOrientation(getCar(sim)))*tailleSensor), getCenter(sim->car), renderer); /* flanc gauche */
+	drawLine(newPoint(getX(getCenter(getCar(sim)))+cos((-PI/4) + getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin((-PI/4)+getOrientation(getCar(sim)))*tailleSensor), getCenter(sim->car), renderer); /* coin avant gauche */
+	drawLine(newPoint(getX(getCenter(getCar(sim)))+cos(getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin(getOrientation(getCar(sim)))*tailleSensor), getCenter(sim->car), renderer); /* centre avant */
+	drawLine(newPoint(getX(getCenter(getCar(sim)))+cos((PI/4) + getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin((PI/4)+getOrientation(getCar(sim)))*tailleSensor), getCenter(sim->car), renderer); /* coin avant droit */
+	drawLine(newPoint(getX(getCenter(getCar(sim)))+cos((PI/2) + getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin((PI/2)+getOrientation(getCar(sim)))*tailleSensor),getCenter(sim->car), renderer); /* flanc droit */
 
 
 }
@@ -260,7 +261,7 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
                 }
                 else
                 {
-                	sim = newSimulation(6, gen->tabGenomes[i], track, pInit, initOrient);
+                	sim = newSimulation(1, gen->tabGenomes[i], track, pInit, initOrient);
                     endSimulation(getSimulation(disp));
                     setSimulation(disp, sim);
                     fitness = -1;

@@ -136,10 +136,10 @@ int intersect (Point * A, Point * B , Point * C , Point * D){
         float Ix, Iy, Jx, Jy;
         float Ax, Ay, Bx, By, Cx, Cy, Dx, Dy;
         float m, k;
-
         Ax = getX(A);
         Ay = getY(A);
         Bx = getX(B);
+
         By = getY(B);
         Cx = getX(C);
         Cy = getY(C);
