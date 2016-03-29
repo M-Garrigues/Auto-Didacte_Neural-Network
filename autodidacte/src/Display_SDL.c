@@ -158,6 +158,13 @@ void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 	drawLine(getTrackIn(sim->track, sim->sector+1),getTrackOut(sim->track, sim->sector+1),renderer);
 	drawLine(getFrontLeft(sim->car),getBackLeft(sim->car),renderer);
 	drawLine(getFrontRight(sim->car),getBackRight(sim->car), renderer);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 255,255);
+	drawLine(getFrontLeft(sim->car), intersectPoint(getFrontLeft(sim->car),getCenter(sim->car),getTrackIn(sim->track,sim->sector+1),getTrackIn(sim->track,sim->sector)),renderer);
+	drawLine(getFrontRight(sim->car), intersectPoint(getFrontRight(sim->car),getCenter(sim->car),getTrackOut(sim->track,sim->sector+1),getTrackOut(sim->track,sim->sector)),renderer);
+	drawLine(middle(getFrontRight(sim->car),getBackRight(sim->car)), intersectPoint(middle(getFrontRight(sim->car),getBackRight(sim->car)),getCenter(sim->car),getTrackOut(sim->track,sim->sector+1),getTrackOut(sim->track,sim->sector)),renderer);
+	drawLine(middle(getFrontLeft(sim->car),getBackLeft(sim->car)), intersectPoint(middle(getFrontLeft(sim->car),getBackLeft(sim->car)),getCenter(sim->car),getTrackIn(sim->track,sim->sector+1),getTrackIn(sim->track,sim->sector)),renderer);
+
+
 }
 void loadCarImg(SDL_Surface ** img, char * filename)
 {
