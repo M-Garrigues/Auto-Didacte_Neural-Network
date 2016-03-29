@@ -69,19 +69,16 @@ void initCar (Car * nCar, Genome * genome, Point * init, float initOrientation, 
 	setY(nCar->center, getY(init));
 
 	setX(nCar->frontRight, getX(init) + lenght/2);
-	setY(nCar->frontRight, getY(init) - width/2);
+	setY(nCar->frontRight, getY(init) + width/2);
 
 	setX(nCar->backRight, getX(init) - lenght/2);
-	setY(nCar->backRight, getY(init) - width/2);
+	setY(nCar->backRight, getY(init) + width/2);
 	
 	setX(nCar->backLeft, getX(init) - lenght/2);
-	setY(nCar->backLeft, getY(init) + width/2);
+	setY(nCar->backLeft, getY(init) - width/2);
 	
-	setX(nCar->frontLeft, getX(init) + width/2);
-	setY(nCar->frontLeft, getY(init) + lenght/2);
-
 	setX(nCar->frontLeft, getX(init) + lenght/2);
-	setY(nCar->frontLeft, getY(init) + width/2);
+	setY(nCar->frontLeft, getY(init) - width/2);
 
 	nCar->net = convertToNetwork(genome);
 
