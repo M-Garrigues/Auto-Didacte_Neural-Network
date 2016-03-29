@@ -24,15 +24,18 @@ void testRegressionPOINT();
 int main()
 {
 	FILE * f = fopen("data/track.txt", "r");
-	int tab[3] = {5, 8, 2};
+	int tab[3] = {5, 4, 2};
 	float initOrient = 0;
-	Generation * pGen = newGenerationRandom(10, tab);
+	Generation * pGen = newGenerationRandom(3, tab);
 	Track * pTrack = newTrack();
 	Point * pInit;
 	initTrackFile(pTrack,f);
+	fclose(f);
+	f = fopen("data/firstGen.gen", "w");
+	saveGeneration(pGen, f);
 	srand(time(NULL));
 	pInit = intersectPoint (pTrack->trackIn[0] , pTrack->trackOut[1] , pTrack->trackOut[0] , pTrack->trackIn[1]);
-	displayManagement(pGen , pTrack, pInit, initOrient, 640, 480 , 60, "data/car.png");
+	displayManagement(pGen , pTrack, pInit, initOrient, 640, 480 , 200, "data/car.png");
 	return 0;
 
 }

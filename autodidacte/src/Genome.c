@@ -25,7 +25,7 @@ Genome * newGenomeRandom(int * species)
     assert(pGenome->tabGenes != NULL);
     for(i = 0; i < (pGenome->nbInput + pGenome->nbOutput)*pGenome->nbHidden; i++)
     {
-        setGene(pGenome,i,(rand()/(float)RAND_MAX)*(10) - 5);
+        setGene(pGenome,i,(rand()/(float)RAND_MAX)*(2) - 1);
     }
     return pGenome;
 }

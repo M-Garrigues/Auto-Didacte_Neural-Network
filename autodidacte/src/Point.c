@@ -153,7 +153,6 @@ int intersect (Point * A, Point * B , Point * C , Point * D){
 
         m = (-Ix*Ay + Ix*Cy + Iy*Ax - Iy*Cx)/(Ix*Jy - Iy*Jx);
         k = ( Ax*Jy - Cx*Jy - Jx*Ay + Jx*Cy)/(Ix*Jy - Iy*Jx);
-        printf("\n %f ,%f\n",k,m);
         if((k>=0 && k<=1)&&(m>=0 && m<=1))
             return 1;
         else

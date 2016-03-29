@@ -24,7 +24,6 @@ Simulation * newSimulation(float speed, Genome * genome, Track * track, Point * 
 	Simulation * sim = NULL;
 	sim = malloc(sizeof(Simulation));
 	assert(sim != NULL);
-	printf("orientation %f\n",initOrientation);
 	sim->car = NULL;
 	sim->car = newCar();
 	assert(sim->car != NULL);
@@ -63,22 +62,25 @@ int tickSimulation(Simulation * sim)
 	feedForward(net, tabSensors);
 
 	action = selectHigherValue(out);
-	if(getValue(getNeuron(out, action)) < 1) /*We check if the highest neuron is activated*/
+	if(getValue(getNeuron(out, action)) < 0.5) /*We check if the highest neuron is activated*/
 		action = NONE;/*If not, no action will be done this tick*/
 
 
 	switch (action) {
 
 	case NONE :
+		printf("NONE");
 		moveStraight(sim->car, 1); /* Try different values for moveStraight */
 	 break;
 
 	case RIGHT :
+		printf("RIGHT");
 	 	turnRight(sim->car);
 	 	moveStraight(sim->car, 0.75);
 	 break;
 
 	case LEFT :
+		printf("LEFT");
 		turnLeft(sim->car);
 		moveStraight(sim->car, 0.75);
 	 break;
@@ -86,7 +88,6 @@ int tickSimulation(Simulation * sim)
 
 	if(detectCheckPointCrossed(sim)) /*The car entered a new sector, fitness improves*/
 	{
-		printf("ici");
 		sim->sector++;
 
 		if (!(detectCollision(sim, sim->sector))&&!(detectCollision(sim, sim->sector-1)))
@@ -101,7 +102,6 @@ int tickSimulation(Simulation * sim)
 	{
 		if (!(detectCollision(sim, sim->sector)))
 		{
-			sim->fitness++;
 			return -1;
 		}
 		else
