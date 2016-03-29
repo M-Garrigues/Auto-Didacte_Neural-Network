@@ -152,7 +152,7 @@ void drawTrack(Track * track,SDL_Renderer * renderer)
 void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 {
 	float const PI = 3.14159265359;
-	float tailleSensor = 60;
+	float tailleSensor = 90;
 	displayCar(sim->car,imgCar,renderer);
 	drawTrack(sim->track, renderer);
 	drawHitboxCar(sim->car, renderer);
@@ -160,10 +160,10 @@ void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 	drawLine(getTrackIn(sim->track, sim->sector+1),getTrackOut(sim->track, sim->sector+1),renderer);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 255,255);
 	drawLine(newPoint(getX(getCenter(getCar(sim)))+cos(-(PI/2) + getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin((-PI/2)+getOrientation(getCar(sim)))*tailleSensor), getCenter(sim->car), renderer); /* flanc gauche */
-	/*drawLine(newPoint(getX(getCenter(getCar(sim)))+cos((-PI/4) + getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin((-PI/4)+getOrientation(getCar(sim)))*tailleSensor), getCenter(sim->car), renderer); /* coin avant gauche */
-	/*drawLine(newPoint(getX(getCenter(getCar(sim)))+cos(getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin(getOrientation(getCar(sim)))*tailleSensor), getCenter(sim->car), renderer); /* centre avant */
-	/*drawLine(newPoint(getX(getCenter(getCar(sim)))+cos((PI/4) + getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin((PI/4)+getOrientation(getCar(sim)))*tailleSensor), getCenter(sim->car), renderer); /* coin avant droit */
-	/*drawLine(newPoint(getX(getCenter(getCar(sim)))+cos((PI/2) + getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin((PI/2)+getOrientation(getCar(sim)))*tailleSensor),getCenter(sim->car), renderer); /* flanc droit */
+	drawLine(newPoint(getX(getCenter(getCar(sim)))+cos((-PI/4) + getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin((-PI/4)+getOrientation(getCar(sim)))*tailleSensor), getCenter(sim->car), renderer); /* coin avant gauche */
+	drawLine(newPoint(getX(getCenter(getCar(sim)))+cos(getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin(getOrientation(getCar(sim)))*tailleSensor), getCenter(sim->car), renderer); /* centre avant */
+	drawLine(newPoint(getX(getCenter(getCar(sim)))+cos((PI/4) + getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin((PI/4)+getOrientation(getCar(sim)))*tailleSensor), getCenter(sim->car), renderer); /* coin avant droit */
+	drawLine(newPoint(getX(getCenter(getCar(sim)))+cos((PI/2) + getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin((PI/2)+getOrientation(getCar(sim)))*tailleSensor),getCenter(sim->car), renderer); /* flanc droit */
 
 
 }

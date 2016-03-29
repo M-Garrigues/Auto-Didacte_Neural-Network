@@ -162,7 +162,7 @@ void updateSensors(Simulation * sim, int sector)
 	assert(sim != NULL);
 	float const PI = 3.14159265359;
 	float * tabSensors = malloc(5*sizeof(float));
-	float tailleSensor = 60;
+	float tailleSensor = 90;
 	float a,b,c,d;
 	Point * tOut1;
 	Point * tIn1;
@@ -195,9 +195,9 @@ void updateSensors(Simulation * sim, int sector)
 		/*Si il ya une valeur non nulle a retourner */
 		a = distance(getCenter(sim->car),intersectPoint(tIn1,tIn2,getCenter(sim->car),endSensor1));
 		b = distance(getCenter(sim->car),intersectPoint(tIn2,tIn3,getCenter(sim->car),endSensor1));
-		c = distance(getCenter(sim->car),intersectPoint(tOut1,tOut2,getCenter(sim->car),endSensor1));
-		d = distance(getCenter(sim->car),intersectPoint(tOut2,tOut3,getCenter(sim->car),endSensor1));
-		tabSensors[0] = 1 - minimum(a,b,c,d)/tailleSensor;
+		c = tailleSensor;/*distance(getCenter(sim->car),intersectPoint(tOut1,tOut2,getCenter(sim->car),endSensor1));*/
+		d = tailleSensor;/*distance(getCenter(sim->car),intersectPoint(tOut2,tOut3,getCenter(sim->car),endSensor1));*/
+		tabSensors[0] = minimum(a,b,c,d)/tailleSensor;
 	}
 	else
 	{
@@ -208,9 +208,9 @@ void updateSensors(Simulation * sim, int sector)
 		/*Si il ya une valeur non nulle a retourner */
 		a = distance(getCenter(sim->car),intersectPoint(tIn1,tIn2,getCenter(sim->car),endSensor2));
 		b = distance(getCenter(sim->car),intersectPoint(tIn2,tIn3,getCenter(sim->car),endSensor2));
-		c = distance(getCenter(sim->car),intersectPoint(tOut1,tOut2,getCenter(sim->car),endSensor2));
-		d = distance(getCenter(sim->car),intersectPoint(tOut2,tOut3,getCenter(sim->car),endSensor2));
-		tabSensors[1] = 1 - minimum(a,b,c,d)/tailleSensor;
+		c = tailleSensor; /*distance(getCenter(sim->car),intersectPoint(tOut1,tOut2,getCenter(sim->car),endSensor2));*/
+		d = tailleSensor;/*distance(getCenter(sim->car),intersectPoint(tOut2,tOut3,getCenter(sim->car),endSensor2));*/
+		tabSensors[1] =  minimum(a,b,c,d)/tailleSensor;
 	}
 	else
 	{
@@ -223,7 +223,7 @@ void updateSensors(Simulation * sim, int sector)
 		b = distance(getCenter(sim->car),intersectPoint(tIn2,tIn3,getCenter(sim->car),endSensor3));
 		c = distance(getCenter(sim->car),intersectPoint(tOut1,tOut2,getCenter(sim->car),endSensor3));
 		d = distance(getCenter(sim->car),intersectPoint(tOut2,tOut3,getCenter(sim->car),endSensor3));
-		tabSensors[2] = 1 - minimum(a,b,c,d)/tailleSensor;
+		tabSensors[2] =  minimum(a,b,c,d)/tailleSensor;
 	}
 	else
 	{
@@ -232,11 +232,11 @@ void updateSensors(Simulation * sim, int sector)
 	if(intersect(tIn1,tIn2,getCenter(sim->car),endSensor4)||intersect(tIn2,tIn3,getCenter(sim->car),endSensor4)||intersect(tOut1,tOut2,getCenter(sim->car),endSensor4)||intersect(tOut2,tOut3,getCenter(sim->car),endSensor4))
 	{
 		/*Si il ya une valeur non nulle a retourner */
-		a = distance(getCenter(sim->car),intersectPoint(tIn1,tIn2,getCenter(sim->car),endSensor4));
-		b = distance(getCenter(sim->car),intersectPoint(tIn2,tIn3,getCenter(sim->car),endSensor4));
+		a = tailleSensor; /*distance(getCenter(sim->car),intersectPoint(tIn1,tIn2,getCenter(sim->car),endSensor4));*/
+		b = tailleSensor; /*distance(getCenter(sim->car),intersectPoint(tIn2,tIn3,getCenter(sim->car),endSensor4));*/
 		c = distance(getCenter(sim->car),intersectPoint(tOut1,tOut2,getCenter(sim->car),endSensor4));
 		d = distance(getCenter(sim->car),intersectPoint(tOut2,tOut3,getCenter(sim->car),endSensor4));
-		tabSensors[3] = 1 - minimum(a,b,c,d)/tailleSensor;
+		tabSensors[3] =  minimum(a,b,c,d)/tailleSensor;
 	}
 	else
 	{
@@ -245,11 +245,11 @@ void updateSensors(Simulation * sim, int sector)
 	if(intersect(tIn1,tIn2,getCenter(sim->car),endSensor5)||intersect(tIn2,tIn3,getCenter(sim->car),endSensor5)||intersect(tOut1,tOut2,getCenter(sim->car),endSensor5)||intersect(tOut2,tOut3,getCenter(sim->car),endSensor5))
 	{
 		/*Si il ya une valeur non nulle a retourner */
-		a = distance(getCenter(sim->car),intersectPoint(tIn1,tIn2,getCenter(sim->car),endSensor5));
-		b = distance(getCenter(sim->car),intersectPoint(tIn2,tIn3,getCenter(sim->car),endSensor5));
+		a = tailleSensor; /*distance(getCenter(sim->car),intersectPoint(tIn1,tIn2,getCenter(sim->car),endSensor5));*/
+		b = tailleSensor; /*distance(getCenter(sim->car),intersectPoint(tIn2,tIn3,getCenter(sim->car),endSensor5));*/
 		c = distance(getCenter(sim->car),intersectPoint(tOut1,tOut2,getCenter(sim->car),endSensor5));
 		d = distance(getCenter(sim->car),intersectPoint(tOut2,tOut3,getCenter(sim->car),endSensor5));
-		tabSensors[4] = 1 - minimum(a,b,c,d)/tailleSensor;
+		tabSensors[4] = minimum(a,b,c,d)/tailleSensor;
 	}
 	else
 	{
