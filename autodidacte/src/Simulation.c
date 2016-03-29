@@ -115,18 +115,18 @@ int tickSimulation(Simulation * sim)
 	switch (action) {
 
 	case NONE :
-		/*printf("NONE");*/
+		printf("NONE\n");
 		moveStraight(sim->car, 1); /* Try different values for moveStraight */
 	 break;
 
 	case RIGHT :
-		/*printf("RIGHT");*/
+		printf("RIGHT\n");
 	 	turnRight(sim->car);
 	 	moveStraight(sim->car, 0.75);
 	 break;
 
 	case LEFT :
-		/*printf("LEFT");*/
+		printf("LEFT\n");
 		turnLeft(sim->car);
 		moveStraight(sim->car, 0.75);
 	 break;
@@ -255,11 +255,6 @@ void updateSensors(Simulation * sim, int sector)
 	{
 		tabSensors[4] = 0;
 	}
-	printf("%f\n",tabSensors[0]);
-	printf("%f\n",tabSensors[1]);
-	printf("%f\n",tabSensors[2]);
-	printf("%f\n",tabSensors[3]);
-	printf("%f\n\n",tabSensors[4]);
 	setSensors(sim->car, tabSensors);
 	deletePoint(endSensor1);
 	deletePoint(endSensor2);
