@@ -213,8 +213,9 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 	if(initSDL())
     {
         SDL_Event event;
-        Simulation * sim = newSimulation(1 ,gen->tabGenomes[0], track, pInit, initOrient);
+        Simulation * sim = newSimulation(6 ,gen->tabGenomes[0], track, pInit, initOrient);
         Display_SDL * disp = newDisplay_SDL(sim,x,y,fps,file);
+        FILE * f = fopen("data/inProgGen.gen", "w");
         int ticks = SDL_GetTicks();
         int fitness = -1;
         int i = 0; /* indique le genome en cours de simulation */
@@ -241,17 +242,18 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
             }
             else
             {
-            	printf("%d\n",i);
                 setFitness(gen->tabGenomes[i],fitness);
                 i++;
                 if(i == getNbSubject(gen))
                 {
+                	saveGeneration(gen , f);
                 	nextGeneration(gen);
-                    i = 0;
+                    i = 1;
+
                 }
                 else
                 {
-                	sim = newSimulation(2, gen->tabGenomes[i], track, pInit, initOrient);
+                	sim = newSimulation(6, gen->tabGenomes[i], track, pInit, initOrient);
                     endSimulation(getSimulation(disp));
                     setSimulation(disp, sim);
                     fitness = -1;
