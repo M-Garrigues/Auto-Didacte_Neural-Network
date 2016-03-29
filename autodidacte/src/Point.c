@@ -219,28 +219,39 @@ int intersect (Point * p1 , Point * p2 , Point * p3 , Point * p4){
 
 }
 
-Point * intersectPoint (Point * p1 , Point * p2 , Point * p3 , Point * p4){
+Point * intersectPoint (Point * A, Point * B , Point * C , Point * D){
 
-    float a1, b1 , a2 , b2, xInter , yInter;
-    Point * pointInter;
-    /* y = ax+b*/
-    a1 = (getY(p2) - getY(p1)) / (getX(p2) - getX(p1));
-    b1 = getY(p1) - a1 * getX(p1);
+        float Ix, Iy, Jx, Jy;
+        float Ax, Ay, Bx, By, Cx, Cy, Dx, Dy;
+        float m;
+        Point * P;
 
-    a2 = (getY(p4) - getY(p3)) / (getX(p4) - getX(p3));
-    b2 = getY(p3) - a2 * getX(p3);
+        P = malloc(sizeof(Point));
 
-    xInter = (b1 - b2)/(a2 - a1);
-    yInter = a1 * xInter + b1;
-    pointInter = newPoint (xInter,yInter);
-    if (((xInter <= getX(p3))&&(xInter >= getX(p4)))||((xInter <= getX(p4))&&(xInter >= getX(p3))))
-    {
-    	return pointInter;
+        Ax = getX(A);
+        Ay = getY(A);
+        Bx = getX(B);
+        By = getY(B);
+        Cx = getX(C);
+        Cy = getY(C);
+        Dx = getX(D);
+        Dy = getY(D);
+
+        Ix = (Ax-Bx);
+        Iy = (Ay-By);
+        Jx = (Cx-Dx);
+        Jy = (Cy-Dy);
+
+        m = -(-Ix*Ay + Ix*Cy + Iy*Ax - Iy*Cx)/(Ix*Jy - Iy*Jx);
+      
+
+        setX(P, Cx + m* Jx);
+        setY(P, Cy + m* Jy);
+
+        return P;
     }
-    else
-    	return newPoint (10000,10000);
 
-}
+
 
 /* Point destructor */
 void deletePoint(Point * p)
