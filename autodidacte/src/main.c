@@ -15,32 +15,32 @@
 #include "Display_SDL.h"
 #include "time.h"
 
-void regressionTestANN();
+/*void regressionTestANN();
 void printNetwork(Network * net);
 void printLayer(Layer * layer);
 void testRegressionPOINT();
-
+*/
 
 int main()
 {
 	FILE * f = fopen("data/track.txt", "r");
 	int tab[3] = {5, 4, 2};
 	float initOrient = 0;
-	Generation * pGen = newGenerationRandom(3, tab);
+	srand(time(NULL));
+	Generation * pGen = newGenerationRandom(15, tab);
 	Track * pTrack = newTrack();
 	Point * pInit;
 	initTrackFile(pTrack,f);
 	fclose(f);
 	f = fopen("data/firstGen.gen", "w");
 	saveGeneration(pGen, f);
-	srand(time(NULL));
 	pInit = intersectPoint (pTrack->trackIn[0] , pTrack->trackOut[1] , pTrack->trackOut[0] , pTrack->trackIn[1]);
 	displayManagement(pGen , pTrack, pInit, initOrient, 640, 480 , 200, "data/car.png");
 	return 0;
 
 }
 
-void regressionTestANN(void)
+/*void regressionTestANN(void)
 {
 	float tabFloat[5] = {1, 0.5, -2, 0.8, -0.3};
 
@@ -123,3 +123,4 @@ void testRegressionPOINT()
 	printf("\n%f, %f\n", getX(intersectPoint(p1,p2,p3,p4)), getY(intersectPoint(p1,p2,p3,p4)));
 }
 
+*/
