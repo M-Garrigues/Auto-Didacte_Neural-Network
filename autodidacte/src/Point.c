@@ -62,11 +62,11 @@ float distance (Point * p1, Point * p2){
 }
 
 float distanceCheck (Point * p1,Point * p2){
-	if (distance(p1,p2) >= 20)
+	if (distance(p1,p2) >= 30)
 	{
 		return 0;
 	}
-	else return (distance(p1,p2));
+	else return (distance(p1,p2)/30);
 }
 
 Point * rotation (Point * pointInit, Point * centre ,float angle){
