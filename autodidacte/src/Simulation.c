@@ -67,7 +67,7 @@ int tickSimulation(Simulation * sim)
 
 printf("%d\n", action);
 
-action = LEFT;
+action = 2;
 	switch (action) {
 
 	case NONE :
