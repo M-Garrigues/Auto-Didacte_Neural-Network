@@ -10,6 +10,7 @@
 #include "stdlib.h"
 #include "assert.h"
 #include "stdio.h"
+#include "math.h"
 
 
 
@@ -117,8 +118,8 @@ void updateSensors(Simulation * sim, int sector){
 	Car * carUpdate;
 	Point * pLeft , * pRight , * pCenter;
 	Point * pFLeft , * pFRight , * pFCenter ;
-	Point * pInter;
-	Point * TrInUp,* TrInDown, * TrOutUp, * TrOutDown;
+	Point * pInter , *pInter2 , *pInter3 , *pInter4;
+	Point * TrInUp,* TrInDown, * TrOutUp, * TrOutDown, *TrInNext, *TrOutNext;
 
 	newTabSensors = malloc ( 5*sizeof(float));
 
@@ -136,45 +137,56 @@ void updateSensors(Simulation * sim, int sector){
 	TrInDown = getTrackIn(sim->track, sim->sector);
 	TrOutUp = getTrackOut(sim->track, sim->sector+1);
 	TrOutDown = getTrackOut(sim->track, sim->sector);
+	TrInNext = getTrackIn(sim->track, sim->sector+2);
+	TrOutNext = getTrackOut(sim->track, sim->sector+2);
 
 	pInter = intersectPoint (pFLeft , pCenter, TrInUp , TrInDown);
-	if (distance(pInter,pCenter) < distance(pInter,pFLeft)){
-			pInter = intersectPoint (pFLeft , pCenter, TrOutUp , TrOutDown);
-	}
-	printf("",pInter->x,pInter->y);
-	c1 = distanceCheck (pInter,pFLeft);
+	pInter2 = intersectPoint (pFLeft , pCenter, TrOutUp , TrOutDown);
+	pInter3 = intersectPoint (pFLeft , pCenter, TrOutUp , TrOutNext);
+	pInter4 = intersectPoint (pFLeft , pCenter, TrInUp , TrInNext);
 
-	pInter = intersectPoint (pFRight , pCenter, TrInUp , TrInDown);
-	if (distance(pInter,pCenter) < distance(pInter,pFRight)){
-			pInter = intersectPoint (pFRight , pCenter, TrOutUp , TrOutDown);
-	}
-	c2 = distanceCheck (pInter,pFRight);
+	c1 = distanceCheck(minimum(distance(pInter,pFLeft),distance(pInter2,pFLeft),distance(pInter3,pFLeft),distance(pInter4,pFLeft)));
+
+	pInter = intersectPoint (pFLeft , pCenter, TrInUp , TrInDown);
+	pInter2 = intersectPoint (pFLeft , pCenter, TrOutUp , TrOutDown);
+	pInter3 = intersectPoint (pFLeft , pCenter, TrOutUp , TrOutNext);
+	pInter4 = intersectPoint (pFLeft , pCenter, TrInUp , TrInNext);
+
+	c2 = distanceCheck(minimum(distance(pInter,pFLeft),distance(pInter2,pFLeft),distance(pInter3,pFLeft),distance(pInter4,pFLeft)));
 
 	pInter = intersectPoint (pFCenter , pCenter, TrInUp , TrInDown);
-	if (distance(pInter,pCenter) < distance(pInter,pFCenter)){
-			pInter = intersectPoint (pFCenter , pCenter, TrOutUp , TrOutDown);
-	}
-	c3 = distanceCheck (pInter,pFCenter);
+	pInter2 = intersectPoint (pFCenter , pCenter, TrOutUp , TrOutDown);
+	pInter3 = intersectPoint (pFCenter , pCenter, TrOutUp , TrOutNext);
+	pInter4 = intersectPoint (pFCenter , pCenter, TrInUp , TrInNext);
+
+	c3 = distanceCheck(minimum(distance(pInter,pFCenter),distance(pInter2,pFCenter),distance(pInter3,pFCenter),distance(pInter4,pFCenter)));
 
 	pInter = intersectPoint (pRight , pCenter, TrInUp , TrInDown);
-	if (distance(pInter,pCenter) < distance(pInter,pRight)){
-			pInter = intersectPoint (pRight , pCenter, TrOutUp , TrOutDown);
-	}
-	c4 = distanceCheck (pInter,pRight);
+	pInter2 = intersectPoint (pRight , pCenter, TrOutUp , TrOutDown);
+	pInter3 = intersectPoint (pRight , pCenter, TrOutUp , TrOutNext);
+	pInter4 = intersectPoint (pRight , pCenter, TrInUp , TrInNext);
+
+	c4 = distanceCheck(minimum(distance(pInter,pRight),distance(pInter2,pRight),distance(pInter3,pRight),distance(pInter4,pRight)));
 
 	pInter = intersectPoint (pLeft , pCenter, TrInUp , TrInDown);
-	if (distance(pInter,pCenter) < distance(pInter,pLeft)){
-			pInter = intersectPoint (pLeft , pCenter, TrOutUp , TrOutDown);
-	}
-	c5 = distanceCheck (pInter,pLeft);
-	printf("%f,%f,%f,%f,%f\n",c1,c2,c3,c4,c5);
+	pInter2 = intersectPoint (pLeft , pCenter, TrOutUp , TrOutDown);
+	pInter3 = intersectPoint (pLeft , pCenter, TrOutUp , TrOutNext);
+	pInter4 = intersectPoint (pLeft , pCenter, TrInUp , TrInNext);
+
+	c5 = distanceCheck(minimum(distance(pInter,pLeft),distance(pInter2,pLeft),distance(pInter3,pLeft),distance(pInter4,pLeft)));
+
 	newTabSensors[0] = c1;
 	newTabSensors[1] = c2;
 	newTabSensors[2] = c3;
 	newTabSensors[3] = c4;
 	newTabSensors[4] = c5;
-
+	printf ("%f\n",c1);
+	printf ("%f\n",c2);
+	printf ("%f\n",c3);
+	printf ("%f\n",c4);
+	printf ("%f\n",c5);
 	setSensors(carUpdate , newTabSensors);
+	free (pInter);
 }
 
 int detectCheckPointCrossed(Simulation * sim)

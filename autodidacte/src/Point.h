@@ -23,9 +23,10 @@ void setY(Point * p, float newY);
 /* Point functions */
 Point * rotation (Point * pointInit, Point * centre ,float angle);
 float distance (Point * p1, Point * p2);
-float distanceCheck (Point * p1, Point * p2);
+float distanceCheck (float f);
 Point * intersectPoint (Point * p1 , Point * p2 , Point * p3 , Point * p4);
 Point * middle (Point * p1, Point * p2);
+float minimum (float f1, float f2, float f3, float f4);
 /* droites p1p2 et p3p4 */
 int intersect (Point * p1 , Point * p2 , Point * p3 , Point * p4);
 
