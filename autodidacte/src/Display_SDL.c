@@ -169,7 +169,7 @@ void loadCarImg(SDL_Surface ** img, char * filename)
 }
 void cleanScreen(Display_SDL * display)
 {
-	SDL_SetRenderDrawColor(display->renderer, 50, 50, 50, 255);
+	SDL_SetRenderDrawColor(display->renderer, 0, 0, 0, 255);
    	SDL_RenderClear(display->renderer);
 }
 
