@@ -27,8 +27,7 @@ Simulation * newSimulation(float speed, Genome * genome, Track * track, Point * 
 	sim->car = NULL;
 	sim->car = newCar();
 	assert(sim->car != NULL);
-	initCar(sim->car, genome, initPosition, initOrientation, 50 , 25);/* Le point initial ne pourrait pas etre dans track ? 
-	a priori ca ne changera pas sur un circuit donné ?  meme chose pour init orientation Valentin*/
+	initCar(sim->car, genome, initPosition, initOrientation, 50 , 25);
 	sim->speed = speed;
 
 
@@ -36,7 +35,7 @@ Simulation * newSimulation(float speed, Genome * genome, Track * track, Point * 
 	sim->initPosition = initPosition;
 	sim->initOrientation = initOrientation;
 
-	sim->fitness = 0;
+	sim->fitness = 1;
 
 	sim->sector = 0;
 
@@ -62,25 +61,28 @@ int tickSimulation(Simulation * sim)
 	feedForward(net, tabSensors);
 
 	action = selectHigherValue(out);
-	if(getValue(getNeuron(out, action)) < 0.5) /*We check if the highest neuron is activated*/
-		action = NONE;/*If not, no action will be done this tick*/
+	printf("%f    %f    ",getValue(getNeuron(out, LEFT)),getValue(getNeuron(out, RIGHT)));
+	/*if(getValue(getNeuron(out, action)) < 0.3) /*We check if the highest neuron is activated
+		{action = NONE;}If not, no action will be done this tick*/
 
+printf("%d\n", action);
 
+action = LEFT;
 	switch (action) {
 
 	case NONE :
-		printf("NONE");
+		/*printf("NONE");*/
 		moveStraight(sim->car, 1); /* Try different values for moveStraight */
 	 break;
 
 	case RIGHT :
-		printf("RIGHT");
+		/*printf("RIGHT");*/
 	 	turnRight(sim->car);
 	 	moveStraight(sim->car, 0.75);
 	 break;
 
 	case LEFT :
-		printf("LEFT");
+		/*printf("LEFT");*/
 		turnLeft(sim->car);
 		moveStraight(sim->car, 0.75);
 	 break;
