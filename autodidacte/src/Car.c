@@ -87,6 +87,7 @@ void initCar (Car * nCar, Genome * genome, Point * init, float initOrientation, 
 
 	changeOrientation(nCar, initOrientation);
 
+	printCar(nCar);
 }
 
 void printCar (Car * car) {
@@ -134,14 +135,14 @@ void changeOrientation (Car * car , float angle) {
 
 void turnLeft (Car * car) {
 	assert(car != NULL);
-	changeOrientation(car, PI/16);
+	changeOrientation(car, PI/128);
 	printCar(car);
 
 }
 
 void turnRight (Car * car) {
 	assert(car != NULL);	
-	changeOrientation(car, -PI/16);
+	changeOrientation(car, -PI/128);
 	printCar(car);
 }
 

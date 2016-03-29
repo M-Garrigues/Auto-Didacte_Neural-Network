@@ -24,7 +24,7 @@ Simulation * newSimulation(float speed, Genome * genome, Track * track, Point * 
 	Simulation * sim = NULL;
 	sim = malloc(sizeof(Simulation));
 	assert(sim != NULL);
-
+	printf("orientation %f\n",initOrientation);
 	sim->car = NULL;
 	sim->car = newCar();
 	assert(sim->car != NULL);
