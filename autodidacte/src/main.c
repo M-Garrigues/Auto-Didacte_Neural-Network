@@ -28,6 +28,12 @@ int main()
 	Generation * pGen = newGenerationRandom(10, tab);
 	Track * pTrack = newTrack();
 	Point * pInit;
+	Point *p1, *p2, *p3, *p4;
+	p1 = newPoint(0,0);
+	p2 = newPoint(10,10);
+	p3 = newPoint(0,5);
+	p4 = newPoint(5,0);
+	printf("\n%d\n", intersect(p1,p2,p3,p4));
 	initTrackFile(pTrack,f);
 	srand(time(NULL));
 	pInit = intersectPoint (pTrack->trackIn[0] , pTrack->trackOut[1] , pTrack->trackOut[0] , pTrack->trackIn[1]);

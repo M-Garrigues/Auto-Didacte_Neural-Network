@@ -180,11 +180,11 @@ void updateSensors(Simulation * sim, int sector){
 	newTabSensors[2] = c3;
 	newTabSensors[3] = c4;
 	newTabSensors[4] = c5;
-	printf ("%f\n",c1);
+	/*printf ("%f\n",c1);
 	printf ("%f\n",c2);
 	printf ("%f\n",c3);
 	printf ("%f\n",c4);
-	printf ("%f\n\n",c5);
+	printf ("%f\n\n",c5);*/
 	setSensors(carUpdate , newTabSensors);
 	free (pInter);
 }
@@ -203,7 +203,8 @@ int detectCheckPointCrossed(Simulation * sim)
 	carFR = getFrontRight(sim->car);
 	carBR = getBackRight(sim->car);
 	carBL = getBackLeft(sim->car);
-
+	/*printf("sector : %d\n CarBL : %f ,%f\n CarFL : %f,%f\n Check :%f,%f\n%f,%f\n\n",sim->sector,carBL->x,carBL->y,carFL->x,carFL->y,CPin->x,CPin->y,CPout->x,CPout->y);
+	printf("\n Interesct : %d \n",intersect(CPin,CPout,carFL,carBL));*/
 	if(intersect(CPin, CPout, carFR, carBR)||intersect(CPin, CPout,carFL,carBL))
 		return 1;
 	else
