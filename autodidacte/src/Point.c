@@ -131,93 +131,34 @@ float minimum (float f1, float f2, float f3, float f4){
 }
 
 /* droites p1p2 et p3p4 */
-int intersect (Point * p1 , Point * p2 , Point * p3 , Point * p4){
+int intersect (Point * A, Point * B , Point * C , Point * D){
 
-    float a1, b1 , a2 , b2, xInter,yInter;
-    if(getX(p1) == getX(p2))
-    {
-    	
-    	if(getX(p3) == getX(p4))
-    		return 0;
-    	else
-    	{
-    		if(getY(p3) == getY(p4))
-    		{
-    			xInter = getX(p1);
-    			yInter = getY(p3);
-    			if ((((xInter <= getX(p3))&&(xInter >= getX(p4)))||((xInter <= getX(p4))&&(xInter >= getX(p3))))&&(((yInter <= getY(p1))&&(yInter >= getY(p2)))||((yInter <= getY(p2))&&(yInter >= getY(p1)))))
-    			{
-    				return 1;
-    			}
-    			else
-    				return 0;
-    		} 
-    		else
-    		{
-    			a2 = (getY(p4) - getY(p3)) / (getX(p4) - getX(p3));
-    			b2 = getY(p3) - a2 * getX(p3);
-    			xInter = (getX(p1) - b2)/a2;
-    			if (((xInter <= getX(p3))&&(xInter >= getX(p4)))||((xInter <= getX(p4))&&(xInter >= getX(p3))))
-    			{
-    				return 1;
-    			}
-    			else
-  					return 0;
-    		}
-    	}
+        float Ix, Iy, Jx, Jy;
+        float Ax, Ay, Bx, By, Cx, Cy, Dx, Dy;
+        float m, k;
 
-    }
-    else if((getX(p3) == getX(p4)))
-    {
-    	if(getY(p1) == getY(p2))
-    	{
-    		xInter = getX(p3);
-    		yInter = getY(p1);
-    		if ((((yInter <= getY(p3))&&(yInter >= getY(p4)))||((yInter <= getY(p4))&&(yInter >= getY(p3))))&&(((xInter <= getX(p1))&&(xInter >= getX(p2)))||((xInter <= getX(p2))&&(xInter >= getX(p1)))))
-    		{
-    			return 1;
-    		}
-    		else return 0;	
+        Ax = getX(A);
+        Ay = getY(A);
+        Bx = getX(B);
+        By = getY(B);
+        Cx = getX(C);
+        Cy = getY(C);
+        Dx = getX(D);
+        Dy = getY(D);
 
-    	}
-    	else{
-    	a1 = (getY(p2) - getY(p1)) / (getX(p2) - getX(p1));
-    	b1 = getY(p1) - a1 * getX(p1);
-    	xInter =(getX(p3) - b1)/a1;
-    	if (((xInter <= getX(p1))&&(xInter >= getX(p2)))||((xInter <= getX(p2))&&(xInter >= getX(p1))))
-    	{
-    		return 1;
-    	}
-    	else
-    	{
-    		return 0;
-    	}
+        Ix = (Ax-Bx);
+        Iy = (Ay-By);
+        Jx = (Cx-Dx);
+        Jy = (Cy-Dy);
+
+        m = -(-Ix*Ay + Ix*Cy + Iy*Ax - Iy*Cx)/(Ix*Jy - Iy*Jx);
+        k = -(Ax * Jy - Cx*Jy - Jx*Ay +Jx*Cy)/(Ix*Jy - Iy*Jx);
+        if((k>0 && k<1)&&(m>0 && m<1))
+            return 1;
+        else
+            return 0;
     }
 
-    }
-    else
-    {
-    /* y = ax+b*/
-   		a1 = (getY(p2) - getY(p1)) / (getX(p2) - getX(p1));
-    	b1 = getY(p1) - a1 * getX(p1);
-
-    	a2 = (getY(p4) - getY(p3)) / (getX(p4) - getX(p3));
-    	b2 = getY(p3) - a2 * getX(p3);
-
-    	xInter = (b1 - b2)/(a2 - a1);
-
-    	if (((xInter <= getX(p1))&&(xInter >= getX(p2)))||((xInter <= getX(p2))&&(xInter >= getX(p1))))
-    	{
-        	if (((xInter <= getX(p3))&&(xInter >= getX(p4)))||((xInter <= getX(p4))&&(xInter >= getX(p3))))
-        	{
-            	return 1;
-        	}
-        	else return 0;
-    	}
-    	return 0;
-	}
-
-}
 
 Point * intersectPoint (Point * A, Point * B , Point * C , Point * D){
 
@@ -250,7 +191,6 @@ Point * intersectPoint (Point * A, Point * B , Point * C , Point * D){
 
         return P;
     }
-
 
 
 /* Point destructor */
