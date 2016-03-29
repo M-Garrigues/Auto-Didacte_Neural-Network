@@ -55,13 +55,10 @@ int tickSimulation(Simulation * sim)
 	Layer * out;
 
 	sim->nbTicks++;
-
 	updateSensors(sim, sim->sector);	
-
 	tabSensors = getSensors(sim->car);
 	net = getCarNetwork(sim->car);
 	out = getLayer(net, OUTPUT);
-
 	feedForward(net, tabSensors);
 
 	action = selectHigherValue(out);
@@ -126,6 +123,7 @@ void updateSensors(Simulation * sim, int sector){
 	newTabSensors = malloc ( 5*sizeof(float));
 
 	carUpdate = getCar(sim);
+	assert(getSensors(carUpdate)!=NULL);
 	free (getSensors(carUpdate));
 	pFLeft = getFrontLeft(carUpdate); /*Capteur 1 */
 	pCenter = getCenter (carUpdate);
