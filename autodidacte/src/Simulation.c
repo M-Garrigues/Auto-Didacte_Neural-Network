@@ -12,6 +12,54 @@
 #include "stdio.h"
 #include "math.h"
 
+void printLayer(Layer * layer)
+{
+	int i,j;
+
+	assert(layer != NULL);
+
+	if(layer->type == INPUT || layer->type == HIDDEN)
+	{
+		if (layer->type == INPUT)
+			printf("INPUT LAYER:\n\n");
+
+		if (layer->type == HIDDEN)
+			printf("HIDDEN LAYER:\n\n");
+
+		for (i = 0; i < layer->nbNeurons; ++i)
+		{
+			printf("Neuron %d: %f  =====  ",i, layer->tabNeurons[i]->value);
+
+			for (j = 0; j < layer->tabNeurons[0]->nbWeights; ++j)
+			{
+				printf("W%d: %f | ", j, layer->tabNeurons[i]->tabWeights[j]);
+			}
+			printf("\n");
+			
+		}
+
+		printf("\n\n ********************************\n\n");
+	}
+
+	else
+	{
+		printf("OUTPUT LAYER:\n\n");
+
+		for (i = 0; i < layer->nbNeurons; ++i)
+		{
+			printf("Neuron %d: %f     ",i, layer->tabNeurons[i]->value);
+		}
+		printf("\n\n ********************************\n\n");
+	}
+}
+
+
+void printNetwork(Network * net)
+{
+	printLayer(net->tabLayers[INPUT]);
+	printLayer(net->tabLayers[HIDDEN]);
+	printLayer(net->tabLayers[OUTPUT]);
+}
 
 
 
@@ -59,15 +107,14 @@ int tickSimulation(Simulation * sim)
 	net = getCarNetwork(sim->car);
 	out = getLayer(net, OUTPUT);
 	feedForward(net, tabSensors);
+	printNetwork(net);
 
 	action = selectHigherValue(out);
 	printf("%f    %f    ",getValue(getNeuron(out, LEFT)),getValue(getNeuron(out, RIGHT)));
-	/*if(getValue(getNeuron(out, action)) < 0.3) /*We check if the highest neuron is activated
-		{action = NONE;}If not, no action will be done this tick*/
+	if(getValue(getNeuron(out, action)) < 0.3) /*We check if the highest neuron is activated*/
+		{action = NONE;}//If not, no action will be done this tick
 
 printf("%d\n", action);
-
-action = 2;
 	switch (action) {
 
 	case NONE :
@@ -161,8 +208,8 @@ void updateSensors(Simulation * sim, int sector){
 	pInter3 = intersectPoint (pFCenter , pCenter, TrOutUp , TrOutNext);
 	pInter4 = intersectPoint (pFCenter , pCenter, TrInUp , TrInNext);
 
-	c3 = distanceCheck(minimum(distance(pInter,pFCenter),distance(pInter2,pFCenter),distance(pInter3,pFCenter),distance(pInter4,pFCenter)));
-
+	c3 = 0; /*distanceCheck(minimum(distance(pInter,pFCenter),distance(pInter2,pFCenter),distance(pInter3,pFCenter),distance(pInter4,pFCenter)));
+*/
 	pInter = intersectPoint (pRight , pCenter, TrInUp , TrInDown);
 	pInter2 = intersectPoint (pRight , pCenter, TrOutUp , TrOutDown);
 	pInter3 = intersectPoint (pRight , pCenter, TrOutUp , TrOutNext);
