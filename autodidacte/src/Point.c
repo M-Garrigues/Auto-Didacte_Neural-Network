@@ -61,12 +61,12 @@ float distance (Point * p1, Point * p2){
 	return distance;
 }
 
-float distanceCheck (Point * p1,Point * p2){
-	if (distance(p1,p2) >= 30)
+float distanceCheck (float f){
+	if (f >=40)
 	{
 		return 0;
 	}
-	else return (distance(p1,p2)/30);
+	else return (1-f/40);
 }
 
 Point * rotation (Point * pointInit, Point * centre ,float angle){
@@ -87,6 +87,47 @@ Point * rotation (Point * pointInit, Point * centre ,float angle){
 	setY(pointFinal, pfY);
 
 	return pointFinal;	
+}
+
+float minimum (float f1, float f2, float f3, float f4){
+	if (f1 < f2)
+	{
+		if (f1 < f3)
+		{
+			if (f1 < f4)
+			{
+				return f1;
+			}
+			else return f4;
+		}
+		else
+		{
+			if (f3 < f4)
+			{
+				return f3;
+			}
+			else return f4;
+		}
+	}
+	else 
+	{
+		if (f2 < f3)
+		{
+			if (f2 < f4)
+			{
+				return f2;
+			}
+			else return f4;
+		}
+		else
+		{
+			if (f3 < f4)
+			{
+				return f3;
+			}
+			else return f4;
+		}
+	}
 }
 
 /* droites p1p2 et p3p4 */
