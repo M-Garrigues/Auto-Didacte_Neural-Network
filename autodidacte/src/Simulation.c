@@ -152,7 +152,7 @@ void updateSensors(Simulation * sim, int sector){
 	pInter3 = intersectPoint (pFLeft , pCenter, TrOutUp , TrOutNext);
 	pInter4 = intersectPoint (pFLeft , pCenter, TrInUp , TrInNext);
 
-	c2 = distanceCheck(minimum(distance(pInter,pFLeft),distance(pInter2,pFLeft),distance(pInter3,pFLeft),distance(pInter4,pFLeft)));
+	c2 = distanceCheck(minimum(distance(pInter,pFRight),distance(pInter2,pFRight),distance(pInter3,pFRight),distance(pInter4,pFRight)));
 
 	pInter = intersectPoint (pFCenter , pCenter, TrInUp , TrInDown);
 	pInter2 = intersectPoint (pFCenter , pCenter, TrOutUp , TrOutDown);
@@ -184,7 +184,7 @@ void updateSensors(Simulation * sim, int sector){
 	printf ("%f\n",c2);
 	printf ("%f\n",c3);
 	printf ("%f\n",c4);
-	printf ("%f\n",c5);
+	printf ("%f\n\n",c5);
 	setSensors(carUpdate , newTabSensors);
 	free (pInter);
 }

@@ -135,14 +135,14 @@ void changeOrientation (Car * car , float angle) {
 
 void turnLeft (Car * car) {
 	assert(car != NULL);
-	changeOrientation(car, PI/128);
+	changeOrientation(car, PI/64);
 	printCar(car);
 
 }
 
 void turnRight (Car * car) {
 	assert(car != NULL);	
-	changeOrientation(car, -PI/128);
+	changeOrientation(car, -PI/64);
 	printCar(car);
 }
 
