@@ -148,16 +148,6 @@ void drawTrack(Track * track,SDL_Renderer * renderer)
 		drawLine(track->trackOut[i-1],track->trackOut[i],renderer);
 	drawLine(track->trackIn[0],track->trackIn[track->nbPoints-1],renderer);
 	drawLine(track->trackOut[0],track->trackOut[track->nbPoints-1],renderer);
-	drawLine(track->trackIn[0],track->trackOut[0],renderer);
-	drawLine(track->trackIn[1],track->trackOut[1],renderer);
-	drawLine(track->trackIn[2],track->trackOut[2],renderer);
-	drawLine(track->trackIn[3],track->trackOut[3],renderer);
-	drawLine(track->trackIn[4],track->trackOut[4],renderer);
-	drawLine(track->trackIn[5],track->trackOut[5],renderer);
-	drawLine(track->trackIn[6],track->trackOut[6],renderer);
-	drawLine(track->trackIn[7],track->trackOut[7],renderer);
-	drawLine(track->trackIn[8],track->trackOut[8],renderer);
-	drawLine(track->trackIn[9],track->trackOut[9],renderer);
 }
 void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 {
@@ -225,7 +215,7 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
         Display_SDL * disp = newDisplay_SDL(sim,x,y,fps,file);
         int ticks = SDL_GetTicks();
         int fitness = -1;
-        int i; /* indique le genome en cours de simulation */
+        int i = 0; /* indique le genome en cours de simulation */
         int continuer = 1;
         while(continuer)
         {
@@ -244,26 +234,25 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 	        if(fitness == -1)
             {
               	fitness = tickSimulation(disp->sim);
-              	/*printf("1: %f:%f::%f::%f::%f\n",getSensors(disp->sim->car)[0],getSensors(disp->sim->car)[1],getSensors(disp->sim->car)[2],getSensors(disp->sim->car)[3],getSensors(disp->sim->car)[4]);
-				*/
-				printf("%d\n",getSector(disp->sim));
               	cleanScreen(disp);
-	            display(disp);
+              	display(disp);
             }
             else
             {
+            	printf("%d\n",i);
                 setFitness(gen->tabGenomes[i],fitness);
                 i++;
                 if(i == getNbSubject(gen))
                 {
-                    nextGeneration(gen);
+                	nextGeneration(gen);
                     i = 0;
                 }
                 else
                 {
-                    sim = newSimulation(1, gen->tabGenomes[i], track, pInit, initOrient);
+                	sim = newSimulation(2, gen->tabGenomes[i], track, pInit, initOrient);
                     endSimulation(getSimulation(disp));
                     setSimulation(disp, sim);
+                    fitness = -1;
                 }
             }
 

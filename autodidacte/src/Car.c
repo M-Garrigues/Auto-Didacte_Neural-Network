@@ -54,6 +54,9 @@ Car * newCar () {
 	nCar->net = malloc(sizeof(Network));
 	assert(nCar->net != NULL);
 
+	nCar->tabSensors = malloc(sizeof(float)*5);
+	assert(nCar->tabSensors !=NULL);
+
 	return nCar;
 }
 
@@ -110,7 +113,7 @@ void deleteCar (Car * car) {
 	deletePoint(car->backRight);
 	deletePoint(car->backLeft);
 	deletePoint(car->center);
-
+	free(car->tabSensors);
 	deleteNetwork(car->net);
 	free(car);
 }
