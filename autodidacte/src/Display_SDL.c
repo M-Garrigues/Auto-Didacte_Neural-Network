@@ -152,19 +152,51 @@ void drawTrack(Track * track,SDL_Renderer * renderer)
 void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 {
 	float const PI = 3.14159265359;
-	float tailleSensor = 90;
+	float tailleSensor = 50;
+	Point * beginSensor1 = middle(getBackLeft(sim->car),getFrontLeft(sim->car));
+	Point * beginSensor2 = getFrontLeft(sim->car);
+	Point * beginSensor3 = middle(getFrontLeft(sim->car),getFrontRight(sim->car));
+	Point * beginSensor4 = getFrontRight(sim->car);
+	Point * beginSensor5 = middle(getBackRight(sim->car), getFrontRight(sim->car));
+	Point * endSensor1 = newPoint(getX(beginSensor1)+cos(-(PI/2) + getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor1)+sin((-PI/2)+getOrientation(getCar(sim)))*tailleSensor);; /* flanc gauche */
+	Point * endSensor2 = newPoint(getX(beginSensor2)+cos((-PI/4) + getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor2)+sin((-PI/4)+getOrientation(getCar(sim)))*tailleSensor); /* coin avant gauche */
+	Point * endSensor3 = newPoint(getX(beginSensor3)+cos(getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor3)+sin(getOrientation(getCar(sim)))*tailleSensor); /* centre avant */
+	Point * endSensor4 = newPoint(getX(beginSensor4)+cos((PI/4) + getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor4)+sin((PI/4)+getOrientation(getCar(sim)))*tailleSensor); /* coin avant droit */
+	Point * endSensor5 = newPoint(getX(beginSensor5)+cos((PI/2) + getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor5)+sin((PI/2)+getOrientation(getCar(sim)))*tailleSensor); /* flanc droit */
+	Point * tOut1;
+	Point * tIn1;
+	Point * tIn2 = getTrackIn(sim->track, sim->sector+1);
+	Point * tIn3 = getTrackIn(sim->track, sim->sector+2);
+
+	Point * tOut2 = getTrackOut(sim->track, sim->sector+1);
+	Point * tOut3 = getTrackOut(sim->track, sim->sector+2);
+	tIn1 = getTrackIn(sim->track, sim->sector);
+	tOut1 = getTrackOut(sim->track, sim->sector);
+
 	displayCar(sim->car,imgCar,renderer);
 	drawTrack(sim->track, renderer);
 	drawHitboxCar(sim->car, renderer);
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0,255);
 	drawLine(getTrackIn(sim->track, sim->sector+1),getTrackOut(sim->track, sim->sector+1),renderer);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 255,255);
-	drawLine(newPoint(getX(getCenter(getCar(sim)))+cos(-(PI/2) + getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin((-PI/2)+getOrientation(getCar(sim)))*tailleSensor), getCenter(sim->car), renderer); /* flanc gauche */
-	drawLine(newPoint(getX(getCenter(getCar(sim)))+cos((-PI/4) + getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin((-PI/4)+getOrientation(getCar(sim)))*tailleSensor), getCenter(sim->car), renderer); /* coin avant gauche */
-	drawLine(newPoint(getX(getCenter(getCar(sim)))+cos(getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin(getOrientation(getCar(sim)))*tailleSensor), getCenter(sim->car), renderer); /* centre avant */
-	drawLine(newPoint(getX(getCenter(getCar(sim)))+cos((PI/4) + getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin((PI/4)+getOrientation(getCar(sim)))*tailleSensor), getCenter(sim->car), renderer); /* coin avant droit */
-	drawLine(newPoint(getX(getCenter(getCar(sim)))+cos((PI/2) + getOrientation(getCar(sim)))*tailleSensor,getY(getCenter(getCar(sim)))+sin((PI/2)+getOrientation(getCar(sim)))*tailleSensor),getCenter(sim->car), renderer); /* flanc droit */
-
+	drawLine(beginSensor1,endSensor1,renderer);
+	drawLine(beginSensor2,endSensor2,renderer);
+	drawLine(beginSensor3,endSensor3,renderer);
+	drawLine(beginSensor4,endSensor4,renderer);
+	drawLine(beginSensor5,endSensor5,renderer);
+	drawLine(tIn1,tIn2,renderer);
+	drawLine(tIn2,tIn3,renderer);
+	drawLine(tOut1,tOut2,renderer);
+	drawLine(tOut2,tOut3,renderer);
+	deletePoint(endSensor1);
+	deletePoint(endSensor2);
+	deletePoint(endSensor3);
+	deletePoint(endSensor4);
+	deletePoint(endSensor5);
+	deletePoint(beginSensor1);
+	deletePoint(beginSensor3);
+	deletePoint(beginSensor5);
+	
 
 }
 void loadCarImg(SDL_Surface ** img, char * filename)
