@@ -210,21 +210,20 @@ void initialiseLayerTEST(Layer * layer)
 int selectHigherValue(Layer * layer)
 {
 	int i;
-	int maxValue = -10;
+	float maxValue = getValue(getNeuron(layer,0));
 	int max = 0;
-	int tempValue;
+	float tempValue;
 
 	for (i = 1; i < layer->nbNeurons; ++i)
 	{
 		tempValue = getValue(getNeuron(layer,i));
-
 		if (tempValue > maxValue)
 		{
 			maxValue = tempValue;
 			max = i;
 		}
 	}
-
+	printf("output: %d\n",max);
 	return max;
 }
 
