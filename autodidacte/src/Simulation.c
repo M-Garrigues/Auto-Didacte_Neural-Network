@@ -104,14 +104,14 @@ int tickSimulation(Simulation * sim)
 	sim->nbTicks++;
 	updateSensors(sim);	
 
-	printf("Update fait.\n");
+	
 	tabSensors = getSensors(sim->car);
 	net = getCarNetwork(sim->car);
 	out = getLayer(net, OUTPUT);
 	feedForward(net, tabSensors);
 	/*printLayer(net->tabLayers[OUTPUT]);*/
 	action = selectHigherValue(out);
-	printf("Action choix fait.\n");
+	
 	if(getValue(getNeuron(out, action)) < 0.3) /*We check if the highest neuron is activated*/
 		{action = NONE;}//If not, no action will be done this tick
 
@@ -134,7 +134,7 @@ int tickSimulation(Simulation * sim)
 		moveStraight(sim->car, 1);
 	 break;
 }
-printf("Action faite.\n");
+
 
 	if(detectCheckPointCrossed(sim)) /*The car entered a new sector, fitness improves*/
 	{
@@ -162,8 +162,6 @@ printf("Action faite.\n");
 		}
 		else
 			return sim->fitness;
-
-		printf("Checkpoint détecté fait.\n");
 	}
 	else
 	{
@@ -173,8 +171,6 @@ printf("Action faite.\n");
 		}
 		else
 			return sim->fitness;
-
-		printf("Collision fait.\n");
 	}
 
 }
