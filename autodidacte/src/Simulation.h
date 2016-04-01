@@ -57,7 +57,7 @@ void setSector(Simulation * sim, int newSector);
 
 
 /* Simulation functions */
-void updateSensors(Simulation * sim, int sector);
+void updateSensors(Simulation * sim);
 int detectCheckPointCrossed(Simulation * sim);
 int detectCollision(Simulation * sim, int sector);
 int tickSimulation(Simulation * sim);
