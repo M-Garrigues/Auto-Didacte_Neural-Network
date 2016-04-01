@@ -152,7 +152,7 @@ void drawTrack(Track * track,SDL_Renderer * renderer)
 void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 {
 	float const PI = 3.14159265359;
-	float tailleSensor = 50;
+	float tailleSensor = 60;
 	Point * beginSensor1 = middle(getBackLeft(sim->car),getFrontLeft(sim->car));
 	Point * beginSensor2 = getFrontLeft(sim->car);
 	Point * beginSensor3 = middle(getFrontLeft(sim->car),getFrontRight(sim->car));
@@ -165,14 +165,23 @@ void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 	Point * endSensor5 = newPoint(getX(beginSensor5)+cos((PI/2) + getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor5)+sin((PI/2)+getOrientation(getCar(sim)))*tailleSensor); /* flanc droit */
 	Point * tOut1;
 	Point * tIn1;
-	Point * tIn2 = getTrackIn(sim->track, sim->sector+1);
-	Point * tIn3 = getTrackIn(sim->track, sim->sector+2);
+	
+	Point * tIn2 = getTrackIn(sim->track, sim->sector);
+	Point * tIn3 = getTrackIn(sim->track, sim->sector+1);
 
-	Point * tOut2 = getTrackOut(sim->track, sim->sector+1);
-	Point * tOut3 = getTrackOut(sim->track, sim->sector+2);
-	tIn1 = getTrackIn(sim->track, sim->sector);
-	tOut1 = getTrackOut(sim->track, sim->sector);
+	Point * tOut2 = getTrackOut(sim->track, sim->sector);
+	Point * tOut3 = getTrackOut(sim->track, sim->sector+1);
 
+	if(sim->sector == 0)
+	{
+		tIn1 = getTrackIn(sim->track, sim->track->nbPoints-1);
+		tOut1 = getTrackOut(sim->track, sim->track->nbPoints-1);
+	}
+	else
+	{
+		tIn1 = getTrackIn(sim->track, sim->sector-1);
+		tOut1 = getTrackOut(sim->track, sim->sector-1);		
+	}
 	displayCar(sim->car,imgCar,renderer);
 	drawTrack(sim->track, renderer);
 	drawHitboxCar(sim->car, renderer);
