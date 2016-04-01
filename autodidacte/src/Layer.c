@@ -223,7 +223,6 @@ int selectHigherValue(Layer * layer)
 			max = i;
 		}
 	}
-	printf("output: %d\n",max);
 	return max;
 }
 

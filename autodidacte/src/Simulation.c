@@ -162,15 +162,19 @@ void updateSensors(Simulation * sim, int sector)
 	assert(sim != NULL);
 	float const PI = 3.14159265359;
 	float * tabSensors = malloc(5*sizeof(float));
-	float tailleSensor = 30;
-	float a,b,c,d;
+	float tailleSensor = 60;
+	float a,b,c,d,e,f;
 	Point * tOut1;
 	Point * tIn1;
+
 	Point * tIn2 = getTrackIn(sim->track, sim->sector);
 	Point * tIn3 = getTrackIn(sim->track, sim->sector+1);
 
 	Point * tOut2 = getTrackOut(sim->track, sim->sector);
 	Point * tOut3 = getTrackOut(sim->track, sim->sector+1);
+
+	Point * tIn4 = getTrackIn(sim->track, sim->sector+2);
+	Point * tOut4 = getTrackOut(sim->track, sim->sector+2);
 
 	if(sim->sector == 0)
 	{
@@ -211,10 +215,26 @@ void updateSensors(Simulation * sim, int sector)
 		else
 			c = tailleSensor;
 
-		if(intersect(tIn2,tIn3,beginSensor1,endSensor1))
+		if(intersect(tOut2,tOut3,beginSensor1,endSensor1))
 			d = distance(beginSensor1,intersectPoint(tOut2,tOut3,beginSensor1,endSensor1));
 		else
 			d = tailleSensor;
+
+		if(intersect(beginSensor1, endSensor1, tIn3, tIn4))
+		{
+			e = distance(beginSensor1, intersectPoint(tIn3, tIn4,beginSensor1, endSensor1));
+		}
+		else
+			e = tailleSensor;
+
+		if(intersect(beginSensor1, endSensor1, tOut3, tOut4))
+		{
+			f = distance(beginSensor1, intersectPoint(tOut3, tOut4,beginSensor1, endSensor1));
+		}
+		else
+			f = tailleSensor;
+
+		d = minimum(tailleSensor,d,e,f);
 		tabSensors[0] = 1 - minimum(a,b,c,d)/tailleSensor;
 
 		/*Capteur 2 coin avant gauche*/
@@ -233,10 +253,26 @@ void updateSensors(Simulation * sim, int sector)
 		else
 			c = tailleSensor;
 
-		if(intersect(tIn2,tIn3,beginSensor2,endSensor2))
+		if(intersect(tOut2,tOut3,beginSensor2,endSensor2))
 			d = distance(beginSensor2,intersectPoint(tOut2,tOut3,beginSensor2,endSensor2));
 		else
 			d = tailleSensor;
+
+		if(intersect(beginSensor2, endSensor2, tIn3, tIn4))
+		{
+			e = distance(beginSensor2, intersectPoint(tIn3, tIn4,beginSensor2, endSensor2));
+		}
+		else
+			e = tailleSensor;
+
+		if(intersect(beginSensor2, endSensor2, tOut3, tOut4))
+		{
+			f = distance(beginSensor2, intersectPoint(tOut3, tOut4,beginSensor2, endSensor2));
+		}
+		else
+			f = tailleSensor;
+
+		d = minimum(tailleSensor,d,e,f);
 		tabSensors[1] = 1 - minimum(a,b,c,d)/tailleSensor;
 		
 
@@ -256,10 +292,26 @@ void updateSensors(Simulation * sim, int sector)
 		else
 			c = tailleSensor;
 
-		if(intersect(tIn2,tIn3,beginSensor3,endSensor3))
+		if(intersect(tOut2,tOut3,beginSensor3,endSensor3))
 			d = distance(beginSensor3,intersectPoint(tOut2,tOut3,beginSensor3,endSensor3));
 		else
 			d = tailleSensor;
+
+				if(intersect(beginSensor3, endSensor3, tIn3, tIn4))
+		{
+			e = distance(beginSensor3, intersectPoint(tIn3, tIn4,beginSensor3, endSensor3));
+		}
+		else
+			e = tailleSensor;
+
+		if(intersect(beginSensor3, endSensor3, tOut3, tOut4))
+		{
+			f = distance(beginSensor1, intersectPoint(tOut3, tOut4,beginSensor3, endSensor3));
+		}
+		else
+			f = tailleSensor;
+
+		d = minimum(tailleSensor,d,e,f);
 		tabSensors[2] =  1 - minimum(a,b,c,d)/tailleSensor;
 
 	/*Cpateur 4 coin avant droit */
@@ -278,10 +330,25 @@ void updateSensors(Simulation * sim, int sector)
 		else
 			c = tailleSensor;
 
-		if(intersect(tIn2,tIn3,beginSensor4,endSensor4))
+		if(intersect(tOut2,tOut3,beginSensor4,endSensor4))
 			d = distance(beginSensor4,intersectPoint(tOut2,tOut3,beginSensor4,endSensor4));
 		else
 			d = tailleSensor;
+			if(intersect(beginSensor4, endSensor4, tIn3, tIn4))
+		{
+			e = distance(beginSensor1, intersectPoint(tIn3, tIn4,beginSensor4, endSensor4));
+		}
+		else
+			e = tailleSensor;
+
+		if(intersect(beginSensor4, endSensor4, tOut3, tOut4))
+		{
+			f = distance(beginSensor4, intersectPoint(tOut3, tOut4,beginSensor4, endSensor4));
+		}
+		else
+			f = tailleSensor;
+
+		d = minimum(tailleSensor,d,e,f);
 		tabSensors[3] = 1 - minimum(a,b,c,d)/tailleSensor;
 
 	/*Capteur 5 flanc droit */
@@ -300,14 +367,29 @@ void updateSensors(Simulation * sim, int sector)
 		else
 			c = tailleSensor;
 
-		if(intersect(tIn2,tIn3,beginSensor5,endSensor5))
+		if(intersect(tOut2,tOut3,beginSensor5,endSensor5))
 			d = distance(beginSensor5,intersectPoint(tOut2,tOut3,beginSensor5,endSensor5));
 		else
 			d = tailleSensor;
+		if(intersect(beginSensor5,endSensor5, tIn3, tIn4))
+		{
+			e = distance(beginSensor5, intersectPoint(tIn3, tIn4,beginSensor5, endSensor5));
+		}
+		else
+			e = tailleSensor;
+
+		if(intersect(beginSensor5, endSensor5, tOut3, tOut4))
+		{
+			f = distance(beginSensor5, intersectPoint(tOut3, tOut4,beginSensor5, endSensor5));
+		}
+		else
+			f = tailleSensor;
+
+		d = minimum(tailleSensor,d,e,f);
 		tabSensors[4] = 1 - minimum(a,b,c,d)/tailleSensor;
 
 
-		/*printf("%f %f %f %f %f\n",tabSensors[0],tabSensors[1],tabSensors[2],tabSensors[3],tabSensors[4]);*/
+	printf("%f %f %f %f %f\n",tabSensors[0],tabSensors[1],tabSensors[2],tabSensors[3],tabSensors[4]);
 	setSensors(sim->car, tabSensors);
 	deletePoint(endSensor1);
 	deletePoint(endSensor2);
@@ -345,31 +427,36 @@ int detectCollision(Simulation * sim, int sector)/* Here we consider the Inside 
 {
 	assert(sim != NULL);
 
-	Point * TrInUp,* TrInDown, * TrOutUp, * TrOutDown;
+	Point * trInUp,* trInDown, * trOutUp, * trOutDown, * tIn1, * tOut1;
 	Point * carFL,  * carFR, * carBL, * carBR;
 
-	TrInUp = getTrackIn(sim->track, sim->sector+1);
-	TrInDown = getTrackIn(sim->track, sim->sector);
-	TrOutUp = getTrackOut(sim->track, sim->sector+1);
-	TrOutDown = getTrackOut(sim->track, sim->sector);
+	trInUp = getTrackIn(sim->track, sim->sector+1);
+	trInDown = getTrackIn(sim->track, sim->sector);
+	trOutUp = getTrackOut(sim->track, sim->sector+1);
+	trOutDown = getTrackOut(sim->track, sim->sector);
+
+	if(sim->sector == 0)
+	{
+		tIn1 = getTrackIn(sim->track, sim->track->nbPoints-1);
+		tOut1 = getTrackOut(sim->track, sim->track->nbPoints-1);
+	}
+	else
+	{
+		tIn1 = getTrackIn(sim->track, sim->sector-1);
+		tOut1 = getTrackOut(sim->track, sim->sector-1);		
+	}
+
 
 	carFL = getFrontLeft(sim->car);
 	carFR = getFrontRight(sim->car);
 	carBL = getBackLeft(sim->car);
 	carBR = getBackLeft(sim->car);
 
-	if(intersect(TrInUp, TrInDown, carBR, carFR) || intersect(TrOutUp, TrOutDown, carFL, carBL))
+	if(intersect(tIn1, trInDown, carBR, carFR) || intersect(tOut1, trOutDown, carBR, carFR) || intersect(tIn1, trInDown, carBL, carFL) || intersect(tOut1, trOutDown, carBL, carFL)|| intersect(trInDown, trInUp, carBR, carFR) || intersect(trOutDown, trOutUp, carBR, carFR) || intersect(trInDown, trInUp, carBL, carFL) || intersect(trOutDown, trOutUp, carBL, carFL))
 		return 1;
 	else
 		return 0;
 }
-
-
-
-
-
-
-
 
 
 float getSimSpeed(Simulation * sim)

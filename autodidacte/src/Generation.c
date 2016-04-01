@@ -166,7 +166,7 @@ void mutationGeneration(Generation * gen)
     assert(gen != NULL);
     for(i = 1; i<(gen)->nbSubject;i++)
     {   
-        if(rand()%5 == 0)
+        if(1)
         {
             mutation(getGenome(gen, i));
         }
