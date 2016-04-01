@@ -102,7 +102,7 @@ int tickSimulation(Simulation * sim)
 	Layer * out;
 
 	sim->nbTicks++;
-	updateSensors(sim, sim->sector);	
+	updateSensors(sim);	
 	tabSensors = getSensors(sim->car);
 	net = getCarNetwork(sim->car);
 	out = getLayer(net, OUTPUT);
@@ -134,7 +134,15 @@ int tickSimulation(Simulation * sim)
 
 	if(detectCheckPointCrossed(sim)) /*The car entered a new sector, fitness improves*/
 	{
-		sim->sector++;
+		if(sim->sector < getNbPoints(sim->track)-1)
+		{
+			sim->sector++;
+		}
+		else
+		{
+			sim->sector = 0;
+		}
+		printf("%d\n",sim->sector);
 
 		if (!(detectCollision(sim, sim->sector))&&!(detectCollision(sim, sim->sector-1)))
 		{
@@ -157,7 +165,7 @@ int tickSimulation(Simulation * sim)
 }
 
 
-void updateSensors(Simulation * sim, int sector)
+void updateSensors(Simulation * sim)
 {
 	assert(sim != NULL);
 	float const PI = 3.14159265359;
@@ -166,26 +174,52 @@ void updateSensors(Simulation * sim, int sector)
 	float a,b,c,d,e,f;
 	Point * tOut1;
 	Point * tIn1;
-
 	Point * tIn2 = getTrackIn(sim->track, sim->sector);
-	Point * tIn3 = getTrackIn(sim->track, sim->sector+1);
-
 	Point * tOut2 = getTrackOut(sim->track, sim->sector);
-	Point * tOut3 = getTrackOut(sim->track, sim->sector+1);
+	Point * tIn3;
+	Point * tOut3;
 
-	Point * tIn4 = getTrackIn(sim->track, sim->sector+2);
-	Point * tOut4 = getTrackOut(sim->track, sim->sector+2);
+	Point * tIn4;
+	Point * tOut4;
+
 
 	if(sim->sector == 0)
 	{
 		tIn1 = getTrackIn(sim->track, sim->track->nbPoints-1);
 		tOut1 = getTrackOut(sim->track, sim->track->nbPoints-1);
+		tOut3 = getTrackOut(sim->track, sim->sector+1);
+		tIn3 = getTrackIn(sim->track, sim->sector+1);
+		tOut4 = getTrackOut(sim->track, sim->sector+2);
+		tIn4 = getTrackIn(sim->track, sim->sector+2);
+	}
+	else if(sim->sector == getNbPoints(sim->track)-1)
+	{
+		tIn1 = getTrackIn(sim->track, sim->sector-1);
+		tOut1 = getTrackOut(sim->track, sim->sector-1);	
+		tIn3 = getTrackIn(sim->track, 0);
+		tOut3 = getTrackOut(sim->track, 0);
+		tIn4 = getTrackIn(sim->track, 1);
+		tOut4 = getTrackOut(sim->track, 1);
+	}
+	else if(sim->sector == getNbPoints(sim->track)-2)
+	{
+		tIn1 = getTrackIn(sim->track, sim->sector-1);
+		tOut1 = getTrackOut(sim->track, sim->sector-1);	
+		tIn3 = getTrackIn(sim->track, getNbPoints(sim->track)-1);
+		tOut3 = getTrackOut(sim->track, getNbPoints(sim->track)-1);
+		tIn4 = getTrackIn(sim->track, 0);
+		tOut4 = getTrackOut(sim->track, 0);	
 	}
 	else
 	{
 		tIn1 = getTrackIn(sim->track, sim->sector-1);
-		tOut1 = getTrackOut(sim->track, sim->sector-1);		
+		tOut1 = getTrackOut(sim->track, sim->sector-1);
+		tOut3 = getTrackOut(sim->track, sim->sector+1);
+		tIn3 = getTrackIn(sim->track, sim->sector+1);
+		tOut4 = getTrackOut(sim->track, sim->sector+2);
+		tIn4 = getTrackIn(sim->track, sim->sector+2);
 	}
+
 	Point * beginSensor1 = middle(getBackLeft(sim->car),getFrontLeft(sim->car));
 	Point * beginSensor2 = getFrontLeft(sim->car);
 	Point * beginSensor3 = middle(getFrontLeft(sim->car),getFrontRight(sim->car));
@@ -389,7 +423,7 @@ void updateSensors(Simulation * sim, int sector)
 		tabSensors[4] = 1 - minimum(a,b,c,d)/tailleSensor;
 
 
-	printf("%f %f %f %f %f\n",tabSensors[0],tabSensors[1],tabSensors[2],tabSensors[3],tabSensors[4]);
+	/*printf("%f %f %f %f %f\n",tabSensors[0],tabSensors[1],tabSensors[2],tabSensors[3],tabSensors[4]);*/
 	setSensors(sim->car, tabSensors);
 	deletePoint(endSensor1);
 	deletePoint(endSensor2);
@@ -405,11 +439,18 @@ int detectCheckPointCrossed(Simulation * sim)
 {
 	assert(sim != NULL);
 
-	Point * CPin,* CPout;
+	Point * cPin,* cPout;
 	Point * carFL,  * carFR, * carBR, * carBL;
-
-	CPin = getTrackIn(sim->track, sim->sector+1);
-	CPout = getTrackOut(sim->track, sim->sector+1);
+	if(sim->sector == getNbPoints(sim->track)-1)
+	{
+		cPin = getTrackOut(sim->track, 0);
+		cPout = getTrackIn(sim->track, 0);
+	}
+	else
+	{
+		cPin = getTrackIn(sim->track, sim->sector+1);
+		cPout = getTrackOut(sim->track, sim->sector+1);
+	}
 
 	carFL = getFrontLeft(sim->car);
 	carFR = getFrontRight(sim->car);
@@ -417,7 +458,7 @@ int detectCheckPointCrossed(Simulation * sim)
 	carBL = getBackLeft(sim->car);
 	/*printf("sector : %d\n CarBL : %f ,%f\n CarFL : %f,%f\n Check :%f,%f\n%f,%f\n\n",sim->sector,carBL->x,carBL->y,carFL->x,carFL->y,CPin->x,CPin->y,CPout->x,CPout->y);
 	printf("\n Interesct : %d \n",intersect(CPin,CPout,carFL,carBL));*/
-	if(intersect(CPin, CPout, carFR, carBR)||intersect(CPin, CPout,carFL,carBL))
+	if(intersect(cPin, cPout, carFR, carBR)||intersect(cPin, cPout,carFL,carBL))
 		return 1;
 	else
 		return 0;
@@ -430,22 +471,32 @@ int detectCollision(Simulation * sim, int sector)/* Here we consider the Inside 
 	Point * trInUp,* trInDown, * trOutUp, * trOutDown, * tIn1, * tOut1;
 	Point * carFL,  * carFR, * carBL, * carBR;
 
-	trInUp = getTrackIn(sim->track, sim->sector+1);
-	trInDown = getTrackIn(sim->track, sim->sector);
-	trOutUp = getTrackOut(sim->track, sim->sector+1);
-	trOutDown = getTrackOut(sim->track, sim->sector);
+	
+	trInDown = getTrackIn(sim->track, sector);
+	
+	trOutDown = getTrackOut(sim->track, sector);
 
-	if(sim->sector == 0)
+	if(sector == 0)
 	{
 		tIn1 = getTrackIn(sim->track, sim->track->nbPoints-1);
 		tOut1 = getTrackOut(sim->track, sim->track->nbPoints-1);
+		trOutUp = getTrackOut(sim->track, sector+1);
+		trInUp = getTrackIn(sim->track, sector+1);
+	}
+	else if(sector == getNbPoints(sim->track)-1)
+	{
+		tIn1 = getTrackIn(sim->track, sector-1);
+		tOut1 = getTrackOut(sim->track, sector-1);	
+		trInUp = getTrackIn(sim->track, 0);
+		trOutUp = getTrackOut(sim->track, 0);		
 	}
 	else
 	{
-		tIn1 = getTrackIn(sim->track, sim->sector-1);
-		tOut1 = getTrackOut(sim->track, sim->sector-1);		
+		tIn1 = getTrackIn(sim->track, sector-1);
+		tOut1 = getTrackOut(sim->track, sector-1);	
+		trOutUp = getTrackOut(sim->track, sector+1);
+		trInUp = getTrackIn(sim->track, sector+1);
 	}
-
 
 	carFL = getFrontLeft(sim->car);
 	carFR = getFrontRight(sim->car);

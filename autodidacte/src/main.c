@@ -27,7 +27,7 @@ int main()
 	int tab[3] = {5, 3, 2};
 	float initOrient = 0;
 	srand(time(NULL));
-	Generation * pGen = newGenerationRandom(15, tab);
+	Generation * pGen = newGenerationRandom(30, tab);
 	Track * pTrack = newTrack();
 	Point * pInit;
 	initTrackFile(pTrack,f);
@@ -35,7 +35,11 @@ int main()
 	f = fopen("data/firstGen.gen", "w");
 	saveGeneration(pGen, f);
 	pInit = intersectPoint (pTrack->trackIn[0] , pTrack->trackOut[1] , pTrack->trackOut[0] , pTrack->trackIn[1]);
-	displayManagement(pGen , pTrack, pInit, initOrient, 640, 480 , 100, "data/car.png");
+	displayManagement(pGen , pTrack, pInit, initOrient, 640, 480 , 10000, "data/car.png");
+	deleteGeneration(pGen);
+	deleteTrack(pTrack);
+	deletePoint(pInit);
+	fclose(f);
 	return 0;
 
 }

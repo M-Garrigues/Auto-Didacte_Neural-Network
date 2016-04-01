@@ -163,40 +163,31 @@ void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 	Point * endSensor3 = newPoint(getX(beginSensor3)+cos(getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor3)+sin(getOrientation(getCar(sim)))*tailleSensor); /* centre avant */
 	Point * endSensor4 = newPoint(getX(beginSensor4)+cos((PI/4) + getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor4)+sin((PI/4)+getOrientation(getCar(sim)))*tailleSensor); /* coin avant droit */
 	Point * endSensor5 = newPoint(getX(beginSensor5)+cos((PI/2) + getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor5)+sin((PI/2)+getOrientation(getCar(sim)))*tailleSensor); /* flanc droit */
-	Point * tOut1;
-	Point * tIn1;
-	
-	Point * tIn2 = getTrackIn(sim->track, sim->sector);
-	Point * tIn3 = getTrackIn(sim->track, sim->sector+1);
-
-	Point * tOut2 = getTrackOut(sim->track, sim->sector);
-	Point * tOut3 = getTrackOut(sim->track, sim->sector+1);
-
-	if(sim->sector == 0)
+	Point * cPout;
+	Point * cPin;
+	if(sim->sector == getNbPoints(sim->track)-1)
 	{
-		tIn1 = getTrackIn(sim->track, sim->track->nbPoints-1);
-		tOut1 = getTrackOut(sim->track, sim->track->nbPoints-1);
+		cPin = getTrackOut(sim->track, 0);
+		cPout = getTrackIn(sim->track, 0);
 	}
 	else
 	{
-		tIn1 = getTrackIn(sim->track, sim->sector-1);
-		tOut1 = getTrackOut(sim->track, sim->sector-1);		
+		cPin = getTrackIn(sim->track, sim->sector+1);
+		cPout = getTrackOut(sim->track, sim->sector+1);
 	}
+	
+
 	displayCar(sim->car,imgCar,renderer);
 	drawTrack(sim->track, renderer);
 	drawHitboxCar(sim->car, renderer);
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0,255);
-	drawLine(getTrackIn(sim->track, sim->sector+1),getTrackOut(sim->track, sim->sector+1),renderer);
+	drawLine(cPin,cPout,renderer);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 255,255);
 	drawLine(beginSensor1,endSensor1,renderer);
 	drawLine(beginSensor2,endSensor2,renderer);
 	drawLine(beginSensor3,endSensor3,renderer);
 	drawLine(beginSensor4,endSensor4,renderer);
 	drawLine(beginSensor5,endSensor5,renderer);
-	drawLine(tIn1,tIn2,renderer);
-	drawLine(tIn2,tIn3,renderer);
-	drawLine(tOut1,tOut2,renderer);
-	drawLine(tOut2,tOut3,renderer);
 	deletePoint(endSensor1);
 	deletePoint(endSensor2);
 	deletePoint(endSensor3);

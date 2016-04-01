@@ -24,8 +24,8 @@ Point * getTrackOut (const Track * track , int position);
 void setTrackOut (Track * track, int position , Point * newPoint);
 Point * getTrackIn (const Track * track , int position);
 void setTrackIn (Track * track, int position , Point * newPoint);
-int getnbPoints(const Track * track);
-void setnbPoints(Track * track , int nbPoints);
+int getNbPoints(const Track * track);
+void setNbPoints(Track * track , int nbPoints);
 void printTrack (Track * track);
 
 
