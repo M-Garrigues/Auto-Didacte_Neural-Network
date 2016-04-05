@@ -152,11 +152,19 @@ void initialiseLayerTEST(Layer * layer);
 /**
  * @brief      Checks every Layer's Neuron value and gives the highest one.
  *
- * @param[in,out]      layer  { parameter_description }
+ * @param[in,out]      layer  Layer's adress.
  *
- * @return     { description_of_the_return_value }
+ * @return     Returns the Neuron with the highest value index.
  */
 int selectHigherValue(Layer * layer);
+
+/**
+ * @brief      Regulation and activation function for Neurons, used in updateLayer.
+ *
+ * @param[in]  x     A real number.
+ *
+ * @return     sigmoid(x);
+ */
 float sigmoid(float x);
 
 
@@ -166,7 +174,11 @@ float sigmoid(float x);
 /* ----- Layer destructor ----- */
 
 
-
+/**
+ * @brief      Deletes a Layer structure.
+ *
+ * @param[in,out]      layer  Layer's adress.
+ */
 void deleteLayer(Layer * layer);
 
 
