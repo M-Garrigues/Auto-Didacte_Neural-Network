@@ -156,7 +156,7 @@ void setNeuron(Layer * layer, int i, Neuron * newNeuron)
 
 
 
-void updateInputLayer(Layer * layer, float * tabNewValues)							/*LAYER FUNCTIONS*/
+void updateInputLayer(Layer * layer, const float * tabNewValues)							/*LAYER FUNCTIONS*/
 {
 	int i;
 
@@ -169,7 +169,7 @@ void updateInputLayer(Layer * layer, float * tabNewValues)							/*LAYER FUNCTIO
 	}
 }	
 
-void updateLayer(Layer * layer1, Layer * layer2)
+void updateLayer(const Layer * layer1, Layer * layer2)
 {
 	int i, j;
 

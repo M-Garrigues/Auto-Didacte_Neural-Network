@@ -1,4 +1,4 @@
-#ifdef __cplusplus
+  #ifdef __cplusplus
 #error This source file is not C++ but rather C. Please use a C-compiler
 #endif
 
