@@ -9,8 +9,7 @@
 enum{	INPUT , HIDDEN , OUTPUT   };
 
 
-/* Neuron structure */
-
+/* ----- Neuron structure ----- */
 
 /**
  *  @struct Neuron

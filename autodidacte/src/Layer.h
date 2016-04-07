@@ -8,7 +8,7 @@
 #include "Neuron.h"
 
 
-/* Layer structure*/
+/* ----- Layer structure ----- */
 
 /**
  * @struct Layer
