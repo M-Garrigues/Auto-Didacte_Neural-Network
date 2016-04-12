@@ -4,33 +4,164 @@
 
   /* Point.h    -----   LIF7 Auto-Didacte */
 
+
+/**
+ * @struct Point
+ * @brief Points are used for calculation and for dispaly 
+ * 
+ */
 typedef struct
 {
-	float x;
-	float y;
+	float x; /** Point abciss */
+	float y; /** Point ordonate*/
 }Point;
 
-/* Point constructors */
+
+/* ----- Point constructor ----- */
+
+/**
+ * @brief      Create a new point
+ *
+ * @param[in]  X     Abciss of the new point
+ * @param[in]  Y     Ordinate of the new point
+ *
+ * @return     New point adress
+ */
 Point * newPoint(float X, float Y);
 
-/* Point get/set */
+
+
+
+/* ----- Point getter/setter ----- */
+
+
+/**
+ * @brief      Get the x
+ *
+ * @param      p     Point adress
+ *
+ * @return     Point abciss
+ */
 float getX(Point * p);
+
+
+/**
+ * @brief      Get the y.
+ *
+ * @param      p     Point adress
+ *
+ * @return    Point ordonate
+ */
 float getY(Point * p);
 
+/**
+ * @brief      Set the x.
+ *
+ * @param      p     Point adress
+ * @param[in]  newX  New abciss for the point
+ */
 void setX(Point * p, float newX);
+
+
+/**
+ * @brief      Set the y.
+ *
+ * @param      p     Point adress
+ * @param[in]  newY  New ordonate for the point
+ */
 void setY(Point * p, float newY);
 
-/* Point functions */
+
+
+
+
+
+/* ----- Point functions ----- */
+
+
+
+/**
+ * @brief      Apply a rotation to a point and give the new point
+ *
+ * @param      pointInit  Adress of the point to apply rotation
+ * @param      centre     Center of the rotation
+ * @param[in]  angle      Angle of the rotation
+ *
+ * @return     New point adress
+ */
 Point * rotation (Point * pointInit, Point * centre ,float angle);
+
+/**
+ * @brief      Distance between two points
+ *
+ * @param      p1    1st point adress
+ * @param      p2    2nd point adress
+ *
+ * @return     distance between two points
+ */
 float distance (Point * p1, Point * p2);
-float distanceCheck (float f);
+
+
+
+/**
+ * @brief      Give the intersection of (p1,p2) and (p3,p3)
+ *
+ * @param      p1    1st point adress of the 1st segment 
+ * @param      p2    2nd point adress of the 1st segment
+ * @param      p3    1st point adress of the 2nd segment
+ * @param      p4    2nd point adress of the 2nd segment
+ *
+ * @return     Intersection point adress 
+ */
 Point * intersectPoint (Point * p1 , Point * p2 , Point * p3 , Point * p4);
+
+
+/**
+ * @brief      Middle 
+ *
+ * @param      p1    1st point adress
+ * @param      p2    2nd point adress
+ *
+ * @return    Middle point adress
+ */
 Point * middle (Point * p1, Point * p2);
+
+
+
+/**
+ * @brief      Return the minimum between 4 float
+ *
+ * @param[in]  f1    1st number
+ * @param[in]  f2    2nd number
+ * @param[in]  f3    3rd number
+ * @param[in]  f4    4rd number
+ *
+ * @return     Minimum 
+ */
 float minimum (float f1, float f2, float f3, float f4);
-/* droites p1p2 et p3p4 */
+
+/**
+ * @brief      Return 1 if [p1,p2] intersect with [p3,p4] and 0 else
+ *
+ * @param      p1    1st point adress of the 1st segment 
+ * @param      p2    2nd point adress of the 1st segment
+ * @param      p3    1st point adress of the 2nd segment
+ * @param      p4    2nd point adress of the 2nd segment
+ *
+ * @return    1 or 0
+ */
 int intersect (Point * p1 , Point * p2 , Point * p3 , Point * p4);
 
-/* Point destructor */
-void deletePoint(Point * p);
 
+
+
+/* ----- Point destructor ----- */
+
+
+/**
+ * @brief      Delete and free a point
+ *
+ * @param      p     Point adress
+ */
+void deletePoint(Point * p);
 #endif
