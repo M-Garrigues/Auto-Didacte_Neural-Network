@@ -23,7 +23,7 @@ void testRegressionPOINT();
 
 int main()
 {
-	FILE * f = fopen("data/track2.txt", "r");
+	FILE * f = fopen("data/track.txt", "r");
 	int tab[3] = {5, 3, 2};
 	float initOrient = 0;
 	srand(time(NULL));
