@@ -35,7 +35,7 @@ int main()
 	f = fopen("data/firstGen.gen", "w");
 	saveGeneration(pGen, f);
 	pInit = intersectPoint (pTrack->trackIn[0] , pTrack->trackOut[1] , pTrack->trackOut[0] , pTrack->trackIn[1]);
-	displayManagement(pGen , pTrack, pInit, initOrient, 640, 480 , 10000, "data/car.png");
+	displayManagement(pGen , pTrack, pInit, initOrient, 640, 480 , 200, "data/car.png");
 	deleteGeneration(pGen);
 	deleteTrack(pTrack);
 	deletePoint(pInit);

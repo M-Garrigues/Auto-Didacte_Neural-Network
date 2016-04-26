@@ -193,18 +193,6 @@ void loadGenome(FILE * f, Genome * genome)
     }
     fscanf(f,"\n");
 }
-void updateFitnessGenome(Genome * genome)
-{
-    assert(genome != NULL);
-    int i;
-    setFitness(genome, 1);
-    for(i =0; i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome);i++)
-    {
-        if(getGene(genome,i)<0)
-            setFitness(genome, getFitness(genome)+1);
-    }
-    assert(getFitness(genome)!=0);
-}
 
 Network * convertToNetwork(const Genome * genome)
 {
