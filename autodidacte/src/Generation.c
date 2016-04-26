@@ -118,16 +118,6 @@ void nextGeneration(Generation * gen)
     crossoverGeneration(gen);
     mutationGeneration(gen);
 }
-void updateFitnessGeneration(Generation * gen)
-{
-    int i;
-    assert(gen != NULL);
-    for(i = 0; i<getNbSubject(gen);i++)
-    {
-        
-        updateFitnessGenome(gen->tabGenomes[i]);
-    }
-}
 void crossoverGeneration(Generation * gen)
 {
     Genome * genome;
