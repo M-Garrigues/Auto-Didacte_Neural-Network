@@ -150,13 +150,22 @@ void updateLayer(const Layer * layer1, Layer* layer2);
 void initialiseLayerTEST(Layer * layer);
 
 /**
- * @brief      Checks every Layer's Neuron value and gives the highest one.
+ * @brief      Checks action changing Layer's Neuron value and gives the highest one.
  *
  * @param[in,out]      layer  Layer's adress.
  *
  * @return     Returns the Neuron with the highest value index.
  */
-int selectHigherValue(Layer * layer);
+int selectHigherValueAct(Layer * layer);
+
+/**
+ * @brief      Checks speed changing Layer's Neuron value and gives the highest one.
+ *
+ * @param[in,out]      layer  Layer's adress.
+ *
+ * @return     Returns the Neuron with the highest value index.
+ */
+int selectHigherValueSpeed(Layer * layer);
 
 /**
  * @brief      Regulation and activation function for Neurons, used in updateLayer.

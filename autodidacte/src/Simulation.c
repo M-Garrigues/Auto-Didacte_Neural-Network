@@ -111,32 +111,52 @@ int tickSimulation(Simulation * sim)
 	feedForward(net, tabSensors);
 	/*printLayer(net->tabLayers[OUTPUT]);*/
 
+
 	actionTurn = selectHigherValueAct(out);
 	actionSpeed = selectHigherValueSpeed(out);
-	
-	if(getValue(getNeuron(out, action)) < 0.3) /*We check if the highest neuron is activated*/
-		action = NONE;//If not, no action will be done this tick
 
-	switch (action) {
+	if(getValue(getNeuron(out, actionTurn)) < 0.3) /*We check if the highest neuron is activated*/
+		actionTurn = NONE;//If not, no action will be done this tick
+		         
+
+	if(getValue(getNeuron(out, actionSpeed)) < 0.3) /*We check if the highest neuron is activated*/
+		actionSpeed = NONE;//If not, no action will be done this tick	                
+
+
+printf("%d\n", sim->nbTicks);
+
+switch (actionSpeed) {
 
 	case NONE :
-		/*printf("NONE\n");*/
-		moveStraight(sim->car, 1); /* Try different values for moveStraight */
 	 break;
 
-	case RIGHT :
-		/*printf("RIGHT\n");*/
-	 	turnRight(sim->car);
-	 	moveStraight(sim->car, 1);
-	 break;
+	case ACCELERATION :
+	 	accelerate(sim->car);
+	 	break;
 
-	case LEFT :
-		/*printf("LEFT\n");*/
-		turnLeft(sim->car);
-		moveStraight(sim->car, 1);
+	case DECELERATION :
+		decelerate(sim->car);
 	 break;
 }
 
+
+switch (actionTurn) {
+
+	case NONE :/*printf("NONE\n");*/ /* Try different values for moveStraight */
+	 break;
+
+	case RIGHT :
+		if(getSpeed(sim->car) > 0.5)
+	 		turnRight(sim->car);
+	 break;
+
+	case LEFT :
+	if(getSpeed(sim->car) > 0.5)
+		turnLeft(sim->car);
+	 break;
+}
+
+	moveStraight(sim->car, 1); //the car does a step forward
 
 	if(detectCheckPointCrossed(sim)) /*The car entered a new sector, fitness improves*/
 	{
@@ -159,6 +179,7 @@ int tickSimulation(Simulation * sim)
 
 		if (!(detectCollision(sim, sim->sector))&&!(detectCollision(sim, sim->sector-1)))
 		{
+			printf("tetstsettestsetsetsetsettsetestest\n");
 			sim->fitness++;
 			return -1;
 		}
@@ -169,10 +190,15 @@ int tickSimulation(Simulation * sim)
 	{
 		if (!(detectCollision(sim, sim->sector)))
 		{
-			return -1;
-		}
+			if(sim->nbTicks > 20 && getSpeed(sim->car) == 0)
+				return sim->fitness;
+			else if(sim->nbTicks > 50 && getSpeed(sim->car) < 1)
+				return sim->fitness;
+			else
+				return -1;
+		}	
 		else
-			return sim->fitness;
+			return sim->fitness;		
 	}
 
 }
