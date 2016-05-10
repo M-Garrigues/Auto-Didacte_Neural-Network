@@ -54,7 +54,7 @@ Car * newCar () {
 	nCar->net = malloc(sizeof(Network));
 	assert(nCar->net != NULL);
 
-	nCar->tabSensors = malloc(sizeof(float)*5);
+	nCar->tabSensors = malloc(sizeof(float)*6);
 	assert(nCar->tabSensors !=NULL);
 
 	return nCar;
@@ -155,7 +155,7 @@ void accelerate (Car * car){
 
 void decelerate (Car * car){
 	if(car->speed > 0.25)
-		car->speed -= 0.25;
+		car->speed -= 0.4;
 	if(car->speed > 0.1)
 		car->speed -= 0.1;
 }
