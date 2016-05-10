@@ -47,7 +47,7 @@ Car * newCar () {
 	assert(nCar->center != NULL);
 	nCar->center = newPoint(0,0);
 	
-	nCar->speed = 1;
+	nCar->speed = 0;
 	nCar->orientation = 0;
 
 	nCar->net = NULL;
@@ -142,11 +142,22 @@ void turnRight (Car * car) {
 
 
 void accelerate (Car * car){
-	car->speed += 1;
+	if (car->speed < 1)
+		car->speed += 0.25;
+	else if (car->speed < 2.5)
+		car->speed += 0.5;
+	else if (car->speed < 5)
+		car->speed += 0.2;
+	
+	if(car->speed > 5)
+		car->speed = 5;
 }
 
 void decelerate (Car * car){
-	car->speed -= 1;
+	if(car->speed > 0.25)
+		car->speed -= 0.25;
+	if(car->speed > 0.1)
+		car->speed -= 0.1;
 }
 
 
