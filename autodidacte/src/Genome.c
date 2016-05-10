@@ -252,7 +252,6 @@ void regressionTestGenome()
     Genome * g3 = newGenomeNull(tab);
     crossover(g1,g2,g3);
     mutation(g3);
-    updateFitnessGenome(g3);
     saveGenome(g3,f);
     rewind(f);
     loadGenome(f,g1);

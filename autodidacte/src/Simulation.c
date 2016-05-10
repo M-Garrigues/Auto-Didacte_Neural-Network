@@ -113,7 +113,7 @@ int tickSimulation(Simulation * sim)
 	action = selectHigherValue(out);
 	
 	if(getValue(getNeuron(out, action)) < 0.3) /*We check if the highest neuron is activated*/
-		{action = NONE;}//If not, no action will be done this tick
+		action = NONE;//If not, no action will be done this tick
 
 	switch (action) {
 
