@@ -1,3 +1,4 @@
+
 #ifdef __cplusplus
 #error This source file is not C++ but rather C. Please use a C-compiler
 #endif
@@ -165,8 +166,8 @@ void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 	Point * endSensor5 = newPoint(getX(beginSensor5)+cos((PI/2) + getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor5)+sin((PI/2)+getOrientation(getCar(sim)))*tailleSensor); /* flanc droit */
 	Point * cPout;
 	Point * cPin;
-	if(sim->sector == getNbPoints(sim->track)-1)
-	{
+	if(getSector(sim) == getNbPoints(sim->track)-1)
+	{	
 		cPin = getTrackOut(sim->track, 0);
 		cPout = getTrackIn(sim->track, 0);
 	}

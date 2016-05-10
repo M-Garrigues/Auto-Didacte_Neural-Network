@@ -207,24 +207,33 @@ void initialiseLayerTEST(Layer * layer)
 	}
 }
 
-int selectHigherValue(Layer * layer)
+int selectHigherValueAct(Layer * layer)
 {
-	int i;
 	float maxValue = getValue(getNeuron(layer,0));
 	int max = 0;
-	float tempValue;
 
-	for (i = 1; i < layer->nbNeurons; ++i)
+	if(getValue(getNeuron(layer,1)) > maxValue)
 	{
-		tempValue = getValue(getNeuron(layer,i));
-		if (tempValue > maxValue)
-		{
-			maxValue = tempValue;
-			max = i;
-		}
+		max = 1;
 	}
+
 	return max;
 }
+
+
+int selectHigherValueSpeed(Layer * layer)
+{
+	float maxValue = getValue(getNeuron(layer,2));
+	int max = 2;
+
+	if(getValue(getNeuron(layer,3)) > maxValue)
+	{
+		max = 3;
+	}
+
+	return max;
+}
+
 
 float sigmoid(float x)
 {

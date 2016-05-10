@@ -24,7 +24,7 @@ void testRegressionPOINT();
 int main()
 {
 	FILE * f = fopen("data/track.txt", "r");
-	int tab[3] = {5, 3, 2};
+	int tab[3] = {6, 3 , 4};
 	float initOrient = 0;
 	srand(time(NULL));
 	Generation * pGen = newGenerationRandom(30, tab);
@@ -33,7 +33,11 @@ int main()
 	initTrackFile(pTrack,f);
 	fclose(f);
 	pInit = intersectPoint (pTrack->trackIn[0] , pTrack->trackOut[1] , pTrack->trackOut[0] , pTrack->trackIn[1]);
+<<<<<<< local
 	displayManagement(pGen , pTrack, pInit, initOrient, 641, 540 , 200, "data/car.png");
+=======
+	displayManagement(pGen , pTrack, pInit, initOrient, 640, 480 , 4, "data/car.png");
+>>>>>>> other
 	deleteGeneration(pGen);
 	deleteTrack(pTrack);
 	deletePoint(pInit);
