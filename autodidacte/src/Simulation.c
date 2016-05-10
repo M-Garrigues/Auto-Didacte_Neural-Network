@@ -189,7 +189,7 @@ switch (actionTurn) {
 		{
 			if(sim->nbTicks > 20 && getSpeed(sim->car) == 0)
 				return sim->fitness;
-			else if(sim->nbTicks > 7000)
+			else if(sim->nbTicks > 1000)
 				return sim->fitness;
 			else
 				return -1;

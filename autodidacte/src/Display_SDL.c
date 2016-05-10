@@ -247,7 +247,7 @@ void displayButton(Display_SDL * display, int mode)
 {
 	SDL_Surface * button1;
 	Point * buttonPoint = newPoint(140,510);
-	if(mode == 1)
+	if(mode)
 		loadCarImg(&button1, "data/fastComp.png");
 	else
 		loadCarImg(&button1, "data/fastCompOn.png");
@@ -288,8 +288,13 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 	                case SDL_MOUSEBUTTONDOWN:
 	                	if(event.button.button == SDL_BUTTON_LEFT)
 	                	{
+	                		
 	                		if(event.button.x >= 44 && event.button.x <=239 && event.button.y <= 532 && event.button.y >= 495)
-	                			mode++;
+	                		{
+	                			mode = (mode+1)%2;
+	                			displayButton(disp,mode);
+	                			updateScreen(disp);
+	                		}
 	                	}
 	                	break;
 	                default:
@@ -298,23 +303,15 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
             }
               	if(fitness == -1)
             	{
-            		if(mode%2)
-            		{
-            			delay(&ticks, fps);
-            	  		fitness = tickSimulation(disp->sim);
-            	  		cleanScreen(disp);
-            	  		displayButton(disp,mode);
-            	  		display(disp);
-            	  	}
-            	  	else
-            	  	{
-            	  		displayButton(disp,mode);
-            	  		updateScreen(disp);
-            	  		while(fitness == -1)
-            	  		{
-            	  			fitness = tickSimulation(disp->sim);
+            		
+            			fitness = tickSimulation(disp->sim);
+            			if(mode == 1)
+            			{
+            				delay(&ticks, fps);
+            	  			cleanScreen(disp);
+            	  			displayButton(disp,mode);
+            	  			display(disp);
             	  		}
-            	  	}
            		 }
             	else
             	{
