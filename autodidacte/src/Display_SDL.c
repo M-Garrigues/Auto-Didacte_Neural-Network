@@ -255,20 +255,26 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
         SDL_Event event;
         Simulation * sim = newSimulation(6 ,gen->tabGenomes[0], track, pInit, initOrient);
         Display_SDL * disp = newDisplay_SDL(sim,x,y,fps,file);
-        FILE * f = fopen("data/inProgGen.gen", "w");
         int ticks = SDL_GetTicks();
+        int mode = 1;
         int fitness = -1;
         int i = 0; /* indique le genome en cours de simulation */
-        int continuer = 1;
-        while(continuer)
+        int go = 1;
+        while(go)
         {
             while (SDL_PollEvent(&event))/* gestion des evenements */
             {
                 switch(event.type)
                 {
 	                case SDL_QUIT:
-	                    continuer = 0;
+	                    go = 0;
 	                    break;
+	                case SDL_MOUSEBUTTONDOWN:
+	                	if(event.button.button == SDL_BUTTON_LEFT)
+	                	{
+	                		printf("%d , %d\n",event.button.x ,event.button.y);
+	                	}
+	                	break;
 	                default:
                         break;
                 }
@@ -286,7 +292,6 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
                 i++;
                 if(i == getNbSubject(gen))
                 {
-                	saveGeneration(gen , f);
                 	nextGeneration(gen);
                     i = 1;
 
