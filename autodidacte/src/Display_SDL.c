@@ -242,6 +242,19 @@ int initSDL()
     	return 1;
     }
 }
+void displayButton(Display_SDL * display, int mode)
+{
+	SDL_Surface * button1;
+	Point * buttonPoint = newPoint(140,510);
+	if(mode == 1)
+		loadCarImg(&button1, "data/fastComp.png");
+	else
+		loadCarImg(&button1, "data/fastCompOn.png");
+	displayImage(buttonPoint,0,button1,display->renderer);
+	deletePoint(buttonPoint);
+	SDL_FreeSurface(button1);
+
+}
 void display(Display_SDL * display)
 {
 	displaySim(display->sim, display->imgCar, display->renderer);
@@ -255,6 +268,7 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
         SDL_Event event;
         Simulation * sim = newSimulation(6 ,gen->tabGenomes[0], track, pInit, initOrient);
         Display_SDL * disp = newDisplay_SDL(sim,x,y,fps,file);
+
         int ticks = SDL_GetTicks();
         int mode = 1;
         int fitness = -1;
@@ -272,30 +286,42 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 	                case SDL_MOUSEBUTTONDOWN:
 	                	if(event.button.button == SDL_BUTTON_LEFT)
 	                	{
-	                		printf("%d , %d\n",event.button.x ,event.button.y);
+	                		if(event.button.x >= 44 && event.button.x <=239 && event.button.y <= 532 && event.button.y >= 495)
+	                			mode++;
+
 	                	}
 	                	break;
 	                default:
                         break;
                 }
             }
-            delay(&ticks, fps);
-	        if(fitness == -1)
-            {
-              	fitness = tickSimulation(disp->sim);
-              	cleanScreen(disp);
-              	display(disp);
-            }
-            else
-            {
-                setFitness(gen->tabGenomes[i],fitness);
-                i++;
-                if(i == getNbSubject(gen))
-                {
-                	nextGeneration(gen);
-                    i = 1;
-
-                }
+              	if(fitness == -1)
+            	{
+            		if(mode%2)
+            		{
+            			delay(&ticks, fps);
+            	  		fitness = tickSimulation(disp->sim);
+            	  		cleanScreen(disp);
+            	  		displayButton(disp,mode);
+            	  		display(disp);
+            	  	}
+            	  	else
+            	  	{
+            	  		while(fitness == -1)
+            	  		{
+            	  			fitness = tickSimulation(disp->sim);
+            	  		}
+            	  	}
+           		 }
+            	else
+            	{
+            	    setFitness(gen->tabGenomes[i],fitness);
+            	    i++;
+            	    if(i == getNbSubject(gen))
+            	    {
+            	    	nextGeneration(gen);
+            	        i = 1;
+                	}
                 else
                 {
                 	sim = newSimulation(1, gen->tabGenomes[i], track, pInit, initOrient);
