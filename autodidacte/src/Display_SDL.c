@@ -272,6 +272,7 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 
         int ticks = SDL_GetTicks();
         int mode = 1;
+        int g = 1;
         int fitness = -1;
         int i = 0; /* indique le genome en cours de simulation */
         int go = 1;
@@ -289,7 +290,6 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 	                	{
 	                		if(event.button.x >= 44 && event.button.x <=239 && event.button.y <= 532 && event.button.y >= 495)
 	                			mode++;
-
 	                	}
 	                	break;
 	                default:
@@ -308,6 +308,8 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
             	  	}
             	  	else
             	  	{
+            	  		displayButton(disp,mode);
+            	  		updateScreen(disp);
             	  		while(fitness == -1)
             	  		{
             	  			fitness = tickSimulation(disp->sim);
@@ -321,16 +323,18 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
             	    if(i == getNbSubject(gen))
             	    {
             	    	nextGeneration(gen);
+            	    	g++;
+            	    	printf("%d\n",g);
             	        i = 1;
                 	}
-                else
-                {
-                	sim = newSimulation(1, gen->tabGenomes[i], track, pInit, initOrient);
-                    endSimulation(getSimulation(disp));
-                    setSimulation(disp, sim);
-                    fitness = -1;
-                }
-            }
+               		 else
+                	{
+                		sim = newSimulation(1, gen->tabGenomes[i], track, pInit, initOrient);
+                    	endSimulation(getSimulation(disp));
+                    	setSimulation(disp, sim);
+                	    fitness = -1;
+                	}
+            	}
 
         }
         deleteDisplay_SDL(disp);
