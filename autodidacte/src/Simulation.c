@@ -97,7 +97,7 @@ int tickSimulation(Simulation * sim)
 	assert(sim->fitness >= 0);
 
 	float * tabSensors;
-	int action;
+	int actionTurn, actionSpeed;
 	Network * net;
 	Layer * out;
 
@@ -110,7 +110,9 @@ int tickSimulation(Simulation * sim)
 	out = getLayer(net, OUTPUT);
 	feedForward(net, tabSensors);
 	/*printLayer(net->tabLayers[OUTPUT]);*/
-	action = selectHigherValue(out);
+
+	actionTurn = selectHigherValueAct(out);
+	actionSpeed = selectHigherValueSpeed(out);
 	
 	if(getValue(getNeuron(out, action)) < 0.3) /*We check if the highest neuron is activated*/
 		action = NONE;//If not, no action will be done this tick

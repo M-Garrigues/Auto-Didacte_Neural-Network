@@ -10,7 +10,7 @@
 #include "Generation.h"
 
 
-enum{ LEFT , RIGHT  ,  NONE };
+enum{ LEFT , RIGHT  , ACCELERATION  ,  DECELERATION  ,  NONE };
 
 
 
