@@ -82,7 +82,7 @@ Simulation * newSimulation(float speed, Genome * genome, Track * track, Point * 
 	sim->track = track;
 	sim->initPosition = initPosition;
 	sim->initOrientation = initOrientation;
-
+	sim->nbTicks =0;
 	sim->fitness = 1;
 
 	sim->sector = 0;
@@ -111,8 +111,6 @@ int tickSimulation(Simulation * sim)
 	feedForward(net, tabSensors);
 	/*printLayer(net->tabLayers[OUTPUT]);*/
 
-printLayer(net->tabLayers[INPUT]);
-printLayer(out);
 
 	actionTurn = selectHigherValueAct(out);
 	actionSpeed = selectHigherValueSpeed(out);
@@ -123,9 +121,6 @@ printLayer(out);
 
 	if(getValue(getNeuron(out, actionSpeed)) < 0.3) /*We check if the highest neuron is activated*/
 		actionSpeed = NONE;//If not, no action will be done this tick	                
-
-
-printf("%d\n", sim->nbTicks);
 
 switch (actionSpeed) {
 
@@ -178,11 +173,9 @@ switch (actionTurn) {
 			else
 				return sim->fitness;
 		}
-			printf("%d\n",sim->sector);
 
 		if (!(detectCollision(sim, sim->sector))&&!(detectCollision(sim, sim->sector-1)))
 		{
-			printf("tetstsettestsetsetsetsettsetestest\n");
 			sim->fitness++;
 			sim->nbTicks = 0;
 			return -1;
@@ -196,7 +189,7 @@ switch (actionTurn) {
 		{
 			if(sim->nbTicks > 20 && getSpeed(sim->car) == 0)
 				return sim->fitness;
-			else if(sim->nbTicks > 50 && getSpeed(sim->car) < 0.3)
+			else if(sim->nbTicks > 7000)
 				return sim->fitness;
 			else
 				return -1;
@@ -213,7 +206,7 @@ void updateSensors(Simulation * sim)
 	assert(sim != NULL);
 	float const PI = 3.14159265359;
 	float * tabSensors = malloc(6*sizeof(float));
-	float tailleSensor = 12000;
+	float tailleSensor = 50;
 	float a,b,c,d,e,f;
 	Point * tOut1;
 	Point * tIn1;
@@ -272,7 +265,7 @@ void updateSensors(Simulation * sim)
 	Point * beginSensor5 = middle(getBackRight(sim->car), getFrontRight(sim->car));
 	Point * endSensor1 = newPoint(getX(beginSensor1)+cos(-(PI/2) + getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor1)+sin((-PI/2)+getOrientation(getCar(sim)))*tailleSensor);; /* flanc gauche */
 	Point * endSensor2 = newPoint(getX(beginSensor2)+cos((-PI/4) + getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor2)+sin((-PI/4)+getOrientation(getCar(sim)))*tailleSensor); /* coin avant gauche */
-	Point * endSensor3 = newPoint(getX(beginSensor3)+cos(getOrientation(getCar(sim)))*tailleSensor*100,getY(beginSensor3)+sin(getOrientation(getCar(sim)))*tailleSensor*100); /* centre avant */
+	Point * endSensor3 = newPoint(getX(beginSensor3)+cos(getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor3)+sin(getOrientation(getCar(sim)))*tailleSensor); /* centre avant */
 	Point * endSensor4 = newPoint(getX(beginSensor4)+cos((PI/4) + getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor4)+sin((PI/4)+getOrientation(getCar(sim)))*tailleSensor); /* coin avant droit */
 	Point * endSensor5 = newPoint(getX(beginSensor5)+cos((PI/2) + getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor5)+sin((PI/2)+getOrientation(getCar(sim)))*tailleSensor); /* flanc droit */
 	free(getSensors(sim->car));
