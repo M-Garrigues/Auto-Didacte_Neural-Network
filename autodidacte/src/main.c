@@ -24,7 +24,7 @@ void testRegressionPOINT();
 int main()
 {
 	FILE * f = fopen("data/track.txt", "r");
-	int tab[3] = {5, 3, 2};
+	int tab[3] = {5, 3, 4};
 	float initOrient = 0;
 	srand(time(NULL));
 	Generation * pGen = newGenerationRandom(30, tab);
