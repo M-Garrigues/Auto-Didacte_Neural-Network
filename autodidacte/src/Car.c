@@ -117,10 +117,10 @@ void deleteCar (Car * car) {
 void changeOrientation (Car * car , float angle) {
 
 	assert(car != NULL);
-	car->frontLeft = rotation (car->frontLeft , car->center , angle);
-	car->frontRight = rotation (car->frontRight , car->center , angle);
-	car->backLeft = rotation (car->backLeft , car->center , angle);
-	car->backRight = rotation (car->backRight , car->center , angle);
+	rotation (car->frontLeft , car->center , angle);
+	rotation (car->frontRight , car->center , angle);
+	rotation (car->backLeft , car->center , angle);
+	rotation (car->backRight , car->center , angle);
 
 	car->orientation += angle;
 	while (car->orientation > 2*PI){
