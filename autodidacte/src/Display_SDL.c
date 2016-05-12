@@ -245,15 +245,24 @@ int initSDL()
 }
 void displayButton(Display_SDL * display, int mode)
 {
-	SDL_Surface * button1;
-	Point * buttonPoint = newPoint(140,510);
+	SDL_Surface * button1, * button2;
+	Point * buttonPoint2 = newPoint(400,510);
+	Point * buttonPoint1 = newPoint(140,510);
 	if(mode)
 		loadCarImg(&button1, "data/fastComp.png");
 	else
 		loadCarImg(&button1, "data/fastCompOn.png");
-	displayImage(buttonPoint,0,button1,display->renderer);
-	deletePoint(buttonPoint);
+	if(mode%4<=1)
+		loadCarImg(&button2, "data/seeBest.png");
+	else
+		loadCarImg(&button2, "data/resume.png");
+
+	displayImage(buttonPoint1,0,button1,display->renderer);
+	displayImage(buttonPoint2,0,button2,display->renderer);
+	deletePoint(buttonPoint1);
 	SDL_FreeSurface(button1);
+	deletePoint(buttonPoint2);
+	SDL_FreeSurface(button2);
 
 }
 void display(Display_SDL * display)
@@ -288,19 +297,32 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 	                case SDL_MOUSEBUTTONDOWN:
 	                	if(event.button.button == SDL_BUTTON_LEFT)
 	                	{
-	                		
+	                		printf("%d,%d\n",event.button.x,event.button.y);
 	                		if(event.button.x >= 44 && event.button.x <=239 && event.button.y <= 532 && event.button.y >= 495)
 	                		{
 	                			mode = (mode+1)%2;
 	                			displayButton(disp,mode);
 	                			updateScreen(disp);
 	                		}
+	                		else if(event.button.x >= 350 && event.button.x <=450 && event.button.y <= 530 && event.button.y >= 495)
+	                		{
+	                			mode = (mode +2)%4;
+	                			displayButton(disp, mode);
+	                			sim = newSimulation(1, getGenome(gen, 0), track, pInit, initOrient);
+                				endSimulation(getSimulation(disp));
+                				setSimulation(disp, sim);
+                				fitness = -1;
+	                			updateScreen(disp);
+	                		}
+
 	                	}
 	                	break;
 	                default:
                         break;
                 }
             }
+            if(mode%4<=1)
+            {
               	if(fitness == -1)
             	{
             		
@@ -321,7 +343,7 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
             	    {
             	    	nextGeneration(gen);
             	    	g++;
-            	    	printf("%d\n",getFitness(getGenome(gen ,0)));
+            	    	printf("gen %d : %d\n",g, getFitness(getGenome(gen ,0)));
             	        i = 1;
                 	}
                		 else
@@ -332,6 +354,19 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
                 	    fitness = -1;
                 	}
             	}
+            }
+            else
+            {
+            	delay(&ticks, fps);
+            	if(fitness == -1)
+            	{
+            		
+            			fitness = tickSimulation(disp->sim);
+            	  		cleanScreen(disp);
+            	  		displayButton(disp,mode);
+            	  		display(disp);
+           		}
+            }
 
         }
         deleteDisplay_SDL(disp);
