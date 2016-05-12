@@ -20,39 +20,30 @@ Car * newCar () {
 	assert(nCar != NULL);
 	
 	nCar->frontLeft = NULL;
-	nCar->frontLeft = malloc(sizeof(Point));
-	assert(nCar->frontLeft != NULL);
 	nCar->frontLeft = newPoint(0,0);
-	
+	assert(nCar->frontLeft != NULL);
 
 	nCar->frontRight = NULL;
-	nCar->frontRight = malloc(sizeof(Point));
-	assert(nCar->frontRight != NULL);
 	nCar->frontRight = newPoint(0,0);
+	assert(nCar->frontRight != NULL);
 
 
 	nCar->backLeft = NULL;
-	nCar->backLeft = malloc(sizeof(Point));
-	assert(nCar->backLeft != NULL);
 	nCar->backLeft = newPoint(0,0);
-
+	assert(nCar->backLeft != NULL);
 
 	nCar->backRight = NULL;
-	nCar->backRight = malloc(sizeof(Point));
-	assert(nCar->backRight != NULL);
 	nCar->backRight = newPoint(0,0);
+	assert(nCar->backRight != NULL);
 
 	nCar->center = NULL;
-	nCar->center = malloc(sizeof(Point));
-	assert(nCar->center != NULL);
 	nCar->center = newPoint(0,0);
+	assert(nCar->center != NULL);
 	
 	nCar->speed = 0;
 	nCar->orientation = 0;
 
 	nCar->net = NULL;
-	nCar->net = malloc(sizeof(Network));
-	assert(nCar->net != NULL);
 
 	nCar->tabSensors = malloc(sizeof(float)*6);
 	assert(nCar->tabSensors !=NULL);
