@@ -84,6 +84,7 @@ Simulation * newSimulation(float speed, Genome * genome, Track * track, Point * 
 	sim->initOrientation = initOrientation;
 	sim->nbTicks =0;
 	sim->fitness = 1;
+	sim->lap = 0;
 
 	sim->sector = 0;
 
@@ -164,14 +165,16 @@ switch (actionTurn) {
 		else
 		{
 			sim->sector = 0;
+			sim->lap++;
+			
 			if (!(detectCollision(sim, sim->sector))&&!(detectCollision(sim, getNbPoints(sim->track)-1)))
 			{
-				if (sim->nbTicks > 1000)
+				if (sim->nbTicks > 2000)
 				{
-					sim->fitness += 1000;
+					sim->fitness += 2000;
 				}
 				else
-					sim->fitness += 2000 - sim->nbTicks;
+					sim->fitness += 4000 - sim->nbTicks;
 
 				return -1;
 			}
@@ -181,12 +184,12 @@ switch (actionTurn) {
 
 		if (!(detectCollision(sim, sim->sector))&&!(detectCollision(sim, sim->sector-1)))
 		{
-			if (sim->nbTicks > 1000)
+			if (sim->nbTicks > 2000)
 			{
-				sim->fitness += 1000;
+				sim->fitness += 2000;
 			}
 			else
-				sim->fitness += 2000 - sim->nbTicks;
+				sim->fitness += 4000 - sim->nbTicks;
 
 			return -1;
 		}
