@@ -166,7 +166,13 @@ switch (actionTurn) {
 			sim->sector = 0;
 			if (!(detectCollision(sim, sim->sector))&&!(detectCollision(sim, getNbPoints(sim->track)-1)))
 			{
-				sim->fitness++;
+				if (sim->nbTicks > 1000)
+				{
+					sim->fitness += 1000;
+				}
+				else
+					sim->fitness += 2000 - sim->nbTicks;
+
 				return -1;
 			}
 			else
@@ -175,7 +181,13 @@ switch (actionTurn) {
 
 		if (!(detectCollision(sim, sim->sector))&&!(detectCollision(sim, sim->sector-1)))
 		{
-			sim->fitness++;
+			if (sim->nbTicks > 1000)
+			{
+				sim->fitness += 1000;
+			}
+			else
+				sim->fitness += 2000 - sim->nbTicks;
+
 			return -1;
 		}
 		else

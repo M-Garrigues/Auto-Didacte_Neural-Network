@@ -146,7 +146,7 @@ void accelerate (Car * car){
 
 void decelerate (Car * car){
 	if(car->speed > 0.25)
-		car->speed -= 0.4;
+		car->speed -= 0.2;
 	if(car->speed > 0.1)
 		car->speed -= 0.1;
 }
