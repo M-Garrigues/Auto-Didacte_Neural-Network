@@ -321,7 +321,7 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
             	    {
             	    	nextGeneration(gen);
             	    	g++;
-            	    	printf("%d\n",g);
+            	    	printf("%d\n",getFitness(getGenome(gen ,0)));
             	        i = 1;
                 	}
                		 else

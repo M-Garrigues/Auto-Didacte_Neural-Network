@@ -69,10 +69,9 @@ float distanceCheck (float f){
 	else return (1-f/40);
 }
 
-Point * rotation (Point * pointInit, Point * centre ,float angle){
+void rotation (Point * pointInit, Point * centre ,float angle){
 
 	float pfX, pfY, piX, piY, cX, cY;
-	Point * pointFinal = newPoint(0,0);
 
 	piX = getX(pointInit);
 	piY = getY(pointInit);
@@ -83,51 +82,19 @@ Point * rotation (Point * pointInit, Point * centre ,float angle){
 	pfX = (piX - cX)*cos(angle) - (piY - cY)*sin(angle) + cX;
 	pfY = (piY - cY)*cos(angle) + (piX - cX)*sin(angle) + cY;
 
-	setX(pointFinal, pfX);
-	setY(pointFinal, pfY);
-
-	return pointFinal;	
+	setX(pointInit, pfX);
+	setY(pointInit, pfY);	
 }
 
-float minimum (float f1, float f2, float f3, float f4){
-	if (f1 < f2)
+float minimum (float * f1, int nb){
+	int i;
+	int min  = 0;
+	for(i = 1; i < nb;i++)
 	{
-		if (f1 < f3)
-		{
-			if (f1 < f4)
-			{
-				return f1;
-			}
-			else return f4;
-		}
-		else
-		{
-			if (f3 < f4)
-			{
-				return f3;
-			}
-			else return f4;
-		}
+		if(f1[i]<f1[min])
+			min = i;
 	}
-	else 
-	{
-		if (f2 < f3)
-		{
-			if (f2 < f4)
-			{
-				return f2;
-			}
-			else return f4;
-		}
-		else
-		{
-			if (f3 < f4)
-			{
-				return f3;
-			}
-			else return f4;
-		}
-	}
+	return f1[min];
 }
 
 /* droites p1p2 et p3p4 */
