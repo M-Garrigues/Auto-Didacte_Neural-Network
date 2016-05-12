@@ -81,15 +81,15 @@ void setY(Point * p, float newY);
 
 
 /**
- * @brief      Apply a rotation to a point and give the new point
+ * @brief      Apply a rotation to a point
  *
  * @param      pointInit  Adress of the point to apply rotation
  * @param      centre     Center of the rotation
  * @param[in]  angle      Angle of the rotation
  *
- * @return     New point adress
+ * 
  */
-Point * rotation (Point * pointInit, Point * centre ,float angle);
+void rotation (Point * pointInit, Point * centre ,float angle);
 
 /**
  * @brief      Distance between two points
@@ -129,16 +129,14 @@ Point * middle (Point * p1, Point * p2);
 
 
 /**
- * @brief      Return the minimum between 4 float
+ * @brief      Return the minimum between nb float
  *
- * @param[in]  f1    1st number
- * @param[in]  f2    2nd number
- * @param[in]  f3    3rd number
- * @param[in]  f4    4rd number
+ * @param[in]  f1    tab of nb numbers
+ * @param[in]  nb 	 the number of numbers
  *
  * @return     Minimum 
  */
-float minimum (float f1, float f2, float f3, float f4);
+float minimum (float * f1, int nb);
 
 /**
  * @brief      Return 1 if [p1,p2] intersect with [p3,p4] and 0 else

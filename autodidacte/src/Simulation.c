@@ -167,7 +167,6 @@ switch (actionTurn) {
 			if (!(detectCollision(sim, sim->sector))&&!(detectCollision(sim, getNbPoints(sim->track)-1)))
 			{
 				sim->fitness++;
-				sim->nbTicks = 0;
 				return -1;
 			}
 			else
@@ -177,7 +176,6 @@ switch (actionTurn) {
 		if (!(detectCollision(sim, sim->sector))&&!(detectCollision(sim, sim->sector-1)))
 		{
 			sim->fitness++;
-			sim->nbTicks = 0;
 			return -1;
 		}
 		else
@@ -189,7 +187,7 @@ switch (actionTurn) {
 		{
 			if(sim->nbTicks > 20 && getSpeed(sim->car) == 0)
 				return sim->fitness;
-			else if(sim->nbTicks > 1000)
+			else if(sim->nbTicks > 5000)
 				return sim->fitness;
 			else
 				return -1;
@@ -207,56 +205,10 @@ void updateSensors(Simulation * sim)
 	float const PI = 3.14159265359;
 	float * tabSensors = malloc(6*sizeof(float));
 	float tailleSensor = 50;
-	float a,b,c,d,e,f;
-	Point * tOut1;
-	Point * tIn1;
-	Point * tIn2 = getTrackIn(sim->track, sim->sector);
-	Point * tOut2 = getTrackOut(sim->track, sim->sector);
-	Point * tIn3;
-	Point * tOut3;
-
-	Point * tIn4;
-	Point * tOut4;
-
+	int i;
+	float * tempTab = malloc(2*getNbPoints(sim->track)*sizeof(float));
+	Point * tempPoint;
 	tabSensors[5] = (getSpeed(sim->car))/5;
-
-
-	if(sim->sector == 0)
-	{
-		tIn1 = getTrackIn(sim->track, sim->track->nbPoints-1);
-		tOut1 = getTrackOut(sim->track, sim->track->nbPoints-1);
-		tOut3 = getTrackOut(sim->track, sim->sector+1);
-		tIn3 = getTrackIn(sim->track, sim->sector+1);
-		tOut4 = getTrackOut(sim->track, sim->sector+2);
-		tIn4 = getTrackIn(sim->track, sim->sector+2);
-	}
-	else if(sim->sector == getNbPoints(sim->track)-1)
-	{
-		tIn1 = getTrackIn(sim->track, sim->sector-1);
-		tOut1 = getTrackOut(sim->track, sim->sector-1);	
-		tIn3 = getTrackIn(sim->track, 0);
-		tOut3 = getTrackOut(sim->track, 0);
-		tIn4 = getTrackIn(sim->track, 1);
-		tOut4 = getTrackOut(sim->track, 1);
-	}
-	else if(sim->sector == getNbPoints(sim->track)-2)
-	{
-		tIn1 = getTrackIn(sim->track, sim->sector-1);
-		tOut1 = getTrackOut(sim->track, sim->sector-1);	
-		tIn3 = getTrackIn(sim->track, getNbPoints(sim->track)-1);
-		tOut3 = getTrackOut(sim->track, getNbPoints(sim->track)-1);
-		tIn4 = getTrackIn(sim->track, 0);
-		tOut4 = getTrackOut(sim->track, 0);	
-	}
-	else
-	{
-		tIn1 = getTrackIn(sim->track, sim->sector-1);
-		tOut1 = getTrackOut(sim->track, sim->sector-1);
-		tOut3 = getTrackOut(sim->track, sim->sector+1);
-		tIn3 = getTrackIn(sim->track, sim->sector+1);
-		tOut4 = getTrackOut(sim->track, sim->sector+2);
-		tIn4 = getTrackIn(sim->track, sim->sector+2);
-	}
 
 	Point * beginSensor1 = middle(getBackLeft(sim->car),getFrontLeft(sim->car));
 	Point * beginSensor2 = getFrontLeft(sim->car);
@@ -272,197 +224,215 @@ void updateSensors(Simulation * sim)
 
 
 	/*Capteur 1 flanc gauche */
-		if(intersect(tIn1,tIn2,beginSensor1,endSensor1))
-			a = distance(beginSensor1,intersectPoint(tIn1,tIn2,beginSensor1,endSensor1));
-		else
-			a = tailleSensor; /* si a = tailleSensor ==> 1 - a/tailleSensor ==  0*/
 
-		if(intersect(tIn2,tIn3,beginSensor1,endSensor1))
-			b = distance(beginSensor1,intersectPoint(tIn2,tIn3,beginSensor1,endSensor1));
-		else
-			b = tailleSensor;
-
-		if(intersect(tOut1,tOut2,beginSensor1,endSensor1))
-			c = distance(beginSensor1,intersectPoint(tOut1,tOut2,beginSensor1,endSensor1));
-		else
-			c = tailleSensor;
-
-		if(intersect(tOut2,tOut3,beginSensor1,endSensor1))
-			d = distance(beginSensor1,intersectPoint(tOut2,tOut3,beginSensor1,endSensor1));
-		else
-			d = tailleSensor;
-
-		if(intersect(beginSensor1, endSensor1, tIn3, tIn4))
+	/* last sector */
+	if(intersect(getTrackIn(sim->track,getNbPoints(sim->track)-1),getTrackIn(sim->track,0),beginSensor1,endSensor1))
+	{
+		tempPoint = intersectPoint(getTrackIn(sim->track,getNbPoints(sim->track)-1),getTrackIn(sim->track,0),beginSensor1,endSensor1);
+		tempTab[2*getNbPoints(sim->track) -2] = distance(tempPoint, beginSensor1);
+		deletePoint(tempPoint);
+	}
+	else
+		tempTab[2*getNbPoints(sim->track)-2] = tailleSensor;
+	if(intersect(getTrackOut(sim->track,getNbPoints(sim->track)-1),getTrackOut(sim->track,0),beginSensor1,endSensor1))
+	{
+		tempPoint = intersectPoint(getTrackOut(sim->track,getNbPoints(sim->track)-1),getTrackOut(sim->track,0),beginSensor1,endSensor1);
+		tempTab[2*getNbPoints(sim->track)] = distance(tempPoint, beginSensor1);
+		deletePoint(tempPoint);
+	}
+	else
+		tempTab[2*getNbPoints(sim->track)-1] = tailleSensor;
+	/*all sectors*/
+	for(i = 0; i < getNbPoints(sim->track)-1;i++)
+	{
+		if(intersect(getTrackIn(sim->track,i),getTrackIn(sim->track,i+1),beginSensor1,endSensor1))
 		{
-			e = distance(beginSensor1, intersectPoint(tIn3, tIn4,beginSensor1, endSensor1));
+			tempPoint = intersectPoint(getTrackIn(sim->track,i),getTrackIn(sim->track,i+1),beginSensor1,endSensor1);
+			tempTab[2*i] = distance(tempPoint, beginSensor1);
+			deletePoint(tempPoint);
 		}
 		else
-			e = tailleSensor;
-
-		if(intersect(beginSensor1, endSensor1, tOut3, tOut4))
+			tempTab[2*i] = tailleSensor;
+		if(intersect(getTrackOut(sim->track,i),getTrackOut(sim->track,i+1),beginSensor1,endSensor1))
 		{
-			f = distance(beginSensor1, intersectPoint(tOut3, tOut4,beginSensor1, endSensor1));
+			tempPoint = intersectPoint(getTrackOut(sim->track,i),getTrackOut(sim->track,i+1),beginSensor1,endSensor1);
+			tempTab[(2*i)+1] = distance(tempPoint, beginSensor1);
+			deletePoint(tempPoint);
 		}
 		else
-			f = tailleSensor;
+			tempTab[(2*i)+1] = tailleSensor;
+	}
+	tabSensors[0] = 1 - minimum(tempTab,2*getNbPoints(sim->track))/tailleSensor;
 
-		d = minimum(tailleSensor,d,e,f);
-		tabSensors[0] = 1 - minimum(a,b,c,d)/tailleSensor;
+	/*Capteur 2 coin gauche */
 
-		/*Capteur 2 coin avant gauche*/
-		if(intersect(tIn1,tIn2,beginSensor2,endSensor2))
-			a = distance(beginSensor2,intersectPoint(tIn1,tIn2,beginSensor2,endSensor2));
-		else
-			a = tailleSensor; /* si a = tailleSensor ==> 1 - a/tailleSensor ==  0*/
-
-		if(intersect(tIn2,tIn3,beginSensor2,endSensor2))
-			b = distance(beginSensor2,intersectPoint(tIn2,tIn3,beginSensor2,endSensor2));
-		else
-			b = tailleSensor;
-
-		if(intersect(tOut1,tOut2,beginSensor2,endSensor2))
-			c = distance(beginSensor2,intersectPoint(tOut1,tOut2,beginSensor2,endSensor2));
-		else
-			c = tailleSensor;
-
-		if(intersect(tOut2,tOut3,beginSensor2,endSensor2))
-			d = distance(beginSensor2,intersectPoint(tOut2,tOut3,beginSensor2,endSensor2));
-		else
-			d = tailleSensor;
-
-		if(intersect(beginSensor2, endSensor2, tIn3, tIn4))
+	/* last sector */
+	if(intersect(getTrackIn(sim->track,getNbPoints(sim->track)-1),getTrackIn(sim->track,0),beginSensor2,endSensor2))
+	{
+		tempPoint = intersectPoint(getTrackIn(sim->track,getNbPoints(sim->track)-1),getTrackIn(sim->track,0),beginSensor2,endSensor2);
+		tempTab[2*getNbPoints(sim->track) -2] = distance(tempPoint, beginSensor2);
+		deletePoint(tempPoint);
+	}
+	else
+		tempTab[2*getNbPoints(sim->track)-2] = tailleSensor;
+	if(intersect(getTrackOut(sim->track,getNbPoints(sim->track)-1),getTrackOut(sim->track,0),beginSensor2,endSensor2))
+	{
+		tempPoint = intersectPoint(getTrackOut(sim->track,getNbPoints(sim->track)-1),getTrackOut(sim->track,0),beginSensor2,endSensor2);
+		tempTab[2*getNbPoints(sim->track)-1] = distance(tempPoint, beginSensor2);
+		deletePoint(tempPoint);
+	}
+	else
+		tempTab[2*getNbPoints(sim->track)-1] = tailleSensor;
+	/*all sectors*/
+	for(i = 0; i < getNbPoints(sim->track)-1;i++)
+	{
+		if(intersect(getTrackIn(sim->track,i),getTrackIn(sim->track,i+1),beginSensor2,endSensor2))
 		{
-			e = distance(beginSensor2, intersectPoint(tIn3, tIn4,beginSensor2, endSensor2));
+			tempPoint = intersectPoint(getTrackIn(sim->track,i),getTrackIn(sim->track,i+1),beginSensor2,endSensor2);
+			tempTab[2*i] = distance(tempPoint, beginSensor2);
+			deletePoint(tempPoint);
 		}
 		else
-			e = tailleSensor;
-
-		if(intersect(beginSensor2, endSensor2, tOut3, tOut4))
+			tempTab[2*i] = tailleSensor;
+		if(intersect(getTrackOut(sim->track,i),getTrackOut(sim->track,i+1),beginSensor2,endSensor2))
 		{
-			f = distance(beginSensor2, intersectPoint(tOut3, tOut4,beginSensor2, endSensor2));
+			tempPoint = intersectPoint(getTrackOut(sim->track,i),getTrackOut(sim->track,i+1),beginSensor2,endSensor2);
+			tempTab[(2*i)+1] = distance(tempPoint, beginSensor2);
+			deletePoint(tempPoint);
 		}
 		else
-			f = tailleSensor;
+			tempTab[(2*i)+1] = tailleSensor;
+	}
 
-		d = minimum(tailleSensor,d,e,f);
-		tabSensors[1] = 1 - minimum(a,b,c,d)/tailleSensor;
-		
+	tabSensors[1] = 1 - minimum(tempTab,2*getNbPoints(sim->track))/tailleSensor;
 
-	/*Capteur 3 milieu avant*/
-		if(intersect(tIn1,tIn2,beginSensor3,endSensor3))
-			a = distance(beginSensor3,intersectPoint(tIn1,tIn2,beginSensor3,endSensor3));
-		else
-			a = tailleSensor; /* si a = tailleSensor ==> 1 - a/tailleSensor ==  0*/
+	/*Capteur 3 milieu */
 
-		if(intersect(tIn2,tIn3,beginSensor3,endSensor3))
-			b = distance(beginSensor3,intersectPoint(tIn2,tIn3,beginSensor3,endSensor3));
-		else
-			b = tailleSensor;
+	/* last sector */
+	if(intersect(getTrackIn(sim->track,getNbPoints(sim->track)-1),getTrackIn(sim->track,0),beginSensor3,endSensor3))
+	{
+		tempPoint = intersectPoint(getTrackIn(sim->track,getNbPoints(sim->track)-1),getTrackIn(sim->track,0),beginSensor3,endSensor3);
+		tempTab[2*getNbPoints(sim->track) -2] = distance(tempPoint, beginSensor3);
+		deletePoint(tempPoint);
+	}
+	else
+		tempTab[2*getNbPoints(sim->track)-2] = tailleSensor;
+	if(intersect(getTrackOut(sim->track,getNbPoints(sim->track)-1),getTrackOut(sim->track,0),beginSensor3,endSensor3))
+	{
+		tempPoint = intersectPoint(getTrackOut(sim->track,getNbPoints(sim->track)-1),getTrackOut(sim->track,0),beginSensor3,endSensor3);
+		tempTab[2*getNbPoints(sim->track)-1] = distance(tempPoint, beginSensor3);
+		deletePoint(tempPoint);
+	}
+	else
+		tempTab[2*getNbPoints(sim->track)-1] = tailleSensor;
 
-		if(intersect(tOut1,tOut2,beginSensor3,endSensor3))
-			c = distance(beginSensor3,intersectPoint(tOut1,tOut2,beginSensor3,endSensor3));
-		else
-			c = tailleSensor;
-
-		if(intersect(tOut2,tOut3,beginSensor3,endSensor3))
-			d = distance(beginSensor3,intersectPoint(tOut2,tOut3,beginSensor3,endSensor3));
-		else
-			d = tailleSensor;
-
-				if(intersect(beginSensor3, endSensor3, tIn3, tIn4))
+	/*all sectors*/
+	for(i = 0; i < getNbPoints(sim->track)-1;i++)
+	{
+		if(intersect(getTrackIn(sim->track,i),getTrackIn(sim->track,i+1),beginSensor3,endSensor3))
 		{
-			e = distance(beginSensor3, intersectPoint(tIn3, tIn4,beginSensor3, endSensor3));
+			tempPoint = intersectPoint(getTrackIn(sim->track,i),getTrackIn(sim->track,i+1),beginSensor3,endSensor3);
+			tempTab[2*i] = distance(tempPoint, beginSensor3);
+			deletePoint(tempPoint);
 		}
 		else
-			e = tailleSensor;
-
-		if(intersect(beginSensor3, endSensor3, tOut3, tOut4))
+			tempTab[2*i] = tailleSensor;
+		if(intersect(getTrackOut(sim->track,i),getTrackOut(sim->track,i+1),beginSensor3,endSensor3))
 		{
-			f = distance(beginSensor1, intersectPoint(tOut3, tOut4,beginSensor3, endSensor3));
+			tempPoint = intersectPoint(getTrackOut(sim->track,i),getTrackOut(sim->track,i+1),beginSensor3,endSensor3);
+			tempTab[(2*i)+1] = distance(tempPoint, beginSensor3);
+			deletePoint(tempPoint);
 		}
 		else
-			f = tailleSensor;
+			tempTab[(2*i)+1] = tailleSensor;
+	}
 
-		d = minimum(tailleSensor,d,e,f);
-		tabSensors[2] =  1 - minimum(a,b,c,d)/tailleSensor;
+	tabSensors[2] = 1 - minimum(tempTab,2*getNbPoints(sim->track))/tailleSensor;
 
-	/*Cpateur 4 coin avant droit */
-		if(intersect(tIn1,tIn2,beginSensor4,endSensor4))
-			a = distance(beginSensor4,intersectPoint(tIn1,tIn2,beginSensor4,endSensor4));
-		else
-			a = tailleSensor; /* si a = tailleSensor ==> 1 - a/tailleSensor ==  0*/
+	/*Capteur 4 coin droit */
+	/* last sector */
+	if(intersect(getTrackIn(sim->track,getNbPoints(sim->track)-1),getTrackIn(sim->track,0),beginSensor4,endSensor4))
+	{
+		tempPoint = intersectPoint(getTrackIn(sim->track,getNbPoints(sim->track)-1),getTrackIn(sim->track,0),beginSensor4,endSensor4);
+		tempTab[2*getNbPoints(sim->track) -2] = distance(tempPoint, beginSensor4);
+		deletePoint(tempPoint);
+	}
+	else
+		tempTab[2*getNbPoints(sim->track)-2] = tailleSensor;
+	if(intersect(getTrackOut(sim->track,getNbPoints(sim->track)-1),getTrackOut(sim->track,0),beginSensor4,endSensor4))
+	{
+		tempPoint = intersectPoint(getTrackOut(sim->track,getNbPoints(sim->track)-1),getTrackOut(sim->track,0),beginSensor4,endSensor4);
+		tempTab[2*getNbPoints(sim->track)-1] = distance(tempPoint, beginSensor4);
+		deletePoint(tempPoint);
+	}
+	else
+		tempTab[2*getNbPoints(sim->track)-1] = tailleSensor;
 
-		if(intersect(tIn2,tIn3,beginSensor4,endSensor4))
-			b = distance(beginSensor4,intersectPoint(tIn2,tIn3,beginSensor4,endSensor4));
-		else
-			b = tailleSensor;
-
-		if(intersect(tOut1,tOut2,beginSensor4,endSensor4))
-			c = distance(beginSensor4,intersectPoint(tOut1,tOut2,beginSensor4,endSensor4));
-		else
-			c = tailleSensor;
-
-		if(intersect(tOut2,tOut3,beginSensor4,endSensor4))
-			d = distance(beginSensor4,intersectPoint(tOut2,tOut3,beginSensor4,endSensor4));
-		else
-			d = tailleSensor;
-			if(intersect(beginSensor4, endSensor4, tIn3, tIn4))
+	/*all sectors*/
+	for(i = 0; i < getNbPoints(sim->track)-1;i++)
+	{
+		if(intersect(getTrackIn(sim->track,i),getTrackIn(sim->track,i+1),beginSensor4,endSensor4))
 		{
-			e = distance(beginSensor1, intersectPoint(tIn3, tIn4,beginSensor4, endSensor4));
+			tempPoint = intersectPoint(getTrackIn(sim->track,i),getTrackIn(sim->track,i+1),beginSensor4,endSensor4);
+			tempTab[2*i] = distance(tempPoint, beginSensor4);
+			deletePoint(tempPoint);
 		}
 		else
-			e = tailleSensor;
-
-		if(intersect(beginSensor4, endSensor4, tOut3, tOut4))
+			tempTab[2*i] = tailleSensor;
+		if(intersect(getTrackOut(sim->track,i),getTrackOut(sim->track,i+1),beginSensor4,endSensor4))
 		{
-			f = distance(beginSensor4, intersectPoint(tOut3, tOut4,beginSensor4, endSensor4));
+			tempPoint = intersectPoint(getTrackOut(sim->track,i),getTrackOut(sim->track,i+1),beginSensor4,endSensor4);
+			tempTab[(2*i)+1] = distance(tempPoint, beginSensor4);
+			deletePoint(tempPoint);
 		}
 		else
-			f = tailleSensor;
-
-		d = minimum(tailleSensor,d,e,f);
-		tabSensors[3] = 1 - minimum(a,b,c,d)/tailleSensor;
+			tempTab[(2*i)+1] = tailleSensor;
+	}
+	tabSensors[3] = 1 - minimum(tempTab,2*getNbPoints(sim->track))/tailleSensor;
 
 	/*Capteur 5 flanc droit */
-		if(intersect(tIn1,tIn2,beginSensor5,endSensor5))
-			a = distance(beginSensor5,intersectPoint(tIn1,tIn2,beginSensor5,endSensor5));
-		else
-			a = tailleSensor; /* si a = tailleSensor ==> 1 - a/tailleSensor ==  0*/
+	/* last sector */
+	if(intersect(getTrackIn(sim->track,getNbPoints(sim->track)-1),getTrackIn(sim->track,0),beginSensor5,endSensor5))
+	{
+		tempPoint = intersectPoint(getTrackIn(sim->track,getNbPoints(sim->track)-1),getTrackIn(sim->track,0),beginSensor5,endSensor5);
+		tempTab[2*getNbPoints(sim->track) -2] = distance(tempPoint, beginSensor5);
+		deletePoint(tempPoint);
+	}
+	else
+		tempTab[2*getNbPoints(sim->track)-2] = tailleSensor;
+	if(intersect(getTrackOut(sim->track,getNbPoints(sim->track)-1),getTrackOut(sim->track,0),beginSensor5,endSensor5))
+	{
+		tempPoint = intersectPoint(getTrackOut(sim->track,getNbPoints(sim->track)-1),getTrackOut(sim->track,0),beginSensor5,endSensor5);
+		tempTab[2*getNbPoints(sim->track)-1] = distance(tempPoint, beginSensor5);
+		deletePoint(tempPoint);
+	}
+	else
+		tempTab[2*getNbPoints(sim->track)-1] = tailleSensor;
 
-		if(intersect(tIn2,tIn3,beginSensor5,endSensor5))
-			b = distance(beginSensor5,intersectPoint(tIn2,tIn3,beginSensor5,endSensor5));
-		else
-			b = tailleSensor;
-
-		if(intersect(tOut1,tOut2,beginSensor5,endSensor5))
-			c = distance(beginSensor5,intersectPoint(tOut1,tOut2,beginSensor5,endSensor5));
-		else
-			c = tailleSensor;
-
-		if(intersect(tOut2,tOut3,beginSensor5,endSensor5))
-			d = distance(beginSensor5,intersectPoint(tOut2,tOut3,beginSensor5,endSensor5));
-		else
-			d = tailleSensor;
-		if(intersect(beginSensor5,endSensor5, tIn3, tIn4))
+	/*all sectors*/
+	for(i = 0; i < getNbPoints(sim->track)-1;i++)
+	{
+		if(intersect(getTrackIn(sim->track,i),getTrackIn(sim->track,i+1),beginSensor5,endSensor5))
 		{
-			e = distance(beginSensor5, intersectPoint(tIn3, tIn4,beginSensor5, endSensor5));
+			tempPoint = intersectPoint(getTrackIn(sim->track,i),getTrackIn(sim->track,i+1),beginSensor5,endSensor5);
+			tempTab[2*i] = distance(tempPoint, beginSensor5);
+			deletePoint(tempPoint);
 		}
 		else
-			e = tailleSensor;
-
-		if(intersect(beginSensor5, endSensor5, tOut3, tOut4))
+			tempTab[2*i] = tailleSensor;
+		if(intersect(getTrackOut(sim->track,i),getTrackOut(sim->track,i+1),beginSensor5,endSensor5))
 		{
-			f = distance(beginSensor5, intersectPoint(tOut3, tOut4,beginSensor5, endSensor5));
+			tempPoint = intersectPoint(getTrackOut(sim->track,i),getTrackOut(sim->track,i+1),beginSensor5,endSensor5);
+			tempTab[(2*i)+1] = distance(tempPoint, beginSensor5);
+			deletePoint(tempPoint);
 		}
 		else
-			f = tailleSensor;
-
-		d = minimum(tailleSensor,d,e,f);
-		tabSensors[4] = 1 - minimum(a,b,c,d)/tailleSensor;
-
-
-	/*printf("%f %f %f %f %f\n",tabSensors[0],tabSensors[1],tabSensors[2],tabSensors[3],tabSensors[4]);*/
+			tempTab[(2*i)+1] = tailleSensor;
+	}
+	tabSensors[4] = 1 - minimum(tempTab,2*getNbPoints(sim->track))/tailleSensor;
+	
 	setSensors(sim->car, tabSensors);
+	free(tempTab);
 	deletePoint(endSensor1);
 	deletePoint(endSensor2);
 	deletePoint(endSensor3);
