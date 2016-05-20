@@ -243,16 +243,16 @@ int initSDL()
     	return 1;
     }
 }
-void displayButton(Display_SDL * display, int mode)
+void displayButton(Display_SDL * display, int * mode)
 {
 	SDL_Surface * button1, * button2;
 	Point * buttonPoint2 = newPoint(400,510);
 	Point * buttonPoint1 = newPoint(140,510);
-	if(mode)
+	if(mode[0])
 		loadCarImg(&button1, "data/fastComp.png");
 	else
 		loadCarImg(&button1, "data/fastCompOn.png");
-	if(mode%4<=1)
+	if(mode[1])
 		loadCarImg(&button2, "data/seeBest.png");
 	else
 		loadCarImg(&button2, "data/resume.png");
@@ -276,11 +276,13 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 	if(initSDL())
     {
         SDL_Event event;
+        FILE * f = NULL;
+        int tab[3] = {6,5,4};
         Simulation * sim = newSimulation(6 ,gen->tabGenomes[0], track, pInit, initOrient);
         Display_SDL * disp = newDisplay_SDL(sim,x,y,fps,file);
-
+        int trackNb = 0;
         int ticks = SDL_GetTicks();
-        int mode = 1;
+        int mode[2] = {1,1};
         int g = 1;
         int fitness = -1;
         int i = 0; /* indique le genome en cours de simulation */
@@ -300,19 +302,41 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 	                		printf("%d,%d\n",event.button.x,event.button.y);
 	                		if(event.button.x >= 44 && event.button.x <=239 && event.button.y <= 532 && event.button.y >= 495)
 	                		{
-	                			mode = (mode+1)%2;
+	                			mode[0] = (mode[0]+1)%2;
 	                			displayButton(disp,mode);
 	                			updateScreen(disp);
 	                		}
 	                		else if(event.button.x >= 350 && event.button.x <=450 && event.button.y <= 530 && event.button.y >= 495)
 	                		{
-	                			mode = (mode +2)%4;
+	                			mode[1] = (mode[1] +1)%2;
 	                			displayButton(disp, mode);
 	                			sim = newSimulation(1, getGenome(gen, 0), track, pInit, initOrient);
                 				endSimulation(getSimulation(disp));
                 				setSimulation(disp, sim);
                 				fitness = -1;
 	                			updateScreen(disp);
+	                		}
+	                		else if(0/*condition reset*/)
+	                		{
+	                			deleteGeneration(gen);
+	                			gen = newGenerationRandom(30,tab);
+	                			i = 0;
+	                			g = 0;
+	                		}
+	                		else if(1/*condition autre circuit*/)
+	                		{
+	                			trackNb = (trackNb+1)%2;
+	                			if(trackNb)
+	                			{
+	                				f = fopen("track2.txt","r");
+	                			}
+	                			else
+	                			{
+	                				f = fopen("track.txt","r");
+	                			}
+	                			initTrackFile(track,f);
+	                			i = 0; /* on recommence toute la simulation car les fitness ne sont plus les memes*/
+	                			fclose(f);
 	                		}
 
 	                	}
@@ -321,13 +345,13 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
                         break;
                 }
             }
-            if(mode%4<=1)
+            if(mode[1] )
             {
               	if(fitness == -1)
             	{
             		
             			fitness = tickSimulation(disp->sim);
-            			if(mode == 1)
+            			if(mode[0] == 1)
             			{
             				delay(&ticks, fps);
             	  			cleanScreen(disp);
