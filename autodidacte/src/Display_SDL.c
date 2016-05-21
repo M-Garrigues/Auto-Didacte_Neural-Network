@@ -245,7 +245,7 @@ int initSDL()
 }
 void displayButton(Display_SDL * display, int * mode)
 {
-	SDL_Surface * button1, * button2;
+	SDL_Surface * button1, * button2, * button3, *button4;
 	Point * buttonPoint2 = newPoint(400,510);
 	Point * buttonPoint1 = newPoint(140,510);
 	if(mode[0])
@@ -322,20 +322,35 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 	                			gen = newGenerationRandom(30,tab);
 	                			i = 0;
 	                			g = 0;
+	                			endSimulation(getSimulation(disp)); /* recommencer la simulation*/
+	                			sim = newSimulation(1, gen->tabGenomes[i], track, pInit, initOrient);
+	                			setSimulation(disp, sim);
 	                		}
 	                		else if(1/*condition autre circuit*/)
 	                		{
-	                			trackNb = (trackNb+1)%2;
-	                			if(trackNb)
+	                			deleteTrack(track);
+	                			track = newTrack();
+	                			fitness = -1; /* empeche le blocage dans la boucle see best*/
+	                			trackNb = (trackNb+1)%3;
+	                			if(trackNb==1)
 	                			{
-	                				f = fopen("track2.txt","r");
+	                				f = fopen("data/track2.txt","r");
+	                			}
+	                			else if(trackNb == 0)
+	                			{
+	                				f = fopen("data/track.txt","r");
 	                			}
 	                			else
 	                			{
-	                				f = fopen("track.txt","r");
+	                				f = fopen("data/track3.txt","r");
 	                			}
 	                			initTrackFile(track,f);
+	                			deletePoint(pInit);
+	                			pInit = intersectPoint(track->trackIn[0] , track->trackOut[1] , track->trackOut[0] , track->trackIn[1]);
 	                			i = 0; /* on recommence toute la simulation car les fitness ne sont plus les memes*/
+	                			endSimulation(getSimulation(disp));
+	                			sim = newSimulation(1, gen->tabGenomes[i], track, pInit, initOrient);
+	                			setSimulation(disp, sim);
 	                			fclose(f);
 	                		}
 
