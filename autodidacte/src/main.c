@@ -102,7 +102,7 @@ void unitTestTrack (){
 }*/
 int main()
 {
-	FILE * f = fopen("data/track.txt", "r");
+	FILE * f = fopen("data/circle.track", "r");
 	int tab[3] = {6, 5, 4};
 	float initOrient = 0;
 	srand(time(NULL));

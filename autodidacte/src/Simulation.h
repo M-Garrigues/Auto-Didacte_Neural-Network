@@ -33,7 +33,6 @@ typedef struct
     int fitness; /** Car's score */
     int sector; /** Current track's part where the car is */
     int nbTicks; /** Number of simulation's tick done in the current sector */
-    int lap;/** Number of laps done by the car*/
 
 }Simulation;
 
@@ -221,22 +220,7 @@ void setNbTicks(Simulation * sim, int newSector);
 
 
 
-/**
- * @brief      Get the number of laps done.
- *
- * @param[in,out]      sim   Simulation adress
- *
- * @return    Current number of laps. 
- */
-int getLap(Simulation * sim);
 
-/**
- * @brief      Set the number of laps.
- *
- * @param[in,out]      sim        Simulation adress
- * @param[in]  newSector  New number of laps.
- */
-void setLap(Simulation * sim, int newLap);
 
 /* ----- Simulation functions ----- */ 
 

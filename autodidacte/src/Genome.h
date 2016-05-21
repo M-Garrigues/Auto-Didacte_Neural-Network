@@ -18,6 +18,7 @@ typedef struct
     int nbOutput;
     int fitness;
     float * tabGenes;
+    float activation;
 }Genome;
 
 /* Functions Genome */
@@ -125,6 +126,23 @@ int getFitness(const Genome * genome);
  * @param[in]  value   The new fitness value
  */
 void setFitness(Genome * genome, int value);
+
+/**
+ * @brief      Get the activation function.
+ *
+ * @param[in]  genome  The genome you want the activation function
+ *
+ * @return     the activation function.
+ */
+int getActivation(const Genome * genome);
+/**
+ * @brief      Set the activation function.
+ *
+ * @param      genome  The genome you want to change the activation function
+ * @param[in]  value   The new activation function
+ */
+void setActivation(Genome * genome, int newActivation);
+
 
 /* general functions */
 /**

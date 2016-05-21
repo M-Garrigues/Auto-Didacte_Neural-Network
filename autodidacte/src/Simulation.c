@@ -84,7 +84,6 @@ Simulation * newSimulation(float speed, Genome * genome, Track * track, Point * 
 	sim->initOrientation = initOrientation;
 	sim->nbTicks =0;
 	sim->fitness = 1;
-	sim->lap = 0;
 
 	sim->sector = 0;
 
@@ -130,7 +129,7 @@ switch (actionSpeed) {
 
 	case ACCELERATION :
 	 	accelerate(sim->car);
-	 	break;
+	 break;
 
 	case DECELERATION :
 		decelerate(sim->car);
@@ -140,7 +139,7 @@ switch (actionSpeed) {
 
 switch (actionTurn) {
 
-	case NONE :/*printf("NONE\n");*/ /* Try different values for moveStraight */
+	case NONE : /* Try different values for moveStraight */
 	 break;
 
 	case RIGHT :
@@ -165,7 +164,6 @@ switch (actionTurn) {
 		else
 		{
 			sim->sector = 0;
-			sim->lap++;
 			
 			if (!(detectCollision(sim, sim->sector))&&!(detectCollision(sim, getNbPoints(sim->track)-1)))
 			{
