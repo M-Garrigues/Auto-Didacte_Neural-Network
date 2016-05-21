@@ -246,10 +246,10 @@ int initSDL()
 void displayButton(Display_SDL * display, int * mode)
 {
 	SDL_Surface * button1, * button2, * button3, *button4;
-	Point * buttonPoint2 = newPoint(400,510);
-	Point * buttonPoint1 = newPoint(103,510);
-	Point * buttonPoint3 = newPoint(250,510);
-	Point * buttonPoint4 = newPoint(550,510);
+	Point * buttonPoint2 = newPoint(385,510);
+	Point * buttonPoint1 = newPoint(115,510);
+	Point * buttonPoint3 = newPoint(270,510);
+	Point * buttonPoint4 = newPoint(540,510);
 	if(mode[0])
 		loadCarImg(&button1, "data/fastComp.png");
 	else
@@ -309,13 +309,13 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 	                	if(event.button.button == SDL_BUTTON_LEFT)
 	                	{
 	                		printf("%d,%d\n",event.button.x,event.button.y);
-	                		if(event.button.x >= 44 && event.button.x <=239 && event.button.y <= 532 && event.button.y >= 495)
+	                		if(event.button.x >= 20 && event.button.x <=215 && event.button.y <= 535 && event.button.y >= 495)
 	                		{
 	                			mode[0] = (mode[0]+1)%2;
 	                			displayButton(disp,mode);
 	                			updateScreen(disp);
 	                		}
-	                		else if(event.button.x >= 350 && event.button.x <=450 && event.button.y <= 530 && event.button.y >= 495)
+	                		else if( event.button.x >= 330 && event.button.x <=440&& event.button.y <= 535 && event.button.y >= 495)
 	                		{
 	                			mode[1] = (mode[1] +1)%2;
 	                			displayButton(disp, mode);
@@ -325,17 +325,17 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
                 				fitness = -1;
 	                			updateScreen(disp);
 	                		}
-	                		else if(0/*condition reset*/)
+	                		else if(event.button.x >= 230 && event.button.x <=310 && event.button.y <= 535 && event.button.y >= 495)
 	                		{
 	                			deleteGeneration(gen);
 	                			gen = newGenerationRandom(30,tab);
 	                			i = 0;
-	                			g = 0;
+	                			g = 1;
 	                			endSimulation(getSimulation(disp)); /* recommencer la simulation*/
 	                			sim = newSimulation(1, gen->tabGenomes[i], track, pInit, initOrient);
 	                			setSimulation(disp, sim);
 	                		}
-	                		else if(1/*condition autre circuit*/)
+	                		else if(event.button.x >= 465 && event.button.x <=620 && event.button.y <= 535 && event.button.y >= 495)
 	                		{
 	                			deleteTrack(track);
 	                			track = newTrack();
@@ -360,6 +360,9 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 	                			endSimulation(getSimulation(disp));
 	                			sim = newSimulation(1, gen->tabGenomes[i], track, pInit, initOrient);
 	                			setSimulation(disp, sim);
+	                			cleanScreen(disp);
+	                			displayButton(disp, mode);
+	                			display(disp);
 	                			fclose(f);
 	                		}
 
