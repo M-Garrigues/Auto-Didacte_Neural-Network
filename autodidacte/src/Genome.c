@@ -21,6 +21,7 @@ Genome * newGenomeRandom(int * species)
     pGenome->nbHidden = species[1];
     pGenome->nbOutput = species[2];
     pGenome->fitness = 0;
+    pGenome->activation = (rand()/(float)RAND_MAX)/2 + 0.25; // activation is initialised between 0.25 and 0.75
     pGenome->tabGenes = malloc((pGenome->nbInput + pGenome->nbOutput)*pGenome->nbHidden*sizeof(float));
     assert(pGenome->tabGenes != NULL);
     for(i = 0; i < (pGenome->nbInput + pGenome->nbOutput)*pGenome->nbHidden; i++)
@@ -39,6 +40,7 @@ Genome * newGenomeNull(int * species)
     pGenome->nbHidden = species[1];
     pGenome->nbOutput = species[2];
     pGenome->fitness = 0;
+    pGenome->activation = 0.5;
     pGenome->tabGenes = malloc((pGenome->nbInput + pGenome->nbOutput)*pGenome->nbHidden*sizeof(float));
     assert(pGenome != NULL);
     for(i = 0; i < (pGenome->nbInput + pGenome->nbOutput)*pGenome->nbHidden; i++)
@@ -51,6 +53,8 @@ void deleteGenome(Genome * genome)
 {
 	assert(genome != NULL);
     free(genome->tabGenes);
+    genome->fitness = 0;
+    genome->activation = 0;
     free(genome);
 }
 
@@ -107,7 +111,16 @@ void setFitness(Genome * genome, int value)
     genome->fitness = value;
 }
 
-
+int getActivation(const Genome * genome)
+{
+    assert(genome != NULL);
+    return genome->activation;
+}
+void setActivation(Genome * genome, int newActivation)
+{
+    assert(genome != NULL);
+    genome->activation = newActivation; 
+}
 
 
 void crossover(const Genome * genome1, const Genome * genome2, Genome * child)

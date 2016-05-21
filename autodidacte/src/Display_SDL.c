@@ -343,15 +343,15 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
 	                			trackNb = (trackNb+1)%3;
 	                			if(trackNb==1)
 	                			{
-	                				f = fopen("data/track2.txt","r");
+	                				f = fopen("data/basic.track","r");
 	                			}
 	                			else if(trackNb == 0)
 	                			{
-	                				f = fopen("data/track.txt","r");
+	                				f = fopen("data/circle.track","r");
 	                			}
 	                			else
 	                			{
-	                				f = fopen("data/track3.txt","r");
+	                				f = fopen("data/complex.track","r");
 	                			}
 	                			initTrackFile(track,f);
 	                			deletePoint(pInit);
