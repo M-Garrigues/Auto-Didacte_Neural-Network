@@ -247,7 +247,9 @@ void displayButton(Display_SDL * display, int * mode)
 {
 	SDL_Surface * button1, * button2, * button3, *button4;
 	Point * buttonPoint2 = newPoint(400,510);
-	Point * buttonPoint1 = newPoint(140,510);
+	Point * buttonPoint1 = newPoint(103,510);
+	Point * buttonPoint3 = newPoint(250,510);
+	Point * buttonPoint4 = newPoint(550,510);
 	if(mode[0])
 		loadCarImg(&button1, "data/fastComp.png");
 	else
@@ -256,14 +258,21 @@ void displayButton(Display_SDL * display, int * mode)
 		loadCarImg(&button2, "data/seeBest.png");
 	else
 		loadCarImg(&button2, "data/resume.png");
+	loadCarImg(&button3, "data/reset.png");
+	loadCarImg(&button4, "data/changeTrack.png");
 
 	displayImage(buttonPoint1,0,button1,display->renderer);
 	displayImage(buttonPoint2,0,button2,display->renderer);
+	displayImage(buttonPoint3,0,button3,display->renderer);
+	displayImage(buttonPoint4,0,button4,display->renderer);
 	deletePoint(buttonPoint1);
 	SDL_FreeSurface(button1);
 	deletePoint(buttonPoint2);
 	SDL_FreeSurface(button2);
-
+	deletePoint(buttonPoint3);
+	SDL_FreeSurface(button3);
+	deletePoint(buttonPoint4);
+	SDL_FreeSurface(button4);
 }
 void display(Display_SDL * display)
 {
