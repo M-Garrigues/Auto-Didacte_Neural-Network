@@ -135,7 +135,7 @@ void crossoverGeneration(Generation * gen);
  *
  * @param      gen   The generation to do the mutation on
  */
-void mutationGeneration(Generation * gen);
+void mutationGeneration(Generation * gen, int intensity);
 /**
  * @brief      the unit test of generation
  */

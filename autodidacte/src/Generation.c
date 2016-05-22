@@ -116,9 +116,10 @@ void setNbSubject(Generation * gen, int nb)
 
 void nextGeneration(Generation * gen)
 {
+    int intensity = getFitness(getGenome(gen, getBest(gen)));
     assert(gen !=NULL);
     crossoverGeneration(gen);
-    mutationGeneration(gen);
+    mutationGeneration(gen, 1);
 }
 void crossoverGeneration(Generation * gen)
 {
@@ -176,7 +177,7 @@ void crossoverGeneration(Generation * gen)
     }
     free(pGenomes);
 }
-void mutationGeneration(Generation * gen)
+void mutationGeneration(Generation * gen, int intensity)
 {
     int i;
     assert(gen != NULL);
@@ -184,7 +185,7 @@ void mutationGeneration(Generation * gen)
     {   
         if(1)
         {
-            mutation(getGenome(gen, i));
+            mutation(getGenome(gen, i), intensity);
         }
     }
 }

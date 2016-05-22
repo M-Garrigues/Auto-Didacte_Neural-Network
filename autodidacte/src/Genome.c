@@ -146,14 +146,14 @@ void crossover(const Genome * genome1, const Genome * genome2, Genome * child)
     }
 }
 
-void mutation(Genome * genome)
+void mutation(Genome * genome, int intensity)
 {
     int i;
     assert(genome != NULL);
     for(i =0; i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome); i++)
     {
         if(rand()%((getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome)/2) == 0)
-            setGene(genome, i , getGene((genome), i) + (rand()/(float)RAND_MAX)-0.5);
+            setGene(genome, i , getGene((genome), i) + (((rand()/(float)RAND_MAX)-0.5)*2)/(float)intensity);
         else
             setGene(genome,i,getGene(genome,i));
     }
@@ -268,7 +268,7 @@ void regressionTestGenome()
     Genome * g2 = newGenomeRandom(tab);
     Genome * g3 = newGenomeNull(tab);
     crossover(g1,g2,g3);
-    mutation(g3);
+    mutation(g3,5);
     saveGenome(g3,f);
     rewind(f);
     loadGenome(f,g1);

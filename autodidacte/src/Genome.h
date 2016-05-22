@@ -172,8 +172,9 @@ void crossover(const Genome * genome1, const Genome * genome2, Genome * child);
  * @brief      does a mutation on a genome
  *
  * @param[in,out]      genome  The genome you want to mutate
+ * @param[in]          intensity The more intensity is high the less the mutation is intense
  */
-void mutation(Genome * genome);
+void mutation(Genome * genome, int intensity);
 /**
  * @brief      load a genome from a file
  *
