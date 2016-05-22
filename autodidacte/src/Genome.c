@@ -153,7 +153,7 @@ void mutation(Genome * genome)
     for(i =0; i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome); i++)
     {
         if(rand()%((getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome)/2) == 0)
-            setGene(genome, i , getGene((genome), i) + (rand()/(float)RAND_MAX)/5-0.1);
+            setGene(genome, i , getGene((genome), i) + (rand()/(float)RAND_MAX)-0.5);
         else
             setGene(genome,i,getGene(genome,i));
     }

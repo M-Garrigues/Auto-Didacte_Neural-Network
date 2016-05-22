@@ -123,16 +123,18 @@ void nextGeneration(Generation * gen)
 void crossoverGeneration(Generation * gen)
 {
     Genome * genome;
-    float newActivation = getActivationGen(gen->tabGenomes[0])+(rand()/(float)RAND_MAX)/5 -0.1;
+    float newActivation;
+    int * p = malloc(sizeof(int)*getNbSubject(gen));
+    int * rank = malloc(sizeof(int)*getNbSubject(gen));
+    int i,j,temp,subject1, subject2;
+    int tab[3] = {getNbInput(getGenome(gen, 0)), getNbHidden(getGenome(gen, 0)), getNbOutput(getGenome(gen, 0))};
+    int bestGenome = getBest(gen);
+    newActivation = getActivationGen(gen->tabGenomes[0])+((((rand()/(float)RAND_MAX)-0.5)*2)/(float)getFitness(getGenome(gen,bestGenome)));
     if(newActivation<0.2)
         newActivation = 0.2;
     else if(newActivation>0.8)
         newActivation = 0.8;
     printf("new Act : %f\n",newActivation);
-    int * p = malloc(sizeof(int)*getNbSubject(gen));
-    int i,subject1, subject2;
-    int tab[3] = {getNbInput(getGenome(gen, 0)), getNbHidden(getGenome(gen, 0)), getNbOutput(getGenome(gen, 0))};
-    int bestGenome = getBest(gen);
     Genome ** pGenomes = gen->tabGenomes;
     assert(gen != NULL);
     gen->tabGenomes = malloc(sizeof(Genome*)*gen->nbSubject);
@@ -141,17 +143,30 @@ void crossoverGeneration(Generation * gen)
     {
         p[i] = getFitness(pGenomes[i]);
     }
+    for(i = 0;i<gen->nbSubject;i++)
+    {
+        temp = 1;
+        for(j = 0;j<gen->nbSubject;j++)
+        {
+            if(p[i]>p[j])
+            {
+                temp++;
+            }
+        }
+        rank[i] = temp;
+    }
     for(i = 1; i<gen->nbSubject;i++)
     {
         genome = newGenomeNull(tab);
-        subject1 = randomProba(p, gen->nbSubject);
-        subject2 = randomProba(p, gen->nbSubject);
+        subject1 = randomProba(rank, gen->nbSubject);
+        subject2 = randomProba(rank, gen->nbSubject);
         crossover(pGenomes[subject1] ,pGenomes[subject2], genome);
         setActivationGen(genome,newActivation);
         setGenome(gen, i, genome);
 
     }
     free(p);
+    free(rank);
     setGenome(gen,0,pGenomes[bestGenome]);
 
     for(i =0; i<gen->nbSubject;i++){
