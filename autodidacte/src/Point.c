@@ -27,12 +27,12 @@ Point * newPoint(float X, float Y)
 }
 
 /* Point get/set */
-float getX(Point * p)
+float getX(const Point * p)
 {
 	assert(p != NULL);
 	return(p->x);
 }
-float getY(Point * p)
+float getY(const Point * p)
 {
 	assert(p != NULL);
 	return(p->y);
@@ -50,12 +50,12 @@ void setY(Point * p, float newY)
 }
 
 /* Point functions */
-Point * middle (Point * p1, Point * p2){
+Point * middle (const Point * p1, const Point * p2){
 	Point * pointMiddle = newPoint((getX(p1) + getX(p2))/2,(getY(p1) + getY(p2))/2);
 	return pointMiddle;
 }
 
-float distance (Point * p1, Point * p2){
+float distance (const Point * p1, const Point * p2){
 	float distance;
 	distance = sqrt ((getX(p1)-getX(p2))*(getX(p1)-getX(p2)) +(getY(p1)-getY(p2))*(getY(p1)-getY(p2)));
 	return distance;
@@ -69,7 +69,7 @@ float distanceCheck (float f){
 	else return (1-f/40);
 }
 
-void rotation (Point * pointInit, Point * centre ,float angle){
+void rotation (Point * pointInit,const Point * centre ,float angle){
 
 	float pfX, pfY, piX, piY, cX, cY;
 
@@ -86,7 +86,7 @@ void rotation (Point * pointInit, Point * centre ,float angle){
 	setY(pointInit, pfY);	
 }
 
-float minimum (float * f1, int nb){
+float minimum (const float * f1, int nb){
 	int i;
 	int min  = 0;
 	for(i = 1; i < nb;i++)
@@ -98,7 +98,7 @@ float minimum (float * f1, int nb){
 }
 
 /* droites p1p2 et p3p4 */
-int intersect (Point * A, Point * B , Point * C , Point * D){
+int intersect (const Point * A, const Point * B , const Point * C , const Point * D){
 
         float Ix, Iy, Jx, Jy;
         float Ax, Ay, Bx, By, Cx, Cy, Dx, Dy;
@@ -127,7 +127,7 @@ int intersect (Point * A, Point * B , Point * C , Point * D){
     }
 
 
-Point * intersectPoint (Point * A, Point * B , Point * C , Point * D){
+Point * intersectPoint (const Point * A, const Point * B , const Point * C , const Point * D){
 
         float Ix, Iy, Jx, Jy;
         float Ax, Ay, Bx, By, Cx, Cy, Dx, Dy;
