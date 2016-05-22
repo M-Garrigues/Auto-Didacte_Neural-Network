@@ -10,7 +10,11 @@
 #include "Genome.h"
 
 
+
+
 /* ----- Structure Car ----- */
+
+
 
 
 /**
@@ -46,26 +50,28 @@ Car * newCar ();
  * @brief      Initialize a car with given values
  *
  * @param      car              Car adress
- * @param      genome           Genome adress
- * @param      init	      		Car center adress
+ * @param[in]  genome           Genome adress
+ * @param[in]  init	      		Car center adress
  * @param[in]  initOrientation  Orientation of the car
  * @param[in]  lenght           Car's lenght
  * @param[in]  width            Car's width
  */
-void initCar (Car * car, Genome * genome, Point * init, float initOrientation , float lenght, float width);
-
+void initCar (Car * car, const Genome * genome, const Point * init, float initOrientation , float lenght, float width);
 
 
 /* ----- Car getter/setter ----- */
 
+
+
+
 /**
  * @brief      Get the front left.
  *
- * @param      car   Car adress
+ * @param[in]  car   Car adress
  *
  * @return     Point adress
  */
-Point * getFrontLeft(Car * car);
+Point * getFrontLeft(const Car * car);
 
 
 /**
@@ -79,11 +85,11 @@ void setFrontLeft(Car * car, Point * newPoint);
 /**
  * @brief      Get the front right.
  *
- * @param      car   Car adress
+ * @param[in]  car   Car adress
  *
  * @return     Point adress
  */
-Point  * getFrontRight(Car * car);
+Point * getFrontRight(const Car * car);
 
 
 /**
@@ -97,13 +103,11 @@ void setFrontRight(Car * car, Point * newPoint);
 /**
  * @brief      Get the center.
  *
- * @param      car   Car adress
+ * @param[in] car   Car adress
  *
  * @return     Point adress
  */
-Point  * getCenter(Car * car);
-
-
+Point  * getCenter(const Car * car);
 
 /**
  * @brief      Set the center.
@@ -116,11 +120,11 @@ void setCenter(Car * car, Point * newPoint);
 /**
  * @brief      Get the back left.
  *
- * @param      car   Car adress
+ * @param[in]  car   Car adress
  *
  * @return     Point adress
  */
-Point * getBackLeft(Car * car);
+Point * getBackLeft(const Car * car);
 
 /**
  * @brief      Set the back left.
@@ -133,11 +137,11 @@ void setBackLeft(Car * car, Point * newPoint);
 /**
  * @brief      Get the back right.
  *
- * @param      car   Car adress
+ * @param[in]  car   Car adress
  *
  * @return     Point adress
  */
-Point * getBackRight(Car * car);
+Point * getBackRight(const Car * car);
 
 /**
  * @brief      Set the back right.
@@ -145,18 +149,18 @@ Point * getBackRight(Car * car);
  * @param      car       Car adress
  * @param      newPoint  New point adress
  */
-void setBackRight(Car * car, Point * newPoint);
+void setBackRight(Car * car,Point * newPoint);
 
 
 
 /**
  * @brief      Get the speed.
  *
- * @param      car   Car adress
+ * @param[in]  car   Car adress
  *
  * @return     Car's speed
  */
-float getSpeed(Car * car);
+float getSpeed(const Car * car);
 
 /**
  * @brief      Set the speed.
@@ -169,11 +173,11 @@ void setSpeed(Car * car, float newSpeed);
 /**
  * @brief      Get the orientation.
  *
- * @param      car   Car adress
+ * @param[in]  car   Car adress
  *
  * @return     Car's  orientation
  */
-float getOrientation(Car * car);
+float getOrientation(const Car * car);
 
 
 /**
@@ -187,28 +191,28 @@ void setOrientation(Car * car, float newOrientation);
 /**
  * @brief      Get the car network.
  *
- * @param      car   Car adress
+ * @param[in]  car   Car adress
  *
  * @return     Car's network adress
  */
-Network * getCarNetwork(Car * car);
+Network * getCarNetwork(const Car * car);
 
 /**
  * @brief      Set the car network.
  *
- * @param      car         Car adress
- * @param      newNetwork  New car's network
+ * @param[in]  car         Car adress
+ * @param      newNetwork  Car's network adress
  */
 void setCarNetwork(Car * car, Network * newNetwork);
 
 /**
  * @brief      Get the sensors.
  *
- * @param      car   Car adress
+ * @param[in]  car   Car adress
  *
  * @return     Return a float adress
  */
-float * getSensors(Car * car);
+float * getSensors(const Car * car);
 
 
 /**
@@ -219,10 +223,11 @@ float * getSensors(Car * car);
  */
 void setSensors(Car * car, float * newTabSensors);
 
+
+
+
+
 /* ----- Car functions ----- */
-
-
-
 
 
 
@@ -230,9 +235,9 @@ void setSensors(Car * car, float * newTabSensors);
 /**
  * @brief      Print the car values
  *
- * @param      car   Car adress
+ * @param[in]  car   Car adress
  */
-void printCar (Car * car);
+void printCar (const Car * car);
 
 
 
