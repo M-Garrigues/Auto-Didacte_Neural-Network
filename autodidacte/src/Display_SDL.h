@@ -7,6 +7,7 @@
 
 #include "Simulation.h"	
 #include "SDL2/SDL.h"
+#include "SDL/SDL_ttf.h"
 
 
 /* structure Display_SDL */
@@ -247,6 +248,20 @@ void displayManagement(int x, int y , int fps, char * file);
  * @param      renderer  The renderer
  */
 void drawHitboxCar(Car * car, SDL_Renderer * renderer);
-
+/**
+ * @brief      write the infos about simulations
+ *
+ * @param[in]  fitness     The fitness
+ * @param[in]  generation  The generation
+ * @param      renderer    The renderer
+ */
+void displayInfo(int fitness, int generation, SDL_Renderer * renderer);
+/**
+ * @brief      display the buttons for the events
+ *
+ * @param      display  The display
+ * @param      mode     The mode of display tab of 2 int
+ */
+void displayButton(Display_SDL * display, int * mode);
 
 #endif
