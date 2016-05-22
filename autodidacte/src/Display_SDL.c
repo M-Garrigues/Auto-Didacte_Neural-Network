@@ -280,14 +280,22 @@ void display(Display_SDL * display)
 	updateScreen(display);
 }
 #if 1
-void displayManagement(Generation * gen ,Track * track,Point * pInit, float initOrient, int x, int y , int fps, char * file)
+void displayManagement(int x, int y , int fps, char * file)
 {
 	if(initSDL())
     {
+    	FILE * f = fopen("data/circle.track", "r");
+		int tab[3] = {6, 5, 4};
+		float initOrient = 0;
+		srand(time(NULL));
+		Generation * gen = newGenerationRandom(30, tab);
+		Track * track = newTrack();
+		Point * pInit;
+		initTrackFile(track,f);
+		fclose(f);
+		pInit = intersectPoint (pTrack->trackIn[0] , pTrack->trackOut[1] , pTrack->trackOut[0] , pTrack->trackIn[1]);
         SDL_Event event;
-        FILE * f = NULL;
-        int tab[3] = {6,5,4};
-        Simulation * sim = newSimulation(6 ,gen->tabGenomes[0], track, pInit, initOrient);
+        Simulation * sim = newSimulation(1 ,gen->tabGenomes[0], track, pInit, initOrient);
         Display_SDL * disp = newDisplay_SDL(sim,x,y,fps,file);
         int trackNb = 0;
         int ticks = SDL_GetTicks();
@@ -422,6 +430,9 @@ void displayManagement(Generation * gen ,Track * track,Point * pInit, float init
         }
         deleteDisplay_SDL(disp);
         SDL_Quit();
+        deleteGeneration(gen);
+        deleteTrack(track);
+        deletePoint(pInit);
     }
 
 }

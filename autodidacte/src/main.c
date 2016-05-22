@@ -102,22 +102,7 @@ void unitTestTrack (){
 }*/
 int main()
 {
-	FILE * f = fopen("data/circle.track", "r");
-	int tab[3] = {6, 5, 4};
-	float initOrient = 0;
-	srand(time(NULL));
-	Generation * pGen = newGenerationRandom(30, tab);
-	Track * pTrack = newTrack();
-	Point * pInit;
-	initTrackFile(pTrack,f);
-	fclose(f);
-	pInit = intersectPoint (pTrack->trackIn[0] , pTrack->trackOut[1] , pTrack->trackOut[0] , pTrack->trackIn[1]);
-	displayManagement(pGen , pTrack, pInit, initOrient, 641, 540 , 60, "data/car.png");
-
-
-	deleteGeneration(pGen);
-	deleteTrack(pTrack);
-	deletePoint(pInit);
+	displayManagement(641, 540 , 60, "data/car.png");
 	return 0;
 
 }
