@@ -104,7 +104,6 @@ int main()
 {
 	displayManagement(641, 540 , 60, "data/car.png");
 	return 0;
-
 }
 
 /*void regressionTestANN(void)

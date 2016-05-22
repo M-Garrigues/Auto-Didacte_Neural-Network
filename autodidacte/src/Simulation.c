@@ -115,7 +115,7 @@ int tickSimulation(Simulation * sim)
 
 	actionTurn = selectHigherValueAct(out);
 	actionSpeed = selectHigherValueSpeed(out);
-	activation = getActivation(getGenome(getCar(sim)));
+	activation = getActivation(getNetwork(getCar(sim)));
 
 
 	if(getValue(getNeuron(out, actionTurn)) < activation) /*We check if the highest neuron is activated*/

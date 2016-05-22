@@ -111,6 +111,18 @@ void setFitness(Genome * genome, int value)
     genome->fitness = value;
 }
 
+float getActivationGen(const Genome * genome)
+{
+    assert(genome != NULL);
+    return genome->activation;
+}
+
+void setActivationGen(Genome * net, float newActivation)
+{
+    assert(genome != NULL);
+    genome->activation = newActivation;
+}
+
 
 
 void crossover(const Genome * genome1, const Genome * genome2, Genome * child)
@@ -241,6 +253,8 @@ Network * convertToNetwork(const Genome * genome)
     }
 
     assert(c == tailleTab);
+
+    setActivationNet(net, getActivationGen(genome));
 
     return net;
 }

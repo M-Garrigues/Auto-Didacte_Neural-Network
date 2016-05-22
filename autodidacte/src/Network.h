@@ -8,7 +8,7 @@
 #include "Layer.h"
 
 
-/* ----- Network structure ----- */
+/* ----- Network structure ----- */	
 
 /**
  * @struct Network
@@ -127,7 +127,7 @@ void setLayer(Network * network, int type, Layer * newLayer);
  *
  * @return     the activation function.
  */
-int getActivation(const Network * net);
+float getActivationNet(const Network * net);
 
 
 /**
@@ -136,7 +136,7 @@ int getActivation(const Network * net);
  * @param[in,out]      net  The network you want to change the activation function
  * @param[in]  value   The new activation function
  */
-void setActivation(Network * net, int newActivation);
+void setActivationNet(Network * net, float newActivation);
 
 
 

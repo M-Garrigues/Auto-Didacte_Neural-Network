@@ -18,6 +18,7 @@ typedef struct
     int nbOutput;
     int fitness;
     float * tabGenes;
+    float activation; /**< The activation function, used to determine if an Output Neuron is activated.*/
 }Genome;
 
 /* Functions Genome */
@@ -127,6 +128,23 @@ int getFitness(const Genome * genome);
 void setFitness(Genome * genome, int value);
 
 
+/**
+ * @brief      Get the activation function.
+ *
+ * @param[in]  genome  The genome you want the activation function
+ *
+ * @return     the activation function.
+ */
+float getActivationGen(const Genome * genome);
+
+
+/**
+ * @brief      Set the activation function.
+ *
+ * @param[in,out]      genome  The genome you want to change the activation function
+ * @param[in]  value   The new activation function
+ */
+void setActivationGen(Genome * net, float newActivation);
 
 /* general functions */
 /**
