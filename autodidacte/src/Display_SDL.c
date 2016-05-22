@@ -118,8 +118,8 @@ void displayImage(const Point * p,float angle,SDL_Surface * image,SDL_Renderer *
 	imageM = rotozoomSurface(image, -angle, 1.0, 1);
 	dist.h = imageM->h;
 	dist.w = imageM->w;
-	dist.x = p->x - imageM->w /2;
-	dist.y = p->y - imageM->h /2;
+	dist.x = getX(p) - imageM->w /2;
+	dist.y = getY(p) - imageM->h /2;
 	tex = SDL_CreateTextureFromSurface(renderer,imageM);	
 	SDL_RenderCopy(renderer, tex, NULL, &dist);
     SDL_FreeSurface(imageM);
@@ -173,8 +173,8 @@ void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 	}
 	else
 	{
-		cPin = getTrackIn(getTrack(sim), sim->sector+1);
-		cPout = getTrackOut(getTrack(sim), sim->sector+1);
+		cPin = getTrackIn(getTrack(sim), getSector(sim)+1);
+		cPout = getTrackOut(getTrack(sim), getSector(sim)+1);
 	}
 	
 
@@ -396,7 +396,7 @@ void displayManagement(int x, int y , int fps, char * file)
            		 }
             	else
             	{
-            	    setFitness(gen->tabGenomes[i],fitness);
+            	    setFitness(getGenome(gen, i),fitness);
             	    i++;
             	    if(i == getNbSubject(gen))
             	    {
@@ -407,7 +407,7 @@ void displayManagement(int x, int y , int fps, char * file)
                 	}
                		 else
                 	{
-                		sim = newSimulation(1, gen->tabGenomes[i], track, pInit, initOrient);
+                		sim = newSimulation(1, getGenome(gen, i), track, pInit, initOrient);
                     	endSimulation(getSimulation(disp));
                     	setSimulation(disp, sim);
                 	    fitness = -1;
