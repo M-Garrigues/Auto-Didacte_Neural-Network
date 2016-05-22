@@ -21,7 +21,7 @@ Genome * newGenomeRandom(int * species)
     pGenome->nbHidden = species[1];
     pGenome->nbOutput = species[2];
     pGenome->fitness = 0;
-    pGenome->activation = (rand()/(float)RAND_MAX)/2 + 0.25; // activation is initialised between 0.25 and 0.75
+    pGenome->activation = 0; // activation is initialised in generation
     pGenome->tabGenes = malloc((pGenome->nbInput + pGenome->nbOutput)*pGenome->nbHidden*sizeof(float));
     assert(pGenome->tabGenes != NULL);
     for(i = 0; i < (pGenome->nbInput + pGenome->nbOutput)*pGenome->nbHidden; i++)
@@ -40,7 +40,7 @@ Genome * newGenomeNull(int * species)
     pGenome->nbHidden = species[1];
     pGenome->nbOutput = species[2];
     pGenome->fitness = 0;
-    pGenome->activation = 0.5;
+    pGenome->activation = 0;
     pGenome->tabGenes = malloc((pGenome->nbInput + pGenome->nbOutput)*pGenome->nbHidden*sizeof(float));
     assert(pGenome != NULL);
     for(i = 0; i < (pGenome->nbInput + pGenome->nbOutput)*pGenome->nbHidden; i++)
@@ -117,7 +117,7 @@ float getActivationGen(const Genome * genome)
     return genome->activation;
 }
 
-void setActivationGen(Genome * net, float newActivation)
+void setActivationGen(Genome * genome, float newActivation)
 {
     assert(genome != NULL);
     genome->activation = newActivation;
@@ -152,7 +152,7 @@ void mutation(Genome * genome)
     assert(genome != NULL);
     for(i =0; i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome); i++)
     {
-        if(rand()%(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome) == 0)
+        if(rand()%((getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome)/2) == 0)
             setGene(genome, i , getGene((genome), i) + (rand()/(float)RAND_MAX)-0.5);
         else
             setGene(genome,i,getGene(genome,i));
