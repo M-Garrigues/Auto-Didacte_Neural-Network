@@ -38,21 +38,21 @@ Point * newPoint(float X, float Y);
 /**
  * @brief      Get the x
  *
- * @param      p     Point adress
+ * @param[in]  p     Point adress
  *
  * @return     Point abciss
  */
-float getX(Point * p);
+float getX(const Point * p);
 
 
 /**
  * @brief      Get the y.
  *
- * @param      p     Point adress
+ * @param[in]  p     Point adress
  *
  * @return    Point ordonate
  */
-float getY(Point * p);
+float getY(const Point * p);
 
 /**
  * @brief      Set the x.
@@ -84,47 +84,47 @@ void setY(Point * p, float newY);
  * @brief      Apply a rotation to a point
  *
  * @param      pointInit  Adress of the point to apply rotation
- * @param      centre     Center of the rotation
+ * @param[in]  centre     Center of the rotation
  * @param[in]  angle      Angle of the rotation
  *
  * 
  */
-void rotation (Point * pointInit, Point * centre ,float angle);
+void rotation (Point * pointInit,const Point * centre ,float angle);
 
 /**
  * @brief      Distance between two points
  *
- * @param      p1    1st point adress
- * @param      p2    2nd point adress
+ * @param[in]   p1    1st point adress
+ * @param[in]   p2    2nd point adress
  *
  * @return     distance between two points
  */
-float distance (Point * p1, Point * p2);
+float distance (const Point * p1,const Point * p2);
 
 
 
 /**
  * @brief      Give the intersection of (p1,p2) and (p3,p3)
  *
- * @param      p1    1st point adress of the 1st segment 
- * @param      p2    2nd point adress of the 1st segment
- * @param      p3    1st point adress of the 2nd segment
- * @param      p4    2nd point adress of the 2nd segment
+ * @param[in]   p1    1st point adress of the 1st segment 
+ * @param[in]   p2    2nd point adress of the 1st segment
+ * @param[in]   p3    1st point adress of the 2nd segment
+ * @param[in]   p4    2nd point adress of the 2nd segment
  *
  * @return     Intersection point adress 
  */
-Point * intersectPoint (Point * p1 , Point * p2 , Point * p3 , Point * p4);
+Point * intersectPoint (const Point * p1 ,const Point * p2 ,const Point * p3 ,const Point * p4);
 
 
 /**
  * @brief      Middle 
  *
- * @param      p1    1st point adress
- * @param      p2    2nd point adress
+ * @param[in]   p1    1st point adress
+ * @param[in]   p2    2nd point adress
  *
  * @return    Middle point adress
  */
-Point * middle (Point * p1, Point * p2);
+Point * middle (const Point * p1,const Point * p2);
 
 
 
@@ -136,19 +136,19 @@ Point * middle (Point * p1, Point * p2);
  *
  * @return     Minimum 
  */
-float minimum (float * f1, int nb);
+float minimum (const float * f1, int nb);
 
 /**
  * @brief      Return 1 if [p1,p2] intersect with [p3,p4] and 0 else
  *
- * @param      p1    1st point adress of the 1st segment 
- * @param      p2    2nd point adress of the 1st segment
- * @param      p3    1st point adress of the 2nd segment
- * @param      p4    2nd point adress of the 2nd segment
+ * @param[in]   p1    1st point adress of the 1st segment 
+ * @param[in]   p2    2nd point adress of the 1st segment
+ * @param[in]   p3    1st point adress of the 2nd segment
+ * @param[in]   p4    2nd point adress of the 2nd segment
  *
  * @return    1 or 0
  */
-int intersect (Point * p1 , Point * p2 , Point * p3 , Point * p4);
+int intersect (const Point * p1 ,const Point * p2 ,const Point * p3 ,const Point * p4);
 
 
 

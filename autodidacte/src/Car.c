@@ -52,7 +52,7 @@ Car * newCar () {
 }
 
 
-void initCar (Car * nCar, Genome * genome, Point * init, float initOrientation, float lenght, float width) {
+void initCar (Car * nCar, const Genome * genome, const Point * init, float initOrientation, float lenght, float width) {
 	assert(nCar != NULL);
 	assert(genome != NULL);
 	assert(init != NULL);
@@ -77,7 +77,7 @@ void initCar (Car * nCar, Genome * genome, Point * init, float initOrientation, 
 
 }
 
-void printCar (Car * car) {
+void printCar (const Car * car) {
 
 	assert(car != NULL);
 	printf("\n\n\n\nPositions :\n");
@@ -181,7 +181,7 @@ void moveStraight (Car * car, float timeM) {
 
 }
 
-Point * getFrontLeft(Car * car)
+Point * getFrontLeft(const Car * car)
 {
 	assert(car != NULL);
 	return(car->frontLeft);
@@ -192,7 +192,7 @@ void setFrontLeft(Car * car, Point * newPoint)
 	car->frontLeft = newPoint;
 }
 
-Point  * getFrontRight(Car * car)
+Point  * getFrontRight(const Car * car)
 {
 	assert(car != NULL);
 	return(car->frontRight);
@@ -203,7 +203,7 @@ void setFrontRight(Car * car, Point * newPoint)
 	car->frontRight = newPoint;
 }
 
-Point  * getCenter(Car * car)
+Point  * getCenter(const Car * car)
 {
 	assert(car != NULL);
 	return(car->center);
@@ -214,7 +214,7 @@ void setCenter(Car * car, Point * newPoint)
 	car->center = newPoint;
 }
 
-Point * getBackLeft(Car * car)
+Point * getBackLeft(const Car * car)
 {
 	assert(car != NULL);
 	return(car->backLeft);
@@ -225,7 +225,7 @@ void setBackLeft(Car * car, Point * newPoint)
 	car->backLeft = newPoint;
 }
 
-Point * getBackRight(Car * car)
+Point * getBackRight(const Car * car)
 {
 	assert(car != NULL);
 	return(car->backRight);
@@ -236,7 +236,7 @@ void setBackRight(Car * car, Point * newPoint)
 	car->backRight = newPoint;
 }
 
-float getSpeed(Car * car)
+float getSpeed(const Car * car)
 {
 	assert(car != NULL);
 	return(car->speed);
@@ -247,7 +247,7 @@ void setSpeed(Car * car, float newSpeed)
 	car->speed = newSpeed;
 }
 
-float getOrientation(Car * car)
+float getOrientation(const Car * car)
 {
 	assert(car != NULL);
 	return(car->orientation);
@@ -258,7 +258,7 @@ void setOrientation(Car * car, float newOrientation)
 	car->orientation = newOrientation;
 }
 
-Network * getCarNetwork(Car * car)
+Network * getCarNetwork(const Car * car)
 {
 	assert(car != NULL);
 	return car->net;
@@ -269,12 +269,12 @@ void setCarNetwork(Car * car, Network * newNetwork)
 	car->net = newNetwork;
 }
 
-float * getSensors(Car * car)
+float * getSensors(const Car * car)
 {
 	assert(car != NULL);
 	return car->tabSensors;
 }
-void setSensors(Car * car, float * newTabSensors)
+void setSensors(Car * car,float * newTabSensors)
 {
 	assert(car != NULL);
 	car->tabSensors = newTabSensors;
