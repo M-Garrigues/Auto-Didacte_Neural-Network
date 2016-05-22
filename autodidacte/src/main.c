@@ -13,7 +13,6 @@
 #include "Layer.h"
 #include "Track.h"
 #include "Display_SDL.h"
-#include "time.h"
 
 /*void regressionTestANN();
 void printNetwork(Network * net);
