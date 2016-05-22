@@ -17,22 +17,22 @@ int randomProba(int * tabProba, int choices)
     int result, random;
     assert(tabProba != NULL && choices > 0);
     result = 0;
-    for(i = 0; i < choices;i++)
+    for(i = 0; i < choices;i++) /* make the summ of the probas*/
         result += tabProba[i];
     random = rand()%result;
     result = 0;
     for(i= 0; i< choices; i++){
-        if(random>=result && random < result + tabProba[i]){
+        if(random>=result && random < result + tabProba[i]){/* the range varies due to the weights of probas*/
             return i;
         }
         result += tabProba[i];
     }
-    assert(0);
+    assert(0);/* shouldn't be going there*/
 }
 Generation * newGenerationRandom(int nbSubject, int * species)
 {
     int i;
-    float activation = (rand()/(float)RAND_MAX)/2 + 0.25;
+    float activation = (rand()/(float)RAND_MAX)/2 + 0.25;/* activation is the same for a generation*/
     Generation * pGen = malloc(sizeof(Generation));
     assert(nbSubject>0);
     assert(pGen != NULL);
@@ -116,35 +116,34 @@ void setNbSubject(Generation * gen, int nb)
 
 void nextGeneration(Generation * gen)
 {
-    int intensity = getFitness(getGenome(gen, getBest(gen)));
     assert(gen !=NULL);
-    crossoverGeneration(gen);
-    mutationGeneration(gen, 1);
+    crossoverGeneration(gen);/* first step of the new generation is to crossover*/
+    mutationGeneration(gen, 1);/* the second step the mutation on each genomes*/
 }
 void crossoverGeneration(Generation * gen)
 {
     Genome * genome;
     float newActivation;
-    int * p = malloc(sizeof(int)*getNbSubject(gen));
-    int * rank = malloc(sizeof(int)*getNbSubject(gen));
+    int * p = malloc(sizeof(int)*getNbSubject(gen));/* a tab with the fitness of each genomes of gen*/
+    int * rank = malloc(sizeof(int)*getNbSubject(gen));/* a tab with the rank of each genome of gen*/
     int i,j,temp,subject1, subject2;
     int tab[3] = {getNbInput(getGenome(gen, 0)), getNbHidden(getGenome(gen, 0)), getNbOutput(getGenome(gen, 0))};
     int bestGenome = getBest(gen);
     newActivation = getActivationGen(gen->tabGenomes[0])+((((rand()/(float)RAND_MAX)-0.5)*2)/(float)getFitness(getGenome(gen,bestGenome)));
+    /* activation changes less with higher fitness*/
     if(newActivation<0.2)
         newActivation = 0.2;
     else if(newActivation>0.8)
         newActivation = 0.8;
-    printf("new Act : %f\n",newActivation);
     Genome ** pGenomes = gen->tabGenomes;
     assert(gen != NULL);
     gen->tabGenomes = malloc(sizeof(Genome*)*gen->nbSubject);
     setNbGen(gen , getNbGen(gen)+1);
-    for(i =0;i<(gen)->nbSubject;i++)
+    for(i =0;i<(gen)->nbSubject;i++)/* initialise p*/
     {
         p[i] = getFitness(pGenomes[i]);
     }
-    for(i = 0;i<gen->nbSubject;i++)
+    for(i = 0;i<gen->nbSubject;i++)/* fill rank with the ranks*/
     {
         temp = 1;
         for(j = 0;j<gen->nbSubject;j++)
@@ -156,11 +155,12 @@ void crossoverGeneration(Generation * gen)
         }
         rank[i] = temp;
     }
+
     for(i = 1; i<gen->nbSubject;i++)
     {
         genome = newGenomeNull(tab);
-        subject1 = randomProba(rank, gen->nbSubject);
-        subject2 = randomProba(rank, gen->nbSubject);
+        subject1 = randomProba(rank, gen->nbSubject);/* rank can be replaced by p to choose the by fitness selection*/
+        subject2 = randomProba(rank, gen->nbSubject);/* rank can be replaced by p to choose the by fitness selection*/
         crossover(pGenomes[subject1] ,pGenomes[subject2], genome);
         setActivationGen(genome,newActivation);
         setGenome(gen, i, genome);
@@ -171,7 +171,7 @@ void crossoverGeneration(Generation * gen)
     setGenome(gen,0,pGenomes[bestGenome]);
 
     for(i =0; i<gen->nbSubject;i++){
-        if(i != bestGenome){
+        if(i != bestGenome){/* delete all genome exept the best that we keep in the next generation*/
             deleteGenome(pGenomes[i]);
         }
     }
@@ -183,7 +183,7 @@ void mutationGeneration(Generation * gen, int intensity)
     assert(gen != NULL);
     for(i = 1; i<(gen)->nbSubject;i++)
     {   
-        if(1)
+        if(1)/* can be changed if you want less mutations*/
         {
             mutation(getGenome(gen, i), intensity);
         }

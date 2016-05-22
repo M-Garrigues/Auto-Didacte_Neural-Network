@@ -139,7 +139,7 @@ void crossover(const Genome * genome1, const Genome * genome2, Genome * child)
     child->tabGenes = malloc(sizeof(float)*(getNbInput(child) + getNbOutput(child))*getNbHidden(child));
     for(i = 0; i< (getNbInput(child) + getNbOutput(child))*getNbHidden(child); i++)
     {
-        if(rand()%2)
+        if(rand()%2) /* randomly choose one gene to be of a parent or the other*/
             setGene(child, i , getGene(genome1, i));
         else
             setGene(child, i , getGene(genome2, i));
@@ -152,8 +152,8 @@ void mutation(Genome * genome, int intensity)
     assert(genome != NULL);
     for(i =0; i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome); i++)
     {
-        if(rand()%((getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome)/2) == 0)
-            setGene(genome, i , getGene((genome), i) + (((rand()/(float)RAND_MAX)-0.5)*2)/(float)intensity);
+        if(rand()%((getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome)/2) == 0) /* an average of 2 changes by mutations*/
+            setGene(genome, i , getGene((genome), i) + (((rand()/(float)RAND_MAX)-0.5)*2)/(float)intensity);/* intensity moderate the changes*/
         else
             setGene(genome,i,getGene(genome,i));
     }
@@ -163,7 +163,7 @@ void displayGenome(const Genome * genome)
 {
     assert(genome != NULL);
     int i;
-    for(i = 0; i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome);i++)
+    for(i = 0; i<(getNbInput(genome) + getNbOutput(genome))*getNbHidden(genome);i++)/* loop on the number of genes*/
     {
         printf("%f : ", getGene(genome, i));
     }
