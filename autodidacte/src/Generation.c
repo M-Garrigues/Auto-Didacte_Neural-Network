@@ -140,9 +140,13 @@ void crossoverGeneration(Generation * gen)
         subject2 = randomProba(p, gen->nbSubject);
         crossover(pGenomes[subject1] ,pGenomes[subject2], genome);
         setGenome(gen, i, genome);
+
+        //L'activation est légèrement modifiée par rapport à la génération d'avant, à modifier probablement
+        setActivation(getNetwork(genome), getActivation(pGenomes[subject1])+((rand()/RAND_MAX)/5 - 0.1));
     }
     free(p);
     setGenome(gen,0,pGenomes[bestGenome]);
+
     for(i =0; i<gen->nbSubject;i++){
         if(i != bestGenome){
             deleteGenome(pGenomes[i]);

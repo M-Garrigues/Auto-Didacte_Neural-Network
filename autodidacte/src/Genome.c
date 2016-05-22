@@ -111,16 +111,6 @@ void setFitness(Genome * genome, int value)
     genome->fitness = value;
 }
 
-int getActivation(const Genome * genome)
-{
-    assert(genome != NULL);
-    return genome->activation;
-}
-void setActivation(Genome * genome, int newActivation)
-{
-    assert(genome != NULL);
-    genome->activation = newActivation; 
-}
 
 
 void crossover(const Genome * genome1, const Genome * genome2, Genome * child)

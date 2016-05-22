@@ -93,6 +93,17 @@ void setLayer(Network * net, int type, Layer * newLayer)
 	net->tabLayers[type] = newLayer;
 }
 
+int getActivation(const Network * net)
+{
+    assert(net != NULL);
+    return net->activation;
+}
+
+void setActivation(Network * net, int newActivation)
+{
+    assert(net != NULL);
+    net->activation = newActivation; 
+}
 
 void initialiseNetworkTEST(Network * net)									/*NETWORK FUNCTIONS*/
 {
