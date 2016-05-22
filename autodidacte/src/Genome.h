@@ -1,5 +1,5 @@
-#ifndef H_GENOME
-#define H_GENOME
+#ifndef H_VG_GENOME
+#define H_VG_GENOME
 
 
 /*  Genome.h ----- LIF7 Auto-Didacte */
@@ -18,7 +18,6 @@ typedef struct
     int nbOutput;
     int fitness;
     float * tabGenes;
-    float activation;
 }Genome;
 
 /* Functions Genome */
@@ -26,7 +25,7 @@ typedef struct
 
 /* constructors and destructor */
 /**
- * @brief      Initialise a genome with random genes
+ * @brief      Initialises a genome with random genes
  *
  * @param[in]      species a 3 int tab that contains the number of each type of neurons  
  *
@@ -36,7 +35,7 @@ Genome * newGenomeRandom(int * species);
 /**
  * @brief      Initialise a genome with null genes
  *
- * @param      species a 3 int tab that contains the number of each type of neurons
+ * @param[in,out]      species a 3 int tab that contains the number of each type of neurons
  *
  * @return     Pointer on Genome
  */
@@ -44,7 +43,7 @@ Genome * newGenomeNull(int * species);
 /**
  * @brief      Delete a genome
  *
- * @param      genome is the genome to delete
+ * @param[in,out]      genome is the genome to delete
  */
 void deleteGenome(Genome * genome);
 
@@ -77,7 +76,7 @@ int getNbInput(const Genome * genome);
 /**
  * @brief      Set the nb input.
  *
- * @param      genome  the genome you want to change the number of input neuron
+ * @param[in,out]      genome  the genome you want to change the number of input neuron
  * @param[in]  nb The new number of input neuron
  */
 void setNbInput(Genome * genome, int nb);
@@ -92,7 +91,7 @@ int getNbHidden(const Genome * genome);
 /**
  * @brief      Set the nb hidden.
  *
- * @param      genome   The genome you want to change the number of hidden neuron
+ * @param[in,out]      genome   The genome you want to change the number of hidden neuron
  * @param[in]  nb 		the new number of hidden neuron
  */
 void setNbHidden(Genome * genome, int nb);
@@ -107,7 +106,7 @@ int getNbOutput(const Genome * genome);
 /**
  * @brief      Set the nb output.
  *
- * @param      genome  The genome you want to change the number of output neuron
+ * @param[in,out]      genome  The genome you want to change the number of output neuron
  * @param[in]  nb      the new number of output neuron
  */
 void setNbOutput(Genome * genome, int nb);
@@ -122,26 +121,11 @@ int getFitness(const Genome * genome);
 /**
  * @brief      Set the fitness.
  *
- * @param      genome  The genome you want to change the fitness
+ * @param[in,out]      genome  The genome you want to change the fitness
  * @param[in]  value   The new fitness value
  */
 void setFitness(Genome * genome, int value);
 
-/**
- * @brief      Get the activation function.
- *
- * @param[in]  genome  The genome you want the activation function
- *
- * @return     the activation function.
- */
-int getActivation(const Genome * genome);
-/**
- * @brief      Set the activation function.
- *
- * @param      genome  The genome you want to change the activation function
- * @param[in]  value   The new activation function
- */
-void setActivation(Genome * genome, int newActivation);
 
 
 /* general functions */
@@ -169,14 +153,14 @@ void crossover(const Genome * genome1, const Genome * genome2, Genome * child);
 /**
  * @brief      does a mutation on a genome
  *
- * @param      genome  The genome you want to mutate
+ * @param[in,out]      genome  The genome you want to mutate
  */
 void mutation(Genome * genome);
 /**
  * @brief      load a genome from a file
  *
- * @param      f       the file where the genome is
- * @param      genome  The genome where will be stored the genome
+ * @param[in,out]      f       the file where the genome is
+ * @param[in,out]      genome  The genome where will be stored the genome
  */
 void loadGenome(FILE * f, Genome * genome);
 /**

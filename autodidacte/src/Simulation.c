@@ -98,6 +98,7 @@ int tickSimulation(Simulation * sim)
 
 	float * tabSensors;
 	int actionTurn, actionSpeed;
+	float activation;
 	Network * net;
 	Layer * out;
 
@@ -114,12 +115,14 @@ int tickSimulation(Simulation * sim)
 
 	actionTurn = selectHigherValueAct(out);
 	actionSpeed = selectHigherValueSpeed(out);
+	activation = getActivation(getGenome(getCar(sim)));
 
-	if(getValue(getNeuron(out, actionTurn)) < 0.3) /*We check if the highest neuron is activated*/
+
+	if(getValue(getNeuron(out, actionTurn)) < activation) /*We check if the highest neuron is activated*/
 		actionTurn = NONE;//If not, no action will be done this tick
 		         
 
-	if(getValue(getNeuron(out, actionSpeed)) < 0.3) /*We check if the highest neuron is activated*/
+	if(getValue(getNeuron(out, actionSpeed)) < activation) /*We check if the highest neuron is activated*/
 		actionSpeed = NONE;//If not, no action will be done this tick	                
 
 switch (actionSpeed) {

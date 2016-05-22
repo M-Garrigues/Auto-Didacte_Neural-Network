@@ -20,7 +20,9 @@ typedef struct{
 	int nbHiddenNeurons;/**< The number of neurons contained in the Hidden Layer. */
 	int nbOutputNeurons;/**< The number of neurons contained in the Output Layer. */
 
-	Layer ** tabLayers;
+	Layer ** tabLayers; /**< The array containing the adresses of the layers. */
+
+	float activation; /**< The activation function, used to determine if an Output Neuron is activated.*/
 
 }Network;
 
@@ -116,6 +118,25 @@ Layer * getLayer(const Network * network, int type);
  * @param[in,out]      newLayer  New layer.
  */
 void setLayer(Network * network, int type, Layer * newLayer);
+
+
+/**
+ * @brief      Get the activation function.
+ *
+ * @param[in]  net  The network you want the activation function
+ *
+ * @return     the activation function.
+ */
+int getActivation(const Network * net);
+
+
+/**
+ * @brief      Set the activation function.
+ *
+ * @param[in,out]      net  The network you want to change the activation function
+ * @param[in]  value   The new activation function
+ */
+void setActivation(Network * net, int newActivation);
 
 
 
