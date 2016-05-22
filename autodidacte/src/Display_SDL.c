@@ -21,7 +21,7 @@ Display_SDL * newDisplay_SDL(Simulation * sim, int x,int y,int fps,char * file)
 	SDL_Window * pScreen = NULL;
 	SDL_Surface * img = NULL;
 	SDL_Renderer * pRen = NULL;
-	loadCarImg(&img, file);
+	loadImg(&img, file);
 	assert(img);
 	pScreen = SDL_CreateWindow("Auto-Didacte", SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,x,y,SDL_WINDOW_SHOWN);
 	assert(pScreen);
@@ -200,7 +200,7 @@ void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 	
 
 }
-void loadCarImg(SDL_Surface ** img, char * filename)
+void loadImg(SDL_Surface ** img, char * filename)
 {
 	*img = IMG_Load(filename);
 	if(*img == NULL)
@@ -251,15 +251,15 @@ void displayButton(Display_SDL * display, int * mode)
 	Point * buttonPoint3 = newPoint(270,510);
 	Point * buttonPoint4 = newPoint(540,510);
 	if(mode[0])
-		loadCarImg(&button1, "data/fastComp.png");
+		loadImg(&button1, "data/fastComp.png");
 	else
-		loadCarImg(&button1, "data/fastCompOn.png");
+		loadImg(&button1, "data/fastCompOn.png");
 	if(mode[1])
-		loadCarImg(&button2, "data/seeBest.png");
+		loadImg(&button2, "data/seeBest.png");
 	else
-		loadCarImg(&button2, "data/resume.png");
-	loadCarImg(&button3, "data/reset.png");
-	loadCarImg(&button4, "data/changeTrack.png");
+		loadImg(&button2, "data/resume.png");
+	loadImg(&button3, "data/reset.png");
+	loadImg(&button4, "data/changeTrack.png");
 
 	displayImage(buttonPoint1,0,button1,display->renderer);
 	displayImage(buttonPoint2,0,button2,display->renderer);
@@ -441,14 +441,10 @@ void displayManagement(int x, int y , int fps, char * file)
 void drawHitboxCar(Car * car, SDL_Renderer * renderer)
 {
 	SDL_SetRenderDrawColor(renderer, 0, 255, 0,255);
-	drawLine(car->backLeft,car->backRight,renderer);
-	drawLine(car->backRight,car->frontRight,renderer);
-	drawLine(car->backLeft,car->frontLeft,renderer);
-	drawLine(car->frontLeft,car->frontRight, renderer);
-	drawLine(car->center,car->frontRight, renderer);
-	drawLine(car->frontLeft,car->center, renderer);
-	drawLine(car->center,car->backRight, renderer);
-	drawLine(car->backLeft,car->center, renderer);
+	drawLine(getBackLeft(car),getBackRight(car),renderer);
+	drawLine(getBackRight(car),getFrontRight(car),renderer);
+	drawLine(getBackLeft(car),getFrontLeft(car),renderer);
+	drawLine(getFrontLeft(car),getFrontRight(car), renderer);
 }
 #endif
 
