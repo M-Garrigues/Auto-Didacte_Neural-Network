@@ -233,7 +233,7 @@ void updateScreen(Display_SDL * disp)
 }
 int initSDL()
 {
-	if (SDL_Init(SDL_INIT_VIDEO) != 0 )
+	if (SDL_Init(SDL_INIT_VIDEO) != 0 && TTF_Init()==-1 )
     {
         fprintf(stdout,"Échec de l'initialisation de la SDL (%s)\n",SDL_GetError());
         return 0;
@@ -402,7 +402,7 @@ void displayManagement(int x, int y , int fps, char * file)
             	    {
             	    	nextGeneration(gen);
             	    	g++;
-            	    	printf("gen %d : %d\n",g, getFitness(getGenome(gen ,0)));
+            	    	//displayInfo(g, getFitness(getGenome(gen ,0)), disp->renderer);
             	        i = 1;
                 	}
                		 else
@@ -429,6 +429,7 @@ void displayManagement(int x, int y , int fps, char * file)
 
         }
         deleteDisplay_SDL(disp);
+        TTF_Quit();
         SDL_Quit();
         deleteGeneration(gen);
         deleteTrack(track);
@@ -445,6 +446,21 @@ void drawHitboxCar(Car * car, SDL_Renderer * renderer)
 	drawLine(getBackRight(car),getFrontRight(car),renderer);
 	drawLine(getBackLeft(car),getFrontLeft(car),renderer);
 	drawLine(getFrontLeft(car),getFrontRight(car), renderer);
+}
+
+void displayInfo(int fitness, int generation, SDL_Renderer * renderer)
+{
+	char sentence[100];
+	TTF_Font *font = TTF_OpenFont("data/verdana.ttf", 30);
+    SDL_Color white = {255, 255, 255}; 
+    Point *p = newPoint(300,300);
+    sprintf(sentence, "Génération : %d\nFitness Max : %d", generation,fitness);
+    SDL_Surface * text = TTF_RenderText_Blended(font, sentence, white);
+    displayImage(p,0,text,renderer);
+    SDL_FreeSurface(text);
+    TTF_CloseFont(font);
+    deletePoint(p);
+
 }
 #endif
 
