@@ -166,21 +166,21 @@ void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 	Point * endSensor5 = newPoint(getX(beginSensor5)+cos((PI/2) + getOrientation(getCar(sim)))*tailleSensor,getY(beginSensor5)+sin((PI/2)+getOrientation(getCar(sim)))*tailleSensor); /* flanc droit */
 	Point * cPout;
 	Point * cPin;
-	if(getSector(sim) == getNbPoints(sim->track)-1)
+	if(getSector(sim) == getNbPoints(getTrack(sim))-1)
 	{	
-		cPin = getTrackOut(sim->track, 0);
-		cPout = getTrackIn(sim->track, 0);
+		cPin = getTrackOut(getTrack(sim), 0);
+		cPout = getTrackIn(getTrack(sim), 0);
 	}
 	else
 	{
-		cPin = getTrackIn(sim->track, sim->sector+1);
-		cPout = getTrackOut(sim->track, sim->sector+1);
+		cPin = getTrackIn(getTrack(sim), sim->sector+1);
+		cPout = getTrackOut(getTrack(sim), sim->sector+1);
 	}
 	
 
-	displayCar(sim->car,imgCar,renderer);
-	drawTrack(sim->track, renderer);
-	drawHitboxCar(sim->car, renderer);
+	displayCar(getCar(sim),imgCar,renderer);
+	drawTrack(getTrack(sim), renderer);
+	drawHitboxCar(getCar(sim), renderer);
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0,255);
 	drawLine(cPin,cPout,renderer);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 255,255);
@@ -293,9 +293,9 @@ void displayManagement(int x, int y , int fps, char * file)
 		Point * pInit;
 		initTrackFile(track,f);
 		fclose(f);
-		pInit = intersectPoint (pTrack->trackIn[0] , pTrack->trackOut[1] , pTrack->trackOut[0] , pTrack->trackIn[1]);
+		pInit = intersectPoint (getTrackIn(track , 0) , getTrackOut(track ,1) , getTrackOut(track,0) , getTrackIn(track,1));
         SDL_Event event;
-        Simulation * sim = newSimulation(1 ,gen->tabGenomes[0], track, pInit, initOrient);
+        Simulation * sim = newSimulation(1 ,getGenome(gen , 0), track, pInit, initOrient);
         Display_SDL * disp = newDisplay_SDL(sim,x,y,fps,file);
         int trackNb = 0;
         int ticks = SDL_GetTicks();
@@ -340,7 +340,7 @@ void displayManagement(int x, int y , int fps, char * file)
 	                			i = 0;
 	                			g = 1;
 	                			endSimulation(getSimulation(disp)); /* recommencer la simulation*/
-	                			sim = newSimulation(1, gen->tabGenomes[i], track, pInit, initOrient);
+	                			sim = newSimulation(1, getGenome(gen, i), track, pInit, initOrient);
 	                			setSimulation(disp, sim);
 	                		}
 	                		else if(event.button.x >= 465 && event.button.x <=620 && event.button.y <= 535 && event.button.y >= 495)
@@ -366,7 +366,7 @@ void displayManagement(int x, int y , int fps, char * file)
 	                			pInit = intersectPoint(track->trackIn[0] , track->trackOut[1] , track->trackOut[0] , track->trackIn[1]);
 	                			i = 0; /* on recommence toute la simulation car les fitness ne sont plus les memes*/
 	                			endSimulation(getSimulation(disp));
-	                			sim = newSimulation(1, gen->tabGenomes[i], track, pInit, initOrient);
+	                			sim = newSimulation(1, getGenome(gen ,i), track, pInit, initOrient);
 	                			setSimulation(disp, sim);
 	                			cleanScreen(disp);
 	                			displayButton(disp, mode);

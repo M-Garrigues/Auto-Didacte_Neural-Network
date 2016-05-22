@@ -32,6 +32,7 @@ int randomProba(int * tabProba, int choices)
 Generation * newGenerationRandom(int nbSubject, int * species)
 {
     int i;
+    float activation = (rand()/(float)RAND_MAX)/2 + 0.25;
     Generation * pGen = malloc(sizeof(Generation));
     assert(nbSubject>0);
     assert(pGen != NULL);
@@ -42,6 +43,7 @@ Generation * newGenerationRandom(int nbSubject, int * species)
     for(i = 0; i<nbSubject;i++)
     {
         setGenome(pGen, i, newGenomeRandom(species));
+        setActivationGen(getGenome(pGen,i),activation);
     }
     return pGen;
 }
@@ -121,6 +123,12 @@ void nextGeneration(Generation * gen)
 void crossoverGeneration(Generation * gen)
 {
     Genome * genome;
+    float newActivation = getActivationGen(gen->tabGenomes[0])+(rand()/(float)RAND_MAX)/5 -0.1;
+    if(newActivation<0.2)
+        newActivation = 0.2;
+    else if(newActivation>0.8)
+        newActivation = 0.8;
+    printf("new Act : %f\n",newActivation);
     int * p = malloc(sizeof(int)*getNbSubject(gen));
     int i,subject1, subject2;
     int tab[3] = {getNbInput(getGenome(gen, 0)), getNbHidden(getGenome(gen, 0)), getNbOutput(getGenome(gen, 0))};
@@ -139,10 +147,9 @@ void crossoverGeneration(Generation * gen)
         subject1 = randomProba(p, gen->nbSubject);
         subject2 = randomProba(p, gen->nbSubject);
         crossover(pGenomes[subject1] ,pGenomes[subject2], genome);
+        setActivationGen(genome,newActivation);
         setGenome(gen, i, genome);
 
-        //L'activation est légèrement modifiée par rapport à la génération d'avant, à modifier probablement
-        setActivation(getNetwork(genome), getActivation(pGenomes[subject1])+((rand()/RAND_MAX)/5 - 0.1));
     }
     free(p);
     setGenome(gen,0,pGenomes[bestGenome]);

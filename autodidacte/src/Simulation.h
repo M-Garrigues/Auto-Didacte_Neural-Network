@@ -8,6 +8,7 @@
 #include "Car.h"
 #include "Track.h"
 #include "Generation.h"
+#include "time.h"
 
 
 enum{ LEFT , RIGHT  , ACCELERATION  ,  DECELERATION  ,  NONE };
