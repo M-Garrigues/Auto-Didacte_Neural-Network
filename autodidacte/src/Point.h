@@ -162,4 +162,10 @@ int intersect (const Point * p1 ,const Point * p2 ,const Point * p3 ,const Point
  * @param      p     Point adress
  */
 void deletePoint(Point * p);
+
+
+/**
+ * @brief      Regression test for point
+ */
+void unitTestPoint ();
 #endif

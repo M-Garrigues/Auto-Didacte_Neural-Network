@@ -279,3 +279,27 @@ void setSensors(Car * car,float * newTabSensors)
 	assert(car != NULL);
 	car->tabSensors = newTabSensors;
 }
+
+void unitTestCar ()
+{
+	Car *c1;
+	Genome *g1;
+	Point *p1, *p2, *p3;
+	int tab[3] = {6, 5, 4};
+	p1 = newPoint (0,0);
+	g1 = newGenomeRandom(tab);
+	c1 = newCar();
+	initCar (c1, g1, p1, 0, 100, 50);
+	p2 = getFrontLeft(c1);
+	assert(getX(p2)==50);
+	assert(getY(p2)==-25);
+	p3 = getCenter(c1);
+	assert(getX(p3)==0);
+	assert(getY(p3)==0);
+	turnLeft(c1);
+	assert(getOrientation(c1)<0);
+	turnRight(c1);
+	assert(getOrientation(c1)==0);
+	deleteCar (c1);
+	printf("Unit test for Car.* OK\n");
+}

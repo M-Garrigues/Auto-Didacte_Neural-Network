@@ -132,3 +132,33 @@ void deleteTrack (Track * track){
 	free (track->trackOut);
 	free (track);
 }
+
+
+
+void unitTestTrack ()
+{
+	Track *t1, *t2;
+	Point *p0, *p1, *p2, *p3, *p4;
+	p0 = newPoint (0,0);
+	p1 = newPoint (10,50);
+	p3 = newPoint (10,10);
+	p4 = newPoint (50,50);
+	FILE * f = fopen("data/track.txt", "r");
+	t1 = newTrack();
+	initTrack(t1,2);
+	setTrackOut(t1,0,p1);
+	setTrackOut(t1,1,p0);
+	setTrackIn(t1,0,p3);
+	setTrackIn(t1,1,p4);
+	p2 = getTrackOut (t1,0);
+	assert(getX(p2)==getX(p1));
+	assert(getY(p2)==getY(p1));
+	assert(getNbPoints(t1)==2);
+	deleteTrack(t1);
+	t2 = newTrack();
+	initTrackFile (t2,f);
+	assert(getNbPoints(t2)!=0);
+	fclose(f);
+	deleteTrack(t2);
+	printf("Unit test for Track.* OK\n");
+}

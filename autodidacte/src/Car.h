@@ -306,4 +306,11 @@ void decelerate (Car * car);
  */
 void deleteCar(Car * car);
 
+
+/**
+ * @brief      Car's regression test
+ */
+void unitTestCar ();
+
+
 #endif

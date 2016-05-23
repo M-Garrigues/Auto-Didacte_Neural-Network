@@ -170,3 +170,33 @@ void deletePoint(Point * p)
 
 	free(p);
 }
+
+void unitTestPoint ()
+{
+	Point *p1, *p2, *p3, *p4, *p5, *p6;
+ 	p1 = newPoint(-10,0);
+ 	p2 = newPoint(10,0);
+ 	p3 = newPoint(10,10);
+ 	p4 = newPoint(-10,-10);
+ 	assert (getX(p1)==-10);
+ 	assert (getY(p3)==10);
+ 	assert (intersect(p1,p2,p3,p4)==1);
+ 	p5 = intersectPoint(p1,p2,p3,p4);
+ 	assert (getX(p5)==0);
+ 	assert (getY(p5)==0);
+ 	setX(p4,20);
+ 	setY(p4,10);
+ 	setX(p1,20);
+ 	assert (intersect(p1,p2,p3,p4)==0);
+ 	p6 = middle (p2,p3);
+ 	assert (getX(p6)==10);
+ 	assert (getY(p6)==5);
+ 	assert (distance(p2,p6)==distance(p3,p6));
+ 	deletePoint(p1);
+  	deletePoint(p2);
+  	deletePoint(p3);
+  	deletePoint(p4);
+  	deletePoint(p5);
+  	deletePoint(p6);
+  	printf("Unit test for Point.* OK\n");
+}
