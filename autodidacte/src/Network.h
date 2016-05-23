@@ -173,6 +173,21 @@ void deleteNetwork(Network * net);
 
 
 
+/**
+ * @brief      Prints the whole network in the console. Only used for the regression test.
+ *
+ * @param      net   Network's adress.
+ */
+void printNetwork(Network * net);
+
+
+
+/**
+ * @brief      ANN's regression test.
+ */
+void regressionTestANN(void);
+
+
 
 
 

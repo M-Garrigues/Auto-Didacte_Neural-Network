@@ -239,3 +239,44 @@ float sigmoid(float x)
 {
     return (1/(1+exp(-x)));
 }
+
+void printLayer(Layer * layer)
+{
+	int i,j;
+
+	assert(layer != NULL);
+
+	if(layer->type == INPUT || layer->type == HIDDEN)
+	{
+		if (layer->type == INPUT)
+			printf("INPUT LAYER:\n\n");
+
+		if (layer->type == HIDDEN)
+			printf("HIDDEN LAYER:\n\n");
+
+		for (i = 0; i < layer->nbNeurons; ++i)
+		{
+			printf("Neuron %d: %f  =====  ",i, layer->tabNeurons[i]->value);
+
+			for (j = 0; j < layer->tabNeurons[0]->nbWeights; ++j)
+			{
+				printf("W%d: %f | ", j, layer->tabNeurons[i]->tabWeights[j]);
+			}
+			printf("\n");
+			
+		}
+
+		printf("\n\n ********************************\n\n");
+	}
+
+	else
+	{
+		printf("OUTPUT LAYER:\n\n");
+
+		for (i = 0; i < layer->nbNeurons; ++i)
+		{
+			printf("Neuron %d: %f     ",i, layer->tabNeurons[i]->value);
+		}
+		printf("\n\n ********************************\n\n");
+	}
+}

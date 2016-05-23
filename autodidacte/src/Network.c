@@ -142,3 +142,35 @@ void deleteNetwork(Network * net)												/*NETWORK DESTRUCTOR*/
 
 	free(net);
 }
+
+
+
+void printNetwork(Network * net)
+{
+	printLayer(net->tabLayers[INPUT]);
+	printLayer(net->tabLayers[HIDDEN]);
+	printLayer(net->tabLayers[OUTPUT]);
+}
+
+
+void regressionTestANN(void)
+{
+	float tabFloat[5] = {1, 0.5, -2, 0.8, -0.3};
+
+    Network * net = newNetwork(5,3,5);
+
+    initialiseNetworkTEST(net);
+
+    setWeight(net->tabLayers[INPUT]->tabNeurons[1],1, 1.3);
+    setWeight(net->tabLayers[INPUT]->tabNeurons[2],0, -0.5);
+    setWeight(net->tabLayers[HIDDEN]->tabNeurons[0],1, 2.3);
+    setWeight(net->tabLayers[HIDDEN]->tabNeurons[1],0, 1.9);
+
+    feedForward(net, tabFloat);
+
+    printNetwork(net);
+
+    deleteNetwork(net);
+
+    printf("\nNetwork successfully deleted.\n\n\n");
+}
