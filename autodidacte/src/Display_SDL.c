@@ -180,7 +180,6 @@ void displaySim(Simulation * sim, SDL_Surface * imgCar, SDL_Renderer * renderer)
 
 	displayCar(getCar(sim),imgCar,renderer);
 	drawTrack(getTrack(sim), renderer);
-	drawHitboxCar(getCar(sim), renderer);
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0,255);
 	drawLine(cPin,cPout,renderer);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 255,255);
@@ -264,10 +263,12 @@ void displayButton(Display_SDL * display, int * mode)
 	loadImg(&button3, "data/reset.png");
 	loadImg(&button4, "data/changeTrack.png");
 
-	displayImage(buttonPoint1,0,button1,display->renderer);
+	displayImage(buttonPoint1,0,button1,display->renderer);/* display the button */
 	displayImage(buttonPoint2,0,button2,display->renderer);
 	displayImage(buttonPoint3,0,button3,display->renderer);
 	displayImage(buttonPoint4,0,button4,display->renderer);
+
+
 	deletePoint(buttonPoint1);
 	SDL_FreeSurface(button1);
 	deletePoint(buttonPoint2);
