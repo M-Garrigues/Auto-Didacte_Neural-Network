@@ -32,7 +32,7 @@ int randomProba(int * tabProba, int choices)
 Generation * newGenerationRandom(int nbSubject, int * species)
 {
     int i;
-    float activation = (rand()/(float)RAND_MAX)/2 + 0.25;/* activation is the same for a generation*/
+    float activation = (rand()/(float)RAND_MAX)/5 + 0.2;/* activation is the same for a generation*/
     Generation * pGen = malloc(sizeof(Generation));
     assert(nbSubject>0);
     assert(pGen != NULL);
