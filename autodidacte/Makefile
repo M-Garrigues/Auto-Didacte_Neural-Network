@@ -9,7 +9,7 @@ LDFLAGS = -Wall
 SRCDIR = src
 BINDIR = bin
 OBJDIR = obj
-LIBDIR = lib
+LIBDIR = ./lib
 
 
 
