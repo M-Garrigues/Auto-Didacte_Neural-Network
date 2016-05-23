@@ -233,15 +233,18 @@ void updateScreen(Display_SDL * disp)
 }
 int initSDL()
 {
-	if (SDL_Init(SDL_INIT_VIDEO) != 0 && TTF_Init()==-1 )
+	if (SDL_Init(SDL_INIT_EVERYTHING) != 0  )
     {
         fprintf(stdout,"Échec de l'initialisation de la SDL (%s)\n",SDL_GetError());
         return 0;
     }
-    else
+    else if ( TTF_Init()!=0)
     {
-    	return 1;
+    	printf("%s\n", TTF_GetError());
+    	return 0;
     }
+    else
+    	return 1;
 }
 void displayButton(Display_SDL * display, int * mode)
 {
@@ -366,7 +369,7 @@ void displayManagement(int x, int y , int fps, char * file)
 	                			pInit = intersectPoint(track->trackIn[0] , track->trackOut[1] , track->trackOut[0] , track->trackIn[1]);
 	                			i = 0; /* on recommence toute la simulation car les fitness ne sont plus les memes*/
 	                			endSimulation(getSimulation(disp));
-	                			sim = newSimulation(1, getGenome(gen ,i), track, pInit, initOrient);
+	            	  			sim = newSimulation(1, getGenome(gen ,i), track, pInit, initOrient);
 	                			setSimulation(disp, sim);
 	                			cleanScreen(disp);
 	                			displayButton(disp, mode);
@@ -390,6 +393,7 @@ void displayManagement(int x, int y , int fps, char * file)
             			{
             				delay(&ticks, fps);
             	  			cleanScreen(disp);
+            	  			displayInfo( getFitness(getGenome(gen ,0)),g, disp->renderer);
             	  			displayButton(disp,mode);
             	  			display(disp);
             	  		}
@@ -401,8 +405,11 @@ void displayManagement(int x, int y , int fps, char * file)
             	    if(i == getNbSubject(gen))
             	    {
             	    	nextGeneration(gen);
+            	    	cleanScreen(disp);
+            	  		displayInfo( getFitness(getGenome(gen ,0)),g, disp->renderer);
+            	  		displayButton(disp,mode);
+            	  		display(disp);
             	    	g++;
-            	    	//displayInfo(g, getFitness(getGenome(gen ,0)), disp->renderer);
             	        i = 1;
                 	}
                		 else
@@ -422,6 +429,7 @@ void displayManagement(int x, int y , int fps, char * file)
             		
             			fitness = tickSimulation(disp->sim);
             	  		cleanScreen(disp);
+            	  		displayInfo( getFitness(getGenome(gen ,0)),g, disp->renderer);
             	  		displayButton(disp,mode);
             	  		display(disp);
            		}
@@ -450,12 +458,20 @@ void drawHitboxCar(Car * car, SDL_Renderer * renderer)
 
 void displayInfo(int fitness, int generation, SDL_Renderer * renderer)
 {
+
 	char sentence[100];
-	TTF_Font *font = TTF_OpenFont("data/verdana.ttf", 30);
+	TTF_Font * font;// = TTF_OpenFont("./data/arial.ttf", 30);
+	font=TTF_OpenFont("data/arial.ttf",15);
+if(!font) {
+printf("TTF_OpenFont: %s\n", TTF_GetError());
+// handle error
+}
     SDL_Color white = {255, 255, 255}; 
-    Point *p = newPoint(300,300);
-    sprintf(sentence, "Génération : %d\nFitness Max : %d", generation,fitness);
+    Point *p = newPoint(330,80);
+    sprintf(sentence, "Generation : %d  Fitness Max : %d", generation,fitness);
     SDL_Surface * text = TTF_RenderText_Blended(font, sentence, white);
+    if(text ==NULL)
+    	printf("yo1\n");
     displayImage(p,0,text,renderer);
     SDL_FreeSurface(text);
     TTF_CloseFont(font);
