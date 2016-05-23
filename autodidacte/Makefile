@@ -15,7 +15,7 @@ LIBDIR = lib
 
 SOURCES := $(wildcard $(SRCDIR)/*.c)
 INCLUDES := $(wildcard $(SRCDIR)/*.h)
-SDL := -I$(LIBDIR)/SDL2 -lSDL2 -lSDL2_gfx -lSDL2_image -lSDL_ttf
+SDL := -I$(LIBDIR)/SDL2 -lSDL2 -lSDL2_gfx -lSDL2_image -lSDL2_ttf
 OBJECTS := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm  =  rm -rf
 $(BINDIR)/$(TARGET): $(OBJECTS)
