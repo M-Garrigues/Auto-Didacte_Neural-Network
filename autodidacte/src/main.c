@@ -11,13 +11,16 @@
 #include <assert.h>
 #include "Display_SDL.h"
 
+/*
+
+Project coded by Valentin GRANDJEAN, Florian BEGONIN and Mathieu GARRIGUES (2016).
+
+*/
+
+
+
 int main()
 {
 	displayManagement(641, 540 , 60, "data/car.png");
 	return 0;
 }
-
-
-/*************************************************************************************
-LIF7 project coded by Valentin GRANDJEAN, Florian BEGONIN and Mathieu GARRIGUES (2016)
-*************************************************************************************/

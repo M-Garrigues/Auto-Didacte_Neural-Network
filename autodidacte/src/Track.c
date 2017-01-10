@@ -118,21 +118,6 @@ void saveTrackFile (Track * track, FILE * f){
 	}
 }
 
-/* Track destructor */
-void deleteTrack (Track * track){
-	Point * pointTemp;
-	int i;
-	for (i=0 ; i < getNbPoints(track); i++){
-		pointTemp = getTrackIn (track, i);
-		deletePoint (pointTemp);
-		pointTemp = getTrackOut (track, i);
-		deletePoint (pointTemp);
-	}
-	free (track->trackIn);
-	free (track->trackOut);
-	free (track);
-}
-
 
 
 void unitTestTrack ()
@@ -161,4 +146,23 @@ void unitTestTrack ()
 	fclose(f);
 	deleteTrack(t2);
 	printf("Unit test for Track.* OK\n");
+
+}
+
+
+
+/* Track destructor */
+
+void deleteTrack (Track * track){
+	Point * pointTemp;
+	int i;
+	for (i=0 ; i < getNbPoints(track); i++){
+		pointTemp = getTrackIn (track, i);
+		deletePoint (pointTemp);
+		pointTemp = getTrackOut (track, i);
+		deletePoint (pointTemp);
+	}
+	free (track->trackIn);
+	free (track->trackOut);
+	free (track);
 }

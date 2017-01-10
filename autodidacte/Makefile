@@ -37,8 +37,8 @@ remove : clean
 	@echo "exec removed"
 
 run: 
-	make
-	./$(BINDIR)/$(TARGET)
+	@make
+	@./$(BINDIR)/$(TARGET)
 
 valgrind:
 

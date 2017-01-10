@@ -177,7 +177,12 @@ int selectHigherValueSpeed(Layer * layer);
 float sigmoid(float x);
 
 
-
+/**
+ * @brief      Prints a layer in the console, only used in regression test.
+ *
+ * @param[in,out]      layer  The layer's adress.
+ */
+void printLayer(Layer * layer);
 
 
 /* ----- Layer destructor ----- */
@@ -191,13 +196,6 @@ float sigmoid(float x);
 void deleteLayer(Layer * layer);
 
 
-
-/**
- * @brief      Prints a layer in the console. ONly used in regression test.
- *
- * @param[in,out]      layer  The layer's adress.
- */
-void printLayer(Layer * layer);
 
 
 #endif

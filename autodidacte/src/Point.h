@@ -151,6 +151,10 @@ float minimum (const float * f1, int nb);
 int intersect (const Point * p1 ,const Point * p2 ,const Point * p3 ,const Point * p4);
 
 
+/**
+ * @brief      Point's regression test.
+ */
+void unitTestPoint ();
 
 
 /* ----- Point destructor ----- */
@@ -162,10 +166,4 @@ int intersect (const Point * p1 ,const Point * p2 ,const Point * p3 ,const Point
  * @param      p     Point adress
  */
 void deletePoint(Point * p);
-
-
-/**
- * @brief      Regression test for point
- */
-void unitTestPoint ();
 #endif

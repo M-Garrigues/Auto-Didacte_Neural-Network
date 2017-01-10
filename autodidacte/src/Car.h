@@ -308,7 +308,7 @@ void deleteCar(Car * car);
 
 
 /**
- * @brief      Car's regression test
+ * @brief      Car's regression test.
  */
 void unitTestCar ();
 

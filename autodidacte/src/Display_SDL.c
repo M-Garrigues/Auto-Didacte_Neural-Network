@@ -320,7 +320,6 @@ void displayManagement(int x, int y , int fps, char * file)
 	                case SDL_MOUSEBUTTONDOWN:
 	                	if(event.button.button == SDL_BUTTON_LEFT)
 	                	{
-	                		printf("%d,%d\n",event.button.x,event.button.y);
 	                		if(event.button.x >= 20 && event.button.x <=215 && event.button.y <= 535 && event.button.y >= 495)
 	                		{
 	                			mode[0] = (mode[0]+1)%2;
@@ -461,7 +460,7 @@ void displayInfo(int fitness, int generation, SDL_Renderer * renderer)
 {
 
 	char sentence[100];
-	TTF_Font * font;// = TTF_OpenFont("./data/arial.ttf", 30);
+	TTF_Font * font;
 	font=TTF_OpenFont("data/arial.ttf",15);
 if(!font) {
 printf("TTF_OpenFont: %s\n", TTF_GetError());
@@ -471,8 +470,7 @@ printf("TTF_OpenFont: %s\n", TTF_GetError());
     Point *p = newPoint(330,80);
     sprintf(sentence, "Generation : %d  Fitness Max : %d", generation,fitness);
     SDL_Surface * text = TTF_RenderText_Blended(font, sentence, white);
-    if(text ==NULL)
-    	printf("yo1\n");
+    
     displayImage(p,0,text,renderer);
     SDL_FreeSurface(text);
     TTF_CloseFont(font);

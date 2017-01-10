@@ -160,17 +160,6 @@ Point * intersectPoint (const Point * A, const Point * B , const Point * C , con
     }
 
 
-/* Point destructor */
-void deletePoint(Point * p)
-{
-	assert(p != NULL);
-
-	p->x = 0;
-	p->y = 0;
-
-	free(p);
-}
-
 void unitTestPoint ()
 {
 	Point *p1, *p2, *p3, *p4, *p5, *p6;
@@ -198,5 +187,18 @@ void unitTestPoint ()
   	deletePoint(p4);
   	deletePoint(p5);
   	deletePoint(p6);
-  	printf("Unit test for Point.* OK\n");
+  	printf("Unit test for Point. OK\n");
+}
+
+
+
+/* Point destructor */
+void deletePoint(Point * p)
+{
+	assert(p != NULL);
+
+	p->x = 0;
+	p->y = 0;
+
+	free(p);
 }
