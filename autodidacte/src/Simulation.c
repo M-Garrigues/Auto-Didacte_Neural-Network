@@ -12,55 +12,6 @@
 #include "stdio.h"
 #include "math.h"
 
-void printLayer(Layer * layer)
-{
-	int i,j;
-
-	assert(layer != NULL);
-
-	if(layer->type == INPUT || layer->type == HIDDEN)
-	{
-		if (layer->type == INPUT)
-			printf("INPUT LAYER:\n\n");
-
-		if (layer->type == HIDDEN)
-			printf("HIDDEN LAYER:\n\n");
-
-		for (i = 0; i < layer->nbNeurons; ++i)
-		{
-			printf("Neuron %d: %f  =====  ",i, layer->tabNeurons[i]->value);
-
-			for (j = 0; j < layer->tabNeurons[0]->nbWeights; ++j)
-			{
-				printf("W%d: %f | ", j, layer->tabNeurons[i]->tabWeights[j]);
-			}
-			printf("\n");
-			
-		}
-
-		printf("\n\n ********************************\n\n");
-	}
-
-	else
-	{
-		printf("OUTPUT LAYER:\n\n");
-
-		for (i = 0; i < layer->nbNeurons; ++i)
-		{
-			printf("Neuron %d: %f     ",i, layer->tabNeurons[i]->value);
-		}
-		printf("\n\n ********************************\n\n");
-	}
-}
-
-
-void printNetwork(Network * net)
-{
-	printLayer(net->tabLayers[INPUT]);
-	printLayer(net->tabLayers[HIDDEN]);
-	printLayer(net->tabLayers[OUTPUT]);
-}
-
 
 
 
@@ -110,7 +61,6 @@ int tickSimulation(Simulation * sim)
 	net = getCarNetwork(sim->car);
 	out = getLayer(net, OUTPUT);
 	feedForward(net, tabSensors);
-	/*printLayer(net->tabLayers[OUTPUT]);*/
 
 
 	actionTurn = selectHigherValueAct(out);
@@ -124,6 +74,8 @@ int tickSimulation(Simulation * sim)
 
 	if(getValue(getNeuron(out, actionSpeed)) < activation) /*We check if the highest neuron is activated*/
 		actionSpeed = NONE;//If not, no action will be done this tick	                
+
+
 
 switch (actionSpeed) {
 
@@ -142,11 +94,11 @@ switch (actionSpeed) {
 
 switch (actionTurn) {
 
-	case NONE : /* Try different values for moveStraight */
+	case NONE : 
 	 break;
 
 	case RIGHT :
-		if(getSpeed(sim->car) > 0.5)
+		if(getSpeed(sim->car) > 0.5) //these conditions prevent the car from spinning without going forward.
 	 		turnRight(sim->car);
 	 break;
 
@@ -469,8 +421,7 @@ int detectCheckPointCrossed(Simulation * sim)
 	carFR = getFrontRight(sim->car);
 	carBR = getBackRight(sim->car);
 	carBL = getBackLeft(sim->car);
-	/*printf("sector : %d\n CarBL : %f ,%f\n CarFL : %f,%f\n Check :%f,%f\n%f,%f\n\n",sim->sector,carBL->x,carBL->y,carFL->x,carFL->y,CPin->x,CPin->y,CPout->x,CPout->y);
-	printf("\n Interesct : %d \n",intersect(CPin,CPout,carFL,carBL));*/
+	
 	if(intersect(cPin, cPout, carFR, carBR)||intersect(cPin, cPout,carFL,carBL))
 		return 1;
 	else
@@ -619,8 +570,8 @@ void endSimulation(Simulation * sim)
 
 	sim->speed = 0;
 	deleteCar(sim->car);
-	sim->track = NULL; // A CHANGER PEUT ETRE, EN FONCTION DE TRACK.
-	sim->initPosition = NULL; // DE MEME
+	sim->track = NULL; 
+	sim->initPosition = NULL;
 	sim->initOrientation = 0;
 	sim->fitness = 0;
 

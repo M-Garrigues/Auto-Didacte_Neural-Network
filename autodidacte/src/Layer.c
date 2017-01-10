@@ -240,6 +240,7 @@ float sigmoid(float x)
     return (1/(1+exp(-x)));
 }
 
+
 void printLayer(Layer * layer)
 {
 	int i,j;

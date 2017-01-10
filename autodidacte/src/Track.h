@@ -45,7 +45,7 @@ Track * newTrack ();
 /**
  * @brief      Create 2 point adress array in the track
  *
- * @param[in,out]      track     Track adress
+ * @param      track     Track adress
  * @param[in]  nbPoints  Number of points to draw the track
  */
 void initTrack (Track * track , int nbPoints);
@@ -71,9 +71,9 @@ Point * getTrackOut (const Track * track , int position);
 /**
  * @brief      Set the track out.
  *
- * @param[in,out]      track     Track adress
+ * @param      track     Track adress
  * @param[in]  position  Point position to change
- * @param[in,out]      newPoint  New point adress
+ * @param      newPoint  New point adress
  */
 void setTrackOut (Track * track, int position , Point * newPoint);
 
@@ -108,7 +108,7 @@ int getNbPoints(const Track * track);
 /**
  * @brief      Set the nb points.
  *
- * @param[in,out]      track     Track adress
+ * @param      track     Track adress
  * @param[in]  nbPoints  New point number
  */
 void setNbPoints(Track * track , int nbPoints);
@@ -124,27 +124,31 @@ void setNbPoints(Track * track , int nbPoints);
 /**
  * @brief      Print the track's information
  *
- * @param[in,out]      track  Track adress
+ * @param      track  Track adress
  */
 void printTrack (Track * track);
 
 /**
  * @brief      Initialize a Track from a file
  *
- * @param[in,out]      track  Track adress
- * @param[in,out]      f      File adress
+ * @param      track  Track adress
+ * @param      f      File adress
  */
 void initTrackFile (Track * track, FILE * f);
 
 /**
  * @brief      Save a Track from a file
  *
- * @param[in,out]      track  Track adress
- * @param[in,out]      f      File adress
+ * @param      track  Track adress
+ * @param      f      File adress
  */
 void saveTrackFile (Track * track, FILE * f);
 
 
+/**
+ * @brief      Track's regression test.
+ */
+void unitTestTrack ();
 
 
 
@@ -152,19 +156,11 @@ void saveTrackFile (Track * track, FILE * f);
 
 
 
+
 /**
- * @brief      Deletes a track
+ * @brief      Delete a track
  *
- * @param[in,out]      track  Track adress
+ * @param      track  Track adress
  */
 void deleteTrack (Track * track);
-
-
-
-
-/**
- * @brief      Track's regression test
- */
-void unitTestTrack ():
-
 #endif

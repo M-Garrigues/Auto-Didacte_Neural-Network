@@ -1,4 +1,4 @@
-  #ifdef __cplusplus
+#ifdef __cplusplus
 #error This source file is not C++ but rather C. Please use a C-compiler
 #endif
 
@@ -15,7 +15,8 @@
 
 const float PI = 3.14159265359;
 
-Car * newCar () {
+Car * newCar () 
+{
 	Car * nCar = malloc(sizeof(Car));
 	assert(nCar != NULL);
 	
@@ -56,6 +57,7 @@ void initCar (Car * nCar, const Genome * genome, const Point * init, float initO
 	assert(nCar != NULL);
 	assert(genome != NULL);
 	assert(init != NULL);
+
 	setX(nCar->center, getX(init));
 	setY(nCar->center, getY(init));
 
@@ -279,6 +281,7 @@ void setSensors(Car * car,float * newTabSensors)
 	assert(car != NULL);
 	car->tabSensors = newTabSensors;
 }
+
 
 void unitTestCar ()
 {

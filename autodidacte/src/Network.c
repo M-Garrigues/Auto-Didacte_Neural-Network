@@ -122,36 +122,12 @@ void feedForward(Network * net, float * tabNewValues)
 	updateLayer(getLayer(net, HIDDEN), getLayer(net, OUTPUT));
 }
 
-
-
-
-void deleteNetwork(Network * net)												/*NETWORK DESTRUCTOR*/
-{	
-
-	assert(net != NULL);
-
-	net->nbInputNeurons = 0;
-	net->nbHiddenNeurons = 0;
-	net->nbOutputNeurons = 0;
-
-	deleteLayer(getLayer(net, INPUT));
-	deleteLayer(getLayer(net, HIDDEN));
-	deleteLayer(getLayer(net, OUTPUT));
-
-	free(net->tabLayers);
-
-	free(net);
-}
-
-
-
 void printNetwork(Network * net)
 {
-	printLayer(net->tabLayers[INPUT]);
-	printLayer(net->tabLayers[HIDDEN]);
-	printLayer(net->tabLayers[OUTPUT]);
+	printLayer(getLayer(net, INPUT));
+	printLayer(getLayer(net, HIDDEN));
+	printLayer(getLayer(net, OUTPUT));
 }
-
 
 void regressionTestANN(void)
 {
@@ -173,4 +149,24 @@ void regressionTestANN(void)
     deleteNetwork(net);
 
     printf("\nNetwork successfully deleted.\n\n\n");
+}
+
+
+
+void deleteNetwork(Network * net)			/*NETWORK DESTRUCTOR*/
+{	
+
+	assert(net != NULL);
+
+	net->nbInputNeurons = 0;
+	net->nbHiddenNeurons = 0;
+	net->nbOutputNeurons = 0;
+
+	deleteLayer(getLayer(net, INPUT));
+	deleteLayer(getLayer(net, HIDDEN));
+	deleteLayer(getLayer(net, OUTPUT));
+
+	free(net->tabLayers);
+
+	free(net);
 }
